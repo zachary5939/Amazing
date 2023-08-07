@@ -1,2 +1,2 @@
 # Amazing
-Amazon clone
+An Amazing Amazon clone is coming..
