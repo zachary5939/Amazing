@@ -11,15 +11,40 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      review.belongsTo(models.User, { foreignKey: 'user_id' })
+      review.belongsTo(models.Product, { foreignKey: 'product_id' })
     }
   }
   review.init({
-    userId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    rating: DataTypes.INTEGER,
-    text: DataTypes.STRING,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: true,
+      },
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: true,
+      },
+    },
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 1,
+        max: 5,
+      },
+    },
+    text: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     timestamp: DataTypes.DATE
-  }, {
+  },
+  {
     sequelize,
     modelName: 'review',
   });
