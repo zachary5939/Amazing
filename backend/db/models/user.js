@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -13,45 +11,48 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  user.init({
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [4, 30],
-        isNotEmailC(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error("Cannot be an email.");
-          }
+  user.init(
+    {
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [4, 30],
+          isNotEmailC(value) {
+            if (Validator.isEmail(value)) {
+              throw new Error("Cannot be an email.");
+            }
+          },
+        },
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [3, 256],
+          isEmail: true,
+        },
+      },
+      hashedPassword: {
+        type: DataTypes.STRING.BINARY,
+        allowNull: false,
+        validate: {
+          len: [60, 60],
         },
       },
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [3, 256],
-        isEmail: true,
-      },
-    },
-    hashedPassword: {
-      type: DataTypes.STRING.BINARY,
-      allowNull: false,
-      validate: {
-        len: [60, 60],
-      },
-    },
-  }, {
-    sequelize,
-    modelName: 'user',
-  });
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
   return user;
 };
