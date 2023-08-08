@@ -52,7 +52,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Products";
-    await queryInterface.dropTable("options");
+    options.tableName = "products";
+    await queryInterface.dropTable(options);
   },
 };
