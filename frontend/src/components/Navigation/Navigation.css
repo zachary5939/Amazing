@@ -1,32 +1,38 @@
+/* Remove default margins and paddings */
+body, ul {
+  margin: 0;
+  padding: 0;
+}
+
 .hidden {
-    display: none;
-  }
+  display: none;
+}
 
-  .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: #333;
-  }
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #333;
+}
 
-  .nav-list {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
+.nav-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 30rem;
+}
 
-  .logo-image {
-    width:114px;
-  }
+.logo-image {
+  max-width: 114px;
+  height: auto;
+}
 
-  .nav-list li a{
-    color:#ffffff;
-    font-weight:700;
-    text-decoration:none;
-   }
+.nav-list li a {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
 
-   .nav-list .login-item {
-    margin-left: auto; /* Pushes the "Log In" link to the right */
-  }
+.nav-list .login-item {
+  margin-left: auto;
+}

@@ -15,21 +15,20 @@ function Navigation({ isLoaded }) {
     dispatch(sessionActions.logout());
   };
 
-  let sessionLinks;
-  if (sessionUser) {
-    sessionLinks = (
-      <li>
-        <ProfileButton user={sessionUser} />
-        <button onClick={logout}>Log Out</button>
-      </li>
-    );
-  } else {
-    sessionLinks = (
-      <li className="login-item">
-        <NavLink to="/login">Log In</NavLink>
-      </li>
-    );
-  }
+let sessionLinks;
+if (sessionUser) {
+  sessionLinks = (
+    <li>
+      <ProfileButton user={sessionUser} />
+    </li>
+  );
+} else {
+  sessionLinks = (
+    <li className="login-item">
+      <NavLink to="/login">Log In</NavLink>
+    </li>
+  );
+}
 
   return (
     <nav className="navbar">
@@ -39,6 +38,9 @@ function Navigation({ isLoaded }) {
           <NavLink exact to="/">
             <img src={logo} alt="Amazing Logo" className="logo-image" />
           </NavLink>
+        </li>
+        <li>
+          <input type="text" placeholder="Search..." className="search-bar" />
         </li>
         {isLoaded && sessionLinks}
       </ul>
