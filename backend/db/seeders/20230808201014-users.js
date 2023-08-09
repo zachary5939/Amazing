@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = "users";
+    options.tableName = "Users";
     return queryInterface.bulkInsert(
       options,
       [
