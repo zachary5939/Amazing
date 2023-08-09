@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-let options = {};
+let options = { tableName: "Products" };
 if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
   options.schema = process.env.SCHEMA;
 }

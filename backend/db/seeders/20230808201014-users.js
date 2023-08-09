@@ -1,13 +1,13 @@
 "use strict";
 const bcrypt = require("bcryptjs");
 
+/** @type {import('sequelize-cli').Migration} */
+
 let options = {};
 if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
   options.schema = process.env.SCHEMA;
   options.tableName = "Users";
 }
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     options.tableName = "Users";
