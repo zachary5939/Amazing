@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 let options = {};
 if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
   options.schema = process.env.SCHEMA;
+  options.tableName = "Users";
 }
 
 /** @type {import('sequelize-cli').Migration} */
@@ -42,19 +43,19 @@ module.exports = {
           hashedPassword: bcrypt.hashSync("password4"),
         },
       ],
-      {}
+      options
     );
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "users";
+    options.tableName = "Users";
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(
       options,
       {
-        username: { [Op.in]: ["demo", "FakeUser1", "FakeUser2"] },
+        username: { [Op.in]: ["demo", "FakeUser1", "FakeUser2", "FakeUser3"] },
       },
-      {}
+      options
     );
   },
 };
