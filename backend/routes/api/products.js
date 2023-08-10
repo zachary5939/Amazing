@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Product, Category } = require("../../db/models"); // Make sure to use the correct model names
+const { product, Category } = require("../../db/models"); // Make sure to use the correct model names
 const { Op } = require("sequelize");
 
 const { requireAuth } = require("../../utils/auth.js");
@@ -8,7 +8,7 @@ const { handleValidationErrors } = require("../../utils/validation.js");
 //get all products
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll({
+    const products = await product.findAll({
       include: Category,
     });
 
@@ -27,7 +27,7 @@ router.get("/:id", async (req, res, next) => {
   const productId = req.params.id;
 
   try {
-    const product = await Product.findByPk(productId, {
+    const product = await product.findByPk(productId, {
       include: Category,
     });
 
@@ -66,5 +66,3 @@ router.get("/category/:categoryId", async (req, res, next) => {
 
 
   module.exports = router;
-
-module.exports = router;
