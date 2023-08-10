@@ -4,13 +4,13 @@
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
-  options.tableName = "Products";
+  options.tableName = "products";
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Products",
+      "products",
       {
         id: {
           allowNull: false,
@@ -52,7 +52,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Products";
+    options.tableName = "products";
     await queryInterface.dropTable(options);
   },
 };

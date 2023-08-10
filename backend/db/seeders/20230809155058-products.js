@@ -2,13 +2,13 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-let options = { tableName: "Products" };
+let options = { tableName: "products" };
 if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
   options.schema = process.env.SCHEMA;
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("Products", [
+    await queryInterface.bulkInsert("products", [
       {
         name: "MacBook Pro 14 inch Laptop",
         description: "Powerful laptop for all your computing needs",
@@ -106,7 +106,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Products";
+    options.tableName = "products";
     await queryInterface.bulkDelete(options);
   },
 };
