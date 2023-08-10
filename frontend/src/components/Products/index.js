@@ -25,7 +25,6 @@ function Products() {
                             <img src={product.imageUrl} alt={product.name} />
                         </div>
                         <div>
-
                             <h3>{product.name}</h3>
                             <p>{product.description}</p>
                             <p>Price: ${product.price.toFixed(2)}</p>

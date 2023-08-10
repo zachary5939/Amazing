@@ -24,7 +24,6 @@ function LandingPage() {
                     <h2>Electronics</h2>
                 </div>
                 <div className="right-2">
-
                 </div>
             </div>
         </div>
