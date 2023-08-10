@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import { csrfFetch } from "./csrf";
 
 // Action Types
-const FETCH_PRODUCTS_SUCCESS = 'products/FETCH_PRODUCTS_SUCCESS';
+const FETCH_ALL_PRODUCTS_SUCCESS = 'products/FETCH_PRODUCTS_SUCCESS';
 const FETCH_PRODUCT_SUCCESS = 'products/FETCH_PRODUCT_SUCCESS';
 
 // Action Creators
 const fetchProductsSuccess = (products) => ({
-  type: FETCH_PRODUCTS_SUCCESS,
+  type: FETCH_ALL_PRODUCTS_SUCCESS,
   payload: products,
 });
 
@@ -17,7 +17,7 @@ const fetchProductSuccess = (product) => ({
   payload: product,
 });
 
-// Thunks
+
 export const fetchAllProducts = () => async (dispatch) => {
   try {
     const response = await csrfFetch('/api/products');
@@ -38,6 +38,16 @@ export const fetchProductById = (productId) => async (dispatch) => {
   }
 };
 
+export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/products/category/${categoryId}`);
+    const products = await response.json();
+    dispatch(fetchProductsSuccess(products));
+  } catch (error) {
+    console.error(`Error fetching products for category ${categoryId}:`, error);
+  }
+};
+
 // Reducer
 const initialState = {
   allProducts: [],
@@ -46,7 +56,7 @@ const initialState = {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PRODUCTS_SUCCESS:
+    case FETCH_ALL_PRODUCTS_SUCCESS:
       return {
         ...state,
         allProducts: action.payload,

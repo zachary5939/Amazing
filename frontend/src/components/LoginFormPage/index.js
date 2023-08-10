@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
+import { login } from "../../store/session";
 import logo from "../../img/amazinglogoblack.png";
 import "./LoginForm.css";
 
@@ -15,6 +16,25 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const history = useHistory();
+
+
+  const handleDemoUserClick = () => {
+    const demoCredential = "demo@user.io";
+    const demoPassword = "password";
+
+    dispatch(login({ credential: demoCredential, password: demoPassword }))
+    .then(() => {
+      closeModal();
+      history.push("/");
+    })
+    .catch((res) => {
+      if (res.data && res.data.errors) {
+        setErrors(res.data.errors);
+      } else {
+        setErrors({ credential: "Invalid credentials. Please try again." });
+      }
+    });
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +51,8 @@ function LoginFormModal() {
         }
       });
   };
+
+
   return (
     <div className="container">
     <>
@@ -60,6 +82,7 @@ function LoginFormModal() {
         </label>
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
+        <button type="button"onClick={handleDemoUserClick} >Demo User</button>
       </form>
       </div>
       <div className="new">

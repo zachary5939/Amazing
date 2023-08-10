@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as products from '../../store/products';
+import * as sessionActions from '../../store/session';
 
 
 function LandingPage() {

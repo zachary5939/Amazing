@@ -15,20 +15,21 @@ function Navigation({ isLoaded }) {
     dispatch(sessionActions.logout());
   };
 
-let sessionLinks;
-if (sessionUser) {
-  sessionLinks = (
-    <li>
-      <ProfileButton user={sessionUser} />
-    </li>
-  );
-} else {
-  sessionLinks = (
-    <li className="login-item">
-      <NavLink to="/login">Log In</NavLink>
-    </li>
-  );
-}
+  let sessionLinks;
+  if (sessionUser) {
+    sessionLinks = (
+      <li>
+        <NavLink to="/orders">Orders</NavLink>
+        <ProfileButton user={sessionUser} />
+      </li>
+    );
+  } else {
+    sessionLinks = (
+      <li className="login-item">
+        <NavLink to="/login">Log In</NavLink>
+      </li>
+    );
+  }
 
   return (
     <nav className="navbar">
