@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
+import logo from "../../img/amazinglogoblack.png";
 import "./LoginForm.css";
 
 function LoginFormModal() {
@@ -31,9 +32,14 @@ function LoginFormModal() {
       });
   };
   return (
+    <div className="container">
     <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="logo-container">
+    <img src={logo} alt="Amazing Logo" className="logo-image" />
+    </div>
+    <div className="login-container">
+      <h1>Sign In</h1>
+      <form className="login-credentials" onSubmit={handleSubmit}>
         <label>
           Username or Email
           <input
@@ -55,6 +61,7 @@ function LoginFormModal() {
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
       </form>
+      </div>
       <div className="new">
         <div className="newtext">
           <p>New to Amazon?</p>
@@ -64,6 +71,7 @@ function LoginFormModal() {
         </NavLink>
       </div>
     </>
+    </div>
   );
 }
 
