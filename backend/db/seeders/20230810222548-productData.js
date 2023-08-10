@@ -2,10 +2,11 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-let options = { tableName: "Products" };
-if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
+let options = {};
+if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
