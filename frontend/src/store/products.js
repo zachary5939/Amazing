@@ -21,6 +21,9 @@ const fetchProductSuccess = (product) => ({
 export const fetchAllProducts = () => async (dispatch) => {
   try {
     const response = await csrfFetch('/api/products');
+    if (!response.ok) {
+      throw new Error('Failed to fetch products');
+    }
     const products = await response.json();
     dispatch(fetchProductsSuccess(products));
   } catch (error) {
@@ -50,8 +53,8 @@ export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
 
 // Reducer
 const initialState = {
-  allProducts: [],
-  productById: null,
+  allProducts: {},
+  productById: {},
 };
 
 const productsReducer = (state = initialState, action) => {

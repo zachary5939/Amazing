@@ -1,0 +1,35 @@
+.home-container {
+display:grid;
+grid-template-areas:1 2;
+}
+
+.splash-screen {
+    padding-bottom: 100px;
+}
+
+.home-container .splash-screen h1{
+    grid-template-columns:auto 1fr !important;
+    font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;
+   }
+
+   .splash-screen h1{
+    display:flex;
+    justify-content:flex-start;
+    padding-left:90px;
+    width:374px;
+   }
+
+   /* Image */
+#root .home-container .splash-screen img{
+    width:665px !important;
+    display:flex;
+    justify-content:flex-start;
+    align-items:flex-start;
+    padding-top: 30px;
+   }
+
+   /* Image */
+   #root .splash-screen img{
+    max-width:371px;
+    padding-left:79px;
+   }
