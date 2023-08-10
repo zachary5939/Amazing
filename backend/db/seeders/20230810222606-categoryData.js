@@ -11,7 +11,7 @@ module.exports = {
       options.schema = process.env.SCHEMA;
     }
 
-    await queryInterface.bulkInsert("categories",
+    await queryInterface.bulkInsert("Categories",
       [
         {
           name: "Electronics",
@@ -30,17 +30,8 @@ module.exports = {
     );
   },
 
-  down: async (queryInterface, Sequelize) => {
-    const Op = Sequelize.Op;
-    let options = {};
-    if (process.env.NODE_ENV === "production") {
-      options.schema = process.env.SCHEMA;
-    }
-
-    await category.destroy({
-      where: {
-        name: { [Op.in]: ["Electronics", "Entertainment", "Clothing", "Home"] },
-      },
-    });
-  },
+  async down (queryInterface, Sequelize) {
+    options.tableName = 'Categories';
+    await queryInterface.bulkDelete(options);
+  }
 };
