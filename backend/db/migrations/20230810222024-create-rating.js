@@ -4,7 +4,6 @@
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
-  options.tableName = "Ratings";
 }
 
 module.exports = {
@@ -57,6 +56,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "Ratings";
     await queryInterface.dropTable(options);
-  }
+  },
 };

@@ -4,9 +4,8 @@ const bcrypt = require("bcryptjs");
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
-if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
+if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
-  options.tableName = "Users";
 }
 module.exports = {
   up: async (queryInterface, Sequelize) => {

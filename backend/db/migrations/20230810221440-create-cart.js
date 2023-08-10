@@ -2,9 +2,9 @@
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
+
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
-  options.tableName = "Carts";
 }
 
 module.exports = {
@@ -37,7 +37,8 @@ module.exports = {
     options
   );
 },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable(options);
-  }
+async down(queryInterface, Sequelize) {
+  options.tableName = "Carts";
+  await queryInterface.dropTable(options);
+},
 };
