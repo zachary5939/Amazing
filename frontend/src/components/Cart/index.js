@@ -54,7 +54,7 @@ function Cart() {
         {cartItems.map((cartItem) => (
           <li key={cartItem.id}>
             <div>
-              {cartItem.product ? ( // Conditional rendering for product-related data
+              {cartItem.product ? (
                 <Link to={`/products/${cartItem.product.id}`}>
                   <img
                     src={cartItem.product.imageUrl}
@@ -64,10 +64,10 @@ function Cart() {
               ) : (
                 <p>Loading product data...</p>
               )}
-              {cartItem.product ? ( // Conditional rendering for product-related data
+              {cartItem.product ? (
                 <div>
                   <p>
-                    {cartItem.product.name} - ${cartItem.product.price.toFixed(2)} - Quantity: {cartItem.quantity} - Total: ${(cartItem.product.price * cartItem.quantity).toFixed(2)}
+                    {cartItem.product.name} - ${Number(cartItem.product.price).toFixed(2)} - Quantity: {cartItem.quantity} - Total: ${(cartItem.product.price * cartItem.quantity).toFixed(2)}
                   </p>
                 </div>
               ) : (

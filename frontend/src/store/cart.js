@@ -118,18 +118,23 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: [...state.items, action.payload],
       };
-      case UPDATE_CART_ITEM_SUCCESS: {
-        console.log('Action Payload:', action.payload);
-        const updatedCartItem = action.payload;
-        const updatedItems = state.items.map((item) =>
-          item.id === updatedCartItem.id ? updatedCartItem : item
-        );
+    case UPDATE_CART_ITEM_SUCCESS: {
+      const updatedCartItem = action.payload;
+      const updatedItems = state.items.map((item) =>
+        item.id === updatedCartItem.id ? updatedCartItem : item
+      );
 
-        return {
-          ...state,
-          items: updatedItems,
-        };
-      }
+      updatedItems.forEach((item) => {
+        if (item.product) {
+          item.product.price = parseFloat(item.product.price);
+        }
+      });
+
+      return {
+        ...state,
+        items: updatedItems,
+      };
+    }
     case REMOVE_FROM_CART_SUCCESS:
       return {
         ...state,
