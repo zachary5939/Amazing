@@ -27,11 +27,7 @@ function Products() {
                         <div>
                             <h3>{product.name}</h3>
                             <p>{product.description}</p>
-                            {typeof product.price === 'number' ? (
-                                <p>Price: ${product.price.toFixed(2)}</p>
-                            ) : (
-                                <p>Price: N/A</p>
-                            )}
+                            <p>Price: ${product.price}</p>
                         </div>
                     </li>
                 ))}
