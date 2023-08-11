@@ -49,17 +49,28 @@ export const createSessionThunk = (user) => async (dispatch) => {
 };
 
 export const login = (user) => async (dispatch) => {
+  try {
     const { credential, password } = user;
     const response = await csrfFetch("/api/session", {
-        method: "POST",
-        body: JSON.stringify({
-            credential,
-            password,
-        }),
+      method: "POST",
+      body: JSON.stringify({
+        credential,
+        password,
+      }),
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw errorData.errors; // Throw the error to be caught in the catch block
+    }
+
     const data = await response.json();
     dispatch(setUser(data.user));
     return response;
+  } catch (error) {
+    console.error("Error during login:", error);
+    throw error; // Re-throw the error for component-level handling
+  }
 };
 
 export const restoreUser = () => async (dispatch) => {

@@ -1,7 +1,7 @@
 import "./ProductPage.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react"; // Import useState
+import { useEffect, useState } from "react";
 import { fetchProductById } from "../../store/products";
 import { addToCart } from "../../store/cart";
 
@@ -56,7 +56,11 @@ function ProductPage() {
             ))}
           </select>
         </div>
-        <button onClick={handleAddToCart}>Add to Cart</button>
+        {user ? (
+          <button onClick={handleAddToCart}>Add to Cart</button>
+        ) : (
+          <button disabled>Please login to add to cart</button>
+        )}
       </div>
     </div>
   );
