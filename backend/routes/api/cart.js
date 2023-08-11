@@ -1,21 +1,63 @@
 // routes/cart.js
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const { Cart } = require('../../db/models');
+const { Cart, Product} = require('../../db/models');
 
 const router = express.Router();
 
-// Add item to cart
+// Get all cart items for a user
+router.get('/', asyncHandler(async (req, res) => {
+  const { userId } = req.query;
+
+  const cartItems = await Cart.findAll({
+      where: {
+          userId,
+      },
+      include: {
+          model: Product,
+          as: 'product',
+      },
+  });
+
+  res.json(cartItems);
+}));
+
+// Add a product to the cart
 router.post('/', asyncHandler(async (req, res) => {
   const { userId, productId, quantity } = req.body;
 
-  const cartItem = await Cart.create({
-    userId,
-    productId,
-    quantity,
+  let cartItem = await Cart.findOne({
+    where: {
+      userId,
+      productId,
+    },
   });
 
-  res.json(cartItem);
+  if (cartItem) {
+
+    cartItem.quantity += quantity;
+    await cartItem.save();
+  } else {
+
+    cartItem = await Cart.create({
+      userId,
+      productId,
+      quantity,
+    });
+  }
+
+
+  const updatedCartItems = await Cart.findAll({
+    where: {
+      userId,
+    },
+    include: {
+      model: Product,
+      as: 'product',
+    },
+  });
+
+  res.json(updatedCartItems);
 }));
 
 

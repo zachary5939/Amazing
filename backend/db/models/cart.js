@@ -12,21 +12,23 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Associate with User model
       Cart.belongsTo(models.User, {
-        foreignKey: 'user_id',
-        as: 'user', // Optional alias for the associated User
+        foreignKey: 'userId',
+        as: 'user',
+        targetKey: 'id',
       });
 
       // Associate with Product model
       Cart.belongsTo(models.Product, {
-        foreignKey: 'product_id',
-        as: 'product', // Optional alias for the associated Product
+        foreignKey: 'productId',
+        as: 'product',
+        targetKey: 'id',
       });
     }
   }
-  
+//refactor to allow more then 1 item in cart //many to many
   Cart.init({
-    user_id: DataTypes.INTEGER,
-    product_id: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
+    productId: DataTypes.INTEGER,
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -38,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Cart',
+    tableName: 'Carts',
   });
   return Cart;
 };
