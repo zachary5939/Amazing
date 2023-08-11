@@ -1,7 +1,6 @@
-// frontend/src/App.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import LandingPage from "./components/LandingPage";
@@ -9,6 +8,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import ProductPage from "./components/ProductPage";
+import Cart from "./components/Cart";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,12 +34,16 @@ function App() {
         <Route exact path="/products">
           <Products />
         </Route>
-        <Route path="/products/:productId">
-          <ProductPage />
-        </Route>
-        <Route path="/products/category/:categoryId">
+        <Route exact path="/products/category/:categoryId">
           <Products />
         </Route>
+        <Route exact path="/products/:productId">
+          <ProductPage />
+        </Route>
+        <Route path="/cart">
+          <Cart />
+        </Route>
+        <Redirect to="/" />
       </Switch>
     </>
   );

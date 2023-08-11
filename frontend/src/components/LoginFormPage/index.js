@@ -100,7 +100,9 @@ const handleSubmit = async (e) => {
       </div>
       <div className="new">
         <div className="newtext">
+          <div className="new-to-amazon">
           <p>New to Amazon?</p>
+          </div>
         </div>
         <NavLink to="/signup" className="create-account">
           <button className="create">Create an Account</button>

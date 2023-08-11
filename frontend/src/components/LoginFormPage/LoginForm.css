@@ -11,6 +11,24 @@
     margin-left: 10px;
 }
 
+#root .login-container{
+  padding-left:84px;
+  padding-right:78px;
+ }
+
+ /* Heading */
+ #root h1{
+  justify-content:normal;
+  transform: translatex(-78px) translatey(-14px);
+ }
+
+ /* Label */
+ #root label{
+  padding-top:0px;
+  padding-bottom:30px;
+ }
+
+
   .login-container {
     display: flex;
     flex-direction: column;
@@ -42,4 +60,13 @@
     display: flex;
     flex-direction: column;
     padding: 40px;
+  }
+
+  .create {
+    border-style:none;
+    background-color:#f1c40f;
+    width:215px;
+    height:43px;
+    border-radius: 20px;
+    cursor: pointer;
   }
