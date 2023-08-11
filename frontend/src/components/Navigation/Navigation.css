@@ -36,3 +36,8 @@ body, ul {
 .nav-list .login-item {
   margin-left: auto;
 }
+
+.open-menu-text {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
