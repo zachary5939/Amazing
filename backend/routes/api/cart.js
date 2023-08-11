@@ -63,9 +63,10 @@ router.post('/', asyncHandler(async (req, res) => {
 
 // Update cart item quantity
 router.put('/:cartItemId', asyncHandler(async (req, res) => {
-    const { cartItemId } = req.params;
-    const { quantity } = req.body;
+  const { cartItemId } = req.params;
+  const { quantity } = req.body;
 
+  try {
     const cartItem = await Cart.findByPk(cartItemId);
 
     if (cartItem) {
@@ -75,7 +76,12 @@ router.put('/:cartItemId', asyncHandler(async (req, res) => {
     } else {
       res.status(404).json({ message: 'Cart item not found' });
     }
-  }));
+  } catch (error) {
+    console.error('Error updating cart item:', error);
+    res.status(500).json({ message: 'An error occurred while updating the cart item' });
+  }
+}));
+
 
 // Remove item from cart
 router.delete('/:cartItemId', asyncHandler(async (req, res) => {
