@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems, removeFromCart, updateCartItemQuantity } from "../../store/cart";
 import { Link } from "react-router-dom";
@@ -52,7 +52,7 @@ function Cart() {
       <h2>Cart</h2>
       <ul>
         {cartItems.map((cartItem) => (
-          <li key={cartItem.id}>
+          <li key={cartItems?.name}>
             <div>
               {cartItem.product ? (
                 <Link to={`/products/${cartItem.product.id}`}>
