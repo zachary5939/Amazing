@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 
@@ -7,11 +7,10 @@ if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
 module.exports = {
-
   up: async (queryInterface, Sequelize) => {
-
-
-    await queryInterface.bulkInsert("Categories",
+    options.tableName = "Categories";
+    await queryInterface.bulkInsert(
+      "Categories",
       [
         {
           name: "Electronics",
@@ -30,8 +29,8 @@ module.exports = {
     );
   },
 
-  async down (queryInterface, Sequelize) {
-    options.tableName = 'Categories';
+  async down(queryInterface, Sequelize) {
+    options.tableName = "Categories";
     await queryInterface.bulkDelete(options);
-  }
+  },
 };
