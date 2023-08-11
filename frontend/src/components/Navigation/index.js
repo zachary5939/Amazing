@@ -44,6 +44,11 @@ function Navigation({ isLoaded }) {
           <input type="text" placeholder="Search..." className="search-bar" />
         </li>
         {isLoaded && sessionLinks}
+        <li>
+          <NavLink to="/cart">
+            <i className="fa-solid fa-cart-shopping"></i>
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
