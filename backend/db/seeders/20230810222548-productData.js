@@ -11,7 +11,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = "Products";
     await queryInterface.bulkInsert(
-      "Products",
+      options,
       [
         {
           name: "MacBook Pro 14 inch Laptop",
