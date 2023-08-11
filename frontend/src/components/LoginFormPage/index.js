@@ -9,7 +9,7 @@ import { login } from "../../store/session";
 import logo from "../../img/amazinglogoblack.png";
 import "./LoginForm.css";
 
-function LoginFormModal() {
+function LoginFormPage() {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -36,21 +36,34 @@ function LoginFormModal() {
     });
 };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors({});
-    dispatch(sessionActions.login({ credential, password }))
-      .then(() => {
-        closeModal();
-        history.push("/");
-      })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setErrors({});
+  try {
+    await dispatch(sessionActions.login({ credential, password }));
+    closeModal();
+    history.push("/");
+  } catch (res) {
+    if (res.data && res.data.errors) {
+      const errorData = res.data.errors;
+      setErrors(errorData);
+
+      if (errorData.credential) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          credential: "Username or email not found",
+        }));
+      }
+
+      if (errorData.password) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "Password invalid",
+        }));
+      }
+    }
+  }
+};
 
 
   return (
@@ -98,4 +111,4 @@ function LoginFormModal() {
   );
 }
 
-export default LoginFormModal;
+export default LoginFormPage;
