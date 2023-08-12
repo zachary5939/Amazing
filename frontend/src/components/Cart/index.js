@@ -15,7 +15,7 @@ function Cart() {
     if (user) {
       dispatch(fetchCartItems(user.id));
     }
-  }, [dispatch, user, cartItems]);
+}, [dispatch, user]);
 
   const handleRemoveFromCart = (cartItemId) => {
     dispatch(removeFromCart(cartItemId));
@@ -52,7 +52,7 @@ function Cart() {
       <h2>Cart</h2>
       <ul>
         {cartItems.map((cartItem) => (
-          <li key={cartItems?.name}>
+          <li key={cartItem.id}>
             <div>
               {cartItem.product ? (
                 <Link to={`/products/${cartItem.product.id}`}>
