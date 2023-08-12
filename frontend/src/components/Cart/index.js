@@ -1,34 +1,55 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartItems, removeFromCart, updateCartItemQuantity } from "../../store/cart";
+import { fetchCartItems, removeFromCart } from "../../store/cart";
 import { Link } from "react-router-dom";
-import QuantityPopup from "./QuantityPopup"; // Import the new component
+import QuantityPopup from "./QuantityPopup";
+import "./cart.css";
 
 function Cart() {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items).sort((a, b) => a.product.name.localeCompare(b.product.name));
   const user = useSelector((state) => state.session.user);
   const isLoading = useSelector((state) => state.cart.isLoading);
   const error = useSelector((state) => state.cart.error);
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
+  const [showUpdateQuantityPopup, setShowUpdateQuantityPopup] = useState(false);
+  const [itemToUpdate, setItemToUpdate] = useState(null);
 
   useEffect(() => {
     if (user) {
       dispatch(fetchCartItems(user.id));
     }
-}, [dispatch, user]);
+  }, [dispatch, user]);
 
-  const handleRemoveFromCart = (cartItemId) => {
-    dispatch(removeFromCart(cartItemId));
+  const handleOpenConfirmModal = (cartItemId) => {
+    setShowConfirmModal(true);
+    setItemToRemove(cartItemId);
   };
 
-  const [selectedCartItem, setSelectedCartItem] = useState(null);
-
-  const handleOpenPopup = (cartItemId) => {
-    setSelectedCartItem(cartItemId);
+  const handleCloseConfirmModal = () => {
+    setShowConfirmModal(false);
+    setItemToRemove(null);
   };
 
-  const handleClosePopup = () => {
-    setSelectedCartItem(null);
+  const handleOpenUpdateQuantityPopup = (cartItemId) => {
+    setShowUpdateQuantityPopup(true);
+    setItemToUpdate(cartItemId);
+  };
+
+  const handleCloseUpdateQuantityPopup = () => {
+    setShowUpdateQuantityPopup(false);
+    setItemToUpdate(null);
+  };
+
+  const confirmRemove = () => {
+    dispatch(removeFromCart(itemToRemove));
+    handleCloseConfirmModal();
+  };
+
+  const comingSoon = () => {
+    onclick = alert("Feature coming soon!");
   };
 
   if (isLoading) {
@@ -52,37 +73,38 @@ function Cart() {
       <h2>Cart</h2>
       <ul>
         {cartItems.map((cartItem) => (
-          <li key={cartItem.id}>
-            <div>
-              {cartItem.product ? (
-                <Link to={`/products/${cartItem.product.id}`}>
-                  <img
-                    src={cartItem.product.imageUrl}
-                    alt={cartItem.product.name}
-                  />
-                </Link>
-              ) : (
-                <p>Loading product data...</p>
-              )}
-              {cartItem.product ? (
-                <div>
-                  <p>
-                    {cartItem.product.name} - ${Number(cartItem.product.price).toFixed(2)} - Quantity: {cartItem.quantity} - Total: ${(cartItem.product.price * cartItem.quantity).toFixed(2)}
-                  </p>
-                </div>
-              ) : (
-                <p>Loading product data...</p>
-              )}
-              <button onClick={() => handleRemoveFromCart(cartItem.id)}>
-                Remove
-              </button>
-              <button onClick={() => handleOpenPopup(cartItem.id)}>
-                Update Quantity
-              </button>
-              {selectedCartItem === cartItem.id && (
-                <QuantityPopup cartItemId={cartItem.id} onClose={handleClosePopup} />
-              )}
+          <li key={cartItem.id} className="cart-item">
+            <div className="product-details">
+              <Link to={`/products/${cartItem.product.id}`}>
+                <img
+                  src={cartItem.product.imageUrl}
+                  alt={cartItem.product.name}
+                  className="product-image"
+                />
+              </Link>
+              <div>
+                <p className="product-name">{cartItem.product.name}</p>
+                <p className="product-description">{cartItem.product.description}</p>
+                <p className="product-price">Price: ${Number(cartItem.product.price).toFixed(2)}</p>
+                <p className="product-quantity">Quantity: {cartItem.quantity}</p>
+              </div>
             </div>
+            <div className="product-actions">
+              <p className="total-price">Total: ${(cartItem.product.price * cartItem.quantity).toFixed(2)}</p>
+              <button className="update-quantity-button" onClick={() => handleOpenUpdateQuantityPopup(cartItem.id)}>Update Quantity</button>
+              <button className="remove-button" onClick={() => handleOpenConfirmModal(cartItem.id)}>Remove</button>
+              <button onClick={comingSoon} className="review-button">Review</button>
+            </div>
+            {showConfirmModal && (
+              <div className="confirm-modal">
+                <p>Are you sure you want to remove this item?</p>
+                <button onClick={confirmRemove}>Yes</button>
+                <button onClick={handleCloseConfirmModal}>No</button>
+              </div>
+            )}
+            {showUpdateQuantityPopup && itemToUpdate === cartItem.id && (
+              <QuantityPopup cartItemId={itemToUpdate} onClose={handleCloseUpdateQuantityPopup} />
+            )}
           </li>
         ))}
       </ul>

@@ -5,27 +5,24 @@ import { updateCartItemQuantity } from "../../store/cart";
 import { fetchCartItems } from "../../store/cart";
 
 function QuantityPopup({ cartItemId, onClose }) {
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const refreshPage = () => {
-    history.push("/cart");
-    window.location.reload();
-  };
 
   const handleUpdateQuantity = async () => {
     try {
       await dispatch(updateCartItemQuantity(cartItemId, quantity));
       await dispatch(fetchCartItems());
-      refreshPage();
       onClose();
+      // history.push("/cart");
+      window.location.reload();
     } catch (error) {
       console.error('Error updating quantity:', error);
       setErrorMessage('An error occurred while updating the quantity.');
     }
-};
+  };
+
 
 
   return (

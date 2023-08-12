@@ -1,1 +1,55 @@
+/* ProductPage.css */
 
+.product-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+    gap: 20px;
+}
+
+.product-page__image-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 512px;
+    min-width: 300px; /* This will make sure the image scales down if there's less space. */
+}
+
+.product-page__image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-page__center {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-page__right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.product-page__right p {
+    color: green;
+    font-weight: bold;
+}
+
+.product-page__right button {
+    background-color: yellow;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.product-page__right button:hover {
+    background-color: #e5e500;
+}

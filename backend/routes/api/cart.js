@@ -66,19 +66,26 @@ router.put('/:cartItemId', asyncHandler(async (req, res) => {
   const { cartItemId } = req.params;
   const { quantity } = req.body;
 
-  try {
-    const cartItem = await Cart.findByPk(cartItemId);
+  const cartItem = await Cart.findByPk(cartItemId);
 
-    if (cartItem) {
-      cartItem.quantity = quantity;
-      await cartItem.save();
-      res.json(cartItem);
-    } else {
-      res.status(404).json({ message: 'Cart item not found' });
-    }
-  } catch (error) {
-    console.error('Error updating cart item:', error);
-    res.status(500).json({ message: 'An error occurred while updating the cart item' });
+  if (cartItem) {
+    cartItem.quantity = quantity;
+    await cartItem.save();
+
+    //updated cart items
+    const updatedCartItems = await Cart.findAll({
+      where: {
+        userId: cartItem.userId,
+      },
+      include: {
+        model: Product,
+        as: 'product',
+      },
+    });
+
+    res.json(updatedCartItems);
+  } else {
+    res.status(404).json({ message: 'Cart item not found' });
   }
 }));
 

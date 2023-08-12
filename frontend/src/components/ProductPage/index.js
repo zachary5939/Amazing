@@ -37,33 +37,38 @@ function ProductPage() {
 
   return (
     <div className="product-page">
-      <div className="product-page__image-container">
-        <h2>{product.name}</h2>
-        <img src={product.imageUrl} alt={product.name} />
-        <p>{product.description}</p>
-        <p>Price: ${product.price}</p>
-        <div>
-          <label htmlFor="quantity">Quantity:</label>
-          <select
-            id="quantity"
-            value={quantity}
-            onChange={handleQuantityChange}
-          >
-            {[...Array(10).keys()].map((num) => (
-              <option key={num + 1} value={num + 1}>
-                {num + 1}
-              </option>
-            ))}
-          </select>
+        <div className="product-page__image-container">
+            <img src={product.imageUrl} alt={product.name} />
         </div>
-        {user ? (
-          <button onClick={handleAddToCart}>Add to Cart</button>
-        ) : (
-          <button disabled>Please login to add to cart</button>
-        )}
-      </div>
+
+        <div className="product-page__center">
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+            <p>Price: ${product.price}</p>
+            {/* Add reviews here when you have them */}
+        </div>
+
+        <div className="product-page__right">
+            <p>Price: ${product.price}</p>
+            <p>In stock</p>
+            <div>
+                <label htmlFor="quantity">Quantity:</label>
+                <select id="quantity" value={quantity} onChange={handleQuantityChange}>
+                    {[...Array(10).keys()].map((num) => (
+                        <option key={num + 1} value={num + 1}>
+                            {num + 1}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            {user ? (
+                <button onClick={handleAddToCart}>Buy Now</button>
+            ) : (
+                <button disabled>Please login to purchase</button>
+            )}
+        </div>
     </div>
-  );
+);
 }
 
 export default ProductPage;
