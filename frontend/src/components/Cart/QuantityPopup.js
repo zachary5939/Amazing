@@ -1,27 +1,25 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useDispatch } from "react-redux";
-import { updateCartItemQuantity } from "../../store/cart";
-import { fetchCartItems } from "../../store/cart";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCartItemQuantity, fetchCartItems } from "../../store/cart";
+import * as sessionActions from "../../store/session";
 
 function QuantityPopup({ cartItemId, onClose }) {
-  // const history = useHistory();
-  const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
-  const [errorMessage, setErrorMessage] = useState(null);
+    const dispatch = useDispatch();
+    const userId = useSelector(state => state.session.userId); // Fetch the userId from Redux state.
 
-  const handleUpdateQuantity = async () => {
-    try {
-      await dispatch(updateCartItemQuantity(cartItemId, quantity));
-      await dispatch(fetchCartItems());
-      onClose();
-      // history.push("/cart");
-      window.location.reload();
-    } catch (error) {
-      console.error('Error updating quantity:', error);
-      setErrorMessage('An error occurred while updating the quantity.');
-    }
-  };
+    const [quantity, setQuantity] = useState(1);
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    const handleUpdateQuantity = async () => {
+        try {
+            await dispatch(updateCartItemQuantity(cartItemId, quantity));
+            await dispatch(fetchCartItems(userId));  // Use the userId here
+            onClose();
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+            setErrorMessage('An error occurred while updating the quantity.');
+        }
+    };
 
 
 

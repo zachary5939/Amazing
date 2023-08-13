@@ -30,9 +30,13 @@ export const removeFromCartSuccess = (cartItemId) => ({
 });
 
 export const fetchCartItems = (userId) => async (dispatch) => {
+  if (!userId) {
+    console.error('UserId is missing for fetching cart items');
+    return;
+}
   try {
     const response = await csrfFetch(`/api/cart?userId=${userId}`);
-    const cartData = await response.json(); // Assume the response contains both cart items and product data
+    const cartData = await response.json();
     dispatch(fetchCartItemsSuccess(cartData));
   } catch (error) {
     console.error('Error fetching cart items:', error);
@@ -55,10 +59,9 @@ export const addToCart = (userId, productId, quantity) => async (dispatch) => {
     }
 
     const cartItem = await response.json();
-    dispatch(addToCartSuccess(cartItem));
 
     // Fetch updated cart items after adding to cart
-    dispatch(fetchCartItems(userId));
+    dispatch(addToCartSuccess(cartItem));
   } catch (error) {
     console.error('Error adding to cart:', error);
   }
@@ -119,23 +122,17 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: [...state.items, action.payload],
       };
-    case UPDATE_CART_ITEM_SUCCESS: {
-      const updatedCartItem = action.payload;
-      const updatedItems = state.items.map((item) =>
-        item.id === updatedCartItem.id ? updatedCartItem : item
-      );
+      case UPDATE_CART_ITEM_SUCCESS: {
+        const updatedCartItem = action.payload;
+        const updatedItems = state.items.map((item) =>
+          item.id === updatedCartItem.id ? updatedCartItem : item
+        );
+        return {
+          ...state,
+          items: updatedItems,
+        };
+      }
 
-      updatedItems.forEach((item) => {
-        if (item.product) {
-          item.product.price = parseFloat(item.product.price);
-        }
-      });
-
-      return {
-        ...state,
-        items: updatedItems,
-      };
-    }
     case REMOVE_FROM_CART_SUCCESS:
       return {
         ...state,

@@ -1,7 +1,6 @@
-// routes/cart.js
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const { Cart, Product} = require('../../db/models');
+const { Cart, Product } = require('../../db/models');
 
 const router = express.Router();
 
@@ -10,13 +9,13 @@ router.get('/', asyncHandler(async (req, res) => {
   const { userId } = req.query;
 
   const cartItems = await Cart.findAll({
-      where: {
-          userId,
-      },
-      include: {
-          model: Product,
-          as: 'product',
-      },
+    where: {
+        userId,
+    },
+    include: {
+        model: Product,
+        as: 'product',
+    },
   });
 
   res.json(cartItems);
@@ -34,10 +33,17 @@ router.post('/', asyncHandler(async (req, res) => {
   });
 
   if (cartItem) {
+    const newQuantity = cartItem.quantity + quantity;
+    if (newQuantity > 10) {
+      return res.status(400).json({ error: 'Exceeded maximum quantity' });
+    }
 
-    cartItem.quantity += quantity;
+    cartItem.quantity = newQuantity;
     await cartItem.save();
   } else {
+    if (quantity > 10) {
+      return res.status(400).json({ error: 'Exceeded maximum quantity' });
+    }
 
     cartItem = await Cart.create({
       userId,
@@ -45,7 +51,6 @@ router.post('/', asyncHandler(async (req, res) => {
       quantity,
     });
   }
-
 
   const updatedCartItems = await Cart.findAll({
     where: {
@@ -60,11 +65,14 @@ router.post('/', asyncHandler(async (req, res) => {
   res.json(updatedCartItems);
 }));
 
-
 // Update cart item quantity
 router.put('/:cartItemId', asyncHandler(async (req, res) => {
   const { cartItemId } = req.params;
   const { quantity } = req.body;
+
+  if (quantity < 1 || quantity > 10) {
+    return res.status(400).json({ error: 'Invalid quantity' });
+  }
 
   const cartItem = await Cart.findByPk(cartItemId);
 
@@ -72,10 +80,9 @@ router.put('/:cartItemId', asyncHandler(async (req, res) => {
     cartItem.quantity = quantity;
     await cartItem.save();
 
-    //updated cart items
     const updatedCartItems = await Cart.findAll({
       where: {
-        userId: cartItem.userId,
+        userId: cartItem.userId
       },
       include: {
         model: Product,
@@ -89,21 +96,18 @@ router.put('/:cartItemId', asyncHandler(async (req, res) => {
   }
 }));
 
-
 // Remove item from cart
 router.delete('/:cartItemId', asyncHandler(async (req, res) => {
-    const { cartItemId } = req.params;
+  const { cartItemId } = req.params;
 
-    const cartItem = await Cart.findByPk(cartItemId);
+  const cartItem = await Cart.findByPk(cartItemId);
 
-    if (cartItem) {
-      await cartItem.destroy();
-      res.status(204).end();
-    } else {
-      res.status(404).json({ message: 'Cart item not found' });
-    }
-  }));
-
-
+  if (cartItem) {
+    await cartItem.destroy();
+    res.status(204).end();
+  } else {
+    res.status(404).json({ message: 'Cart item not found' });
+  }
+}));
 
 module.exports = router;
