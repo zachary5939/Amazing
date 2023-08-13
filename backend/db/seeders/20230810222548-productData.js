@@ -15,7 +15,7 @@ module.exports = {
       [
         {
           name: "MacBook Pro 14 inch Laptop",
-          description: "Powerful laptop for all your computing needs",
+          description: "Lorem Ipsum",
           imageUrl:
             "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
           price: 999.99,
@@ -23,7 +23,7 @@ module.exports = {
         },
         {
           name: "Nintendo Switch OLED Model",
-          description: "Play games at home or on the go.",
+          description: "Lorem Ipsum",
           imageUrl:
             "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
           price: 349.99,
@@ -31,7 +31,7 @@ module.exports = {
         },
         {
           name: "PlayStation 5",
-          description: "Experience the next generation in Video Games.",
+          description: "Lorem Ipsum",
           imageUrl:
             "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
           price: 499.99,
@@ -39,14 +39,14 @@ module.exports = {
         },
         {
           name: "The Legend of Zelda: Tears of the Kingdom",
-          description: "Possibly one of the best Video Games of all time.",
+          description: "Lorem Ipsum",
           imageUrl: "https://i.redd.it/5272xct5rnn91.jpg",
           price: 69.99,
           categoryId: 2,
         },
         {
           name: "The Super Mario Bros. Movie",
-          description: "The biggest worldwide openings for an animated film.",
+          description: "Lorem Ipsum",
           imageUrl:
             "https://m.media-amazon.com/images/I/71zadW47V2L._AC_UF894,1000_QL80_.jpg",
           price: 29.99,

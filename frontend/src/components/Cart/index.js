@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems, updateCartItemQuantity, removeFromCart } from "../../store/cart";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import QuantityPopup from "./QuantityPopup";
 import logo from "../../img/amazinglogoblack.png";
 import "./cart.css";
 
@@ -28,6 +27,7 @@ function Cart() {
   const [showUpdateQuantityPopup, setShowUpdateQuantityPopup] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState(null);
   const [updateQuantities, setUpdateQuantities] = useState({});
+
   const grandTotal = cartItems.reduce((acc, item) => {
     if (item && item.product) {
       return acc + item.product.price * item.quantity;
@@ -178,9 +178,9 @@ function Cart() {
                   </div>
                   {showConfirmModal && (
                       <div className="cartComp-confirm-modal">
-                          <p>Are you sure you want to remove this item?</p>
-                          <button onClick={confirmRemove}>Yes</button>
-                          <button onClick={handleCloseConfirmModal}>No</button>
+                          <p className="delete-text">Are you sure you want to remove this item?</p>
+                          <button className="delete-button" onClick={confirmRemove}>Yes</button>
+                          <button className="delete-button" onClick={handleCloseConfirmModal}>No</button>
                       </div>
                   )}
               </li>

@@ -66,7 +66,7 @@ function Navigation({ isLoaded }) {
         </ul>
       </nav>
       <div className="nav-categories-container">
-        <NavLink to="/products">All products</NavLink>
+        <NavLink to="/products">All Products</NavLink>
         <NavLink to="/products/category/1">Electronics</NavLink>
         <NavLink to="/products/category/2">Entertainment</NavLink>
         <NavLink to="/products/category/3">Home Goods</NavLink>

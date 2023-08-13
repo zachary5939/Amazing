@@ -19,7 +19,7 @@ function LandingPage() {
         <div className="home-container">
             <div className="splash-screen">
                 <img src={logo} alt="Amazing Logo" className="logo-image2" />
-                <h1 className="product-title">The all new Echo Show</h1>
+                <h1 className="product-title">There will be a landing page eventually</h1>
             </div>
             <div className="product-container">
                 <div className="square" onClick={() => handleProductClick(1)}>

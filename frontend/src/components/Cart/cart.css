@@ -81,6 +81,11 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.cartComp-complete-purchase-button:hover {
+    box-shadow:0px 0px 3px 0px #000000;
 }
 
 .cartComp-info-container {
@@ -113,4 +118,36 @@
 .cartComp-plz-login {
     font-size: 22px;
     font-weight: 700;
+}
+
+.cartComp-confirm-modal {
+    background-color: rgb(166, 165, 165);
+    border-radius: 8px;
+    box-shadow:-1px 8px 25px -19px #000000;
+}
+
+.delete-text {
+    color: white;
+}
+
+.delete-button {
+    background-color: #fddd4e;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out;
+    border: none;
+}
+
+.delete-button:hover {
+    box-shadow:0px 0px 5px 0px #000000;
+}
+
+.cartComp-cart ul .delete-button{
+ flex-direction:row;
+ display:inline-flex;
+ align-items:center;
+ margin-left:53px;
+ padding-left:25px;
+ padding-right:29px;
 }

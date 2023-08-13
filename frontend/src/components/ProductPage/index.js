@@ -1,12 +1,10 @@
 import "./ProductPage.css";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { fetchProductById } from "../../store/products";
-import { fetchCartItems } from "../../store/cart";
-import { addToCart } from "../../store/cart";
-//TODO: Add reviews here when you have them
-//TODO:FIX SOLD OUT BUG
+import { fetchCartItems, addToCart } from "../../store/cart";
+
 function ProductPage() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.productById);
@@ -23,19 +21,26 @@ function ProductPage() {
     }
   }, [dispatch, productId, user]);
 
-  const notLoggedIn = () => {
-    history.push("/login");
-  };
+  //The useMemo hook only runs when one of its dependencies update.
+  //https://legacy.reactjs.org/docs/hooks-reference.html#usememo
 
-  const productQuantityInCart =
-  cartItems.find((item) => item.productId === parseInt(productId))?.quantity || 0;
-  const isProductSoldOut = productQuantityInCart >= 10;
-  const maxQuantityToAdd = 10 - productQuantityInCart;
+  const productQuantityInCart = useMemo(() => {
+    return cartItems.find((item) => item.productId === parseInt(productId))?.quantity || 0;
+  }, [cartItems, productId]);
+
+  const isProductSoldOut = useMemo(() => {
+    return productQuantityInCart >= 10;
+  }, [productQuantityInCart]);
+
+  const maxQuantityToAdd = useMemo(() => {
+    return 10 - productQuantityInCart;
+  }, [productQuantityInCart]);
 
   const handleAddToCart = async () => {
     try {
       await dispatch(addToCart(user.id, product.id, quantity));
       alert("Successfully added to cart");
+      dispatch(fetchCartItems(user.id));
     } catch (error) {
       alert("Failed to add to cart");
     }
@@ -44,6 +49,10 @@ function ProductPage() {
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value);
     setQuantity(newQuantity);
+  };
+
+  const notLoggedIn = () => {
+    history.push("/login");
   };
 
   if (!product) {
@@ -62,7 +71,7 @@ function ProductPage() {
         <h2>{product.name}</h2>
         <p>{product.description}</p>
         <p>MSRP: ${product.price}</p>
-        {/* Add reviews here when you have them */}
+        <p>Reviews coming soon. Average rating here.</p>
       </div>
 
       <div className="product-page__right">
