@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import  { useHistory }from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -6,6 +7,7 @@ import logo from "../../img/amazinglogoblack.png";
 import "./SignupForm.css";
 
 function SignupFormPage() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -29,7 +31,10 @@ function SignupFormPage() {
           password,
         })
       )
-        .then(closeModal)
+        .then(() => {
+          closeModal();
+          history.push("/");
+        })
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
@@ -42,6 +47,7 @@ function SignupFormPage() {
         "Confirm Password field must be the same as the Password field",
     });
   };
+
 
   return (
 <>
