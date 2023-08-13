@@ -16,6 +16,8 @@ function Cart() {
   const [itemToRemove, setItemToRemove] = useState(null);
   const [showUpdateQuantityPopup, setShowUpdateQuantityPopup] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState(null);
+  const grandTotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+
 
   useEffect(() => {
     if (sessionUser) {
@@ -108,6 +110,7 @@ function Cart() {
           </li>
         ))}
     </ul>
+    <p className="grand-total">Grand Total: ${grandTotal.toFixed(2)}</p>
       <button className="complete-purchase-button" onClick={comingSoon}>Complete Purchase</button>
     </div>
   );
