@@ -6,18 +6,18 @@ import { Link } from 'react-router-dom';
 
 function Products() {
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products);
+    const products = useSelector((state) => state.products.allProducts);
     const { categoryId } = useParams();
-    const normalizedProducts =
-      products && products.allProducts ? Object.values(products.allProducts) : [];
 
-    console.log("normalizedProducts:", normalizedProducts)
-    console.log("state", products)
+    // Check if we have any products
+    const normalizedProducts = Object.values(products || {});
 
     useEffect(() => {
         if (categoryId) {
             dispatch(productActions.fetchProductsByCategory(categoryId));
         } else {
+            // If there's no categoryId specified, fetch all products
+            // The search results would have already been loaded into the state by the Navigation component
             dispatch(productActions.fetchAllProducts());
         }
     }, [dispatch, categoryId]);
@@ -44,7 +44,7 @@ function Products() {
             ))}
           </ul>
         </div>
-      );
-    }
+    );
+}
 
 export default Products;

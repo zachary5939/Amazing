@@ -34,6 +34,30 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/search', async (req, res) => {
+  const searchQuery = req.query.name;
+
+  try {
+    const products = await Product.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${searchQuery}%`
+        }
+      }
+    });
+
+    if (!products.length) {
+      return res.status(404).json({ error: 'No products found' });
+    }
+
+    res.json(products);
+  } catch (error) {
+    console.error('Error searching products:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 //get products by category
 router.get("/category/:categoryId", async (req, res, next) => {
   const categoryId = req.params.categoryId;

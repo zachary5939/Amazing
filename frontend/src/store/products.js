@@ -5,6 +5,7 @@ import { csrfFetch } from "./csrf";
 // Action Types
 const FETCH_ALL_PRODUCTS_SUCCESS = 'products/FETCH_PRODUCTS_SUCCESS';
 const FETCH_PRODUCT_SUCCESS = 'products/FETCH_PRODUCT_SUCCESS';
+const SEARCH_RESULTS = "products/SEARCH_RESULTS";
 
 // Action Creators
 const fetchProductsSuccess = (products) => ({
@@ -17,6 +18,20 @@ const fetchProductSuccess = (product) => ({
   payload: product,
 });
 
+export const setSearchResults = (results) => ({
+  type: SEARCH_RESULTS,
+  payload: results,
+});
+
+export const searchProductsByName = (name, history) => async (dispatch) => {
+  const response = await fetch(`/api/products/search?name=${name}`);
+
+  if (response.ok) {
+    const products = await response.json();
+    dispatch(setSearchResults(products));
+    history.push('/products');
+  }
+};
 
 export const fetchAllProducts = () => async (dispatch) => {
   try {
@@ -69,6 +84,12 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         productById: action.payload,
       };
+      case SEARCH_RESULTS:
+        const productsObj = action.payload.reduce((acc, product) => {
+          acc[product.id] = product;
+          return acc;
+        }, {});
+        return { ...state, allProducts: productsObj };
     default:
       return state;
   }

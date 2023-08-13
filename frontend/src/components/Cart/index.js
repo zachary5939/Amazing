@@ -7,8 +7,8 @@ import "./cart.css";
 
 function Cart() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
   const cartItems = useSelector((state) => state.cart.items).sort((a, b) => a.product.name.localeCompare(b.product.name));
-  const user = useSelector((state) => state.session.user);
   const isLoading = useSelector((state) => state.cart.isLoading);
   const error = useSelector((state) => state.cart.error);
 
@@ -18,10 +18,10 @@ function Cart() {
   const [itemToUpdate, setItemToUpdate] = useState(null);
 
   useEffect(() => {
-    if (user) {
-      dispatch(fetchCartItems(user.id));
+    if (sessionUser) {
+      dispatch(fetchCartItems(sessionUser.id));
     }
-  }, [dispatch, user]);
+  }, [dispatch, sessionUser]);
 
   const handleOpenConfirmModal = (cartItemId) => {
     setShowConfirmModal(true);
@@ -49,7 +49,7 @@ function Cart() {
   };
 
   const comingSoon = () => {
-    onclick = alert("Feature coming soon!");
+    alert("Feature coming soon!");
   };
 
   if (isLoading) {
@@ -60,7 +60,7 @@ function Cart() {
     return <div>Error: {error.message}</div>;
   }
 
-  if (!user) {
+  if (!sessionUser) {
     return <div>Please log in to view your cart.</div>;
   }
 
@@ -70,7 +70,7 @@ function Cart() {
 
   return (
     <div className="cart">
-      <h2>Cart</h2>
+      <h2>{sessionUser.firstName}'s Cart</h2>
       <ul>
         {cartItems.map((cartItem) => (
           <li key={cartItem.id} className="cart-item">
@@ -107,7 +107,8 @@ function Cart() {
             )}
           </li>
         ))}
-      </ul>
+    </ul>
+      <button className="complete-purchase-button" onClick={comingSoon}>Complete Purchase</button>
     </div>
   );
 }

@@ -1,6 +1,9 @@
 .cart {
     padding: 20px;
 }
+#root .cart h2{
+    font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;
+   }
 
 .cart-item {
     display: flex;
@@ -67,4 +70,18 @@
 
 .error-message {
     color: red;
+}
+
+.complete-purchase-button {
+    background-color: yellow;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: flex;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
 }

@@ -1,14 +1,28 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 import ProfileButton from './ProfileButton';
 import logo from "../../img/amazinglogo.png";
 import * as sessionActions from '../../store/session';
+import { searchProductsByName } from "../../store/products";
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const comingSoon = () => {
+    alert("Coming soon!");
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      dispatch(searchProductsByName(searchTerm, history));
+    }
+  };
 
   const logout = (e) => {
     e.preventDefault();
@@ -41,7 +55,15 @@ function Navigation({ isLoaded }) {
           </NavLink>
         </li>
         <li>
-          <input type="text" placeholder="Search..." className="search-bar" />
+          <input
+            type="text"
+            placeholder="Search coming soon..."
+            className="search-bar"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+          />
+          <button onClick={comingSoon} className="search-button">Search</button>
         </li>
         {isLoaded && sessionLinks}
         <li>
