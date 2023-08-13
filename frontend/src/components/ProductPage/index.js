@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchProductById } from "../../store/products";
 import { addToCart } from "../../store/cart";
-
+//TODO: Add reviews here when you have them
+//TODO:FIX SOLD OUT BUG
 function ProductPage() {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.productById);
@@ -12,6 +13,7 @@ function ProductPage() {
     const [quantity, setQuantity] = useState(1);
     const user = useSelector((state) => state.session.user);
     const history = useHistory();
+    const cartItems = useSelector((state) => state.cart.items);
 
     useEffect(() => {
         dispatch(fetchProductById(productId));
@@ -20,6 +22,10 @@ function ProductPage() {
     const notLoggedIn = () => {
         history.push("/login");
     };
+
+    const productInCartQuantity = cartItems.find(item => item.productId === product.id)?.quantity || 0;
+
+    const isProductSoldOut = productInCartQuantity >= 10;
 
     const handleAddToCart = async () => {
         try {
@@ -56,7 +62,7 @@ function ProductPage() {
 
             <div className="product-page__right">
                 <p>Total Price: ${totalPrice}</p>
-                <p>In stock</p>
+                <p>{isProductSoldOut ? 'Sold out' : 'In stock'}</p>
                 <div>
                     <label htmlFor="quantity">Quantity:</label>
                     <select id="quantity" value={quantity} onChange={handleQuantityChange}>
@@ -68,6 +74,8 @@ function ProductPage() {
                     </select>
                 </div>
                 {user ? (
+                    isProductSoldOut ?
+                    <button disabled>Out of stock</button> :
                     <button onClick={handleAddToCart}>Buy Now</button>
                 ) : (
                     <button onClick={notLoggedIn}>Please login to purchase</button>
