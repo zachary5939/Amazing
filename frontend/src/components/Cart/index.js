@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems, removeFromCart } from "../../store/cart";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import QuantityPopup from "./QuantityPopup";
+import logo from "../../img/amazinglogoblack.png";
 import "./cart.css";
 
 function Cart() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const cartItems = useSelector((state) => state.cart.items).sort((a, b) => a.product.name.localeCompare(b.product.name));
   const isLoading = useSelector((state) => state.cart.isLoading);
@@ -24,6 +27,7 @@ function Cart() {
       dispatch(fetchCartItems(sessionUser.id));
     }
   }, [dispatch, sessionUser]);
+
 
   const handleOpenConfirmModal = (cartItemId) => {
     setShowConfirmModal(true);
@@ -54,6 +58,10 @@ function Cart() {
     alert("Feature coming soon!");
   };
 
+  const loginPlease = () => {
+    history.push("/login");
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -62,13 +70,32 @@ function Cart() {
     return <div>Error: {error.message}</div>;
   }
 
-  if (!sessionUser) {
-    return <div>Please log in to view your cart.</div>;
-  }
 
-  if (!cartItems || cartItems.length === 0) {
-    return <div>Your cart is empty.</div>;
-  }
+  if (!sessionUser) {
+    return (
+        <div className="info-container">
+            <p className="plz-login" >Please sign in to view your cart.</p>
+            <img src={logo} alt="Amazing Logo" className="website-logo" />
+            <Link to="/login">
+                <button className="login-button">Login to view cart</button>
+            </Link>
+        </div>
+    );
+}
+
+if (!cartItems || cartItems.length === 0) {
+    return (
+        <div className="info-container">
+            <p className="plz-login">{sessionUser.firstName}, your cart is empty!</p>
+            <img src={logo} alt="Amazing Logo" className="website-logo" />
+            <Link to="/products">
+                <button className="login-button">View All Products!</button>
+            </Link>
+        </div>
+    );
+}
+
+
 
   return (
     <div className="cart">

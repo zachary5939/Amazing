@@ -8,17 +8,17 @@ function ProfileButton({ user }) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const containerRef = useRef(); // Ref for the entire container
 
   const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
+    setShowMenu(prev => !prev);
   };
 
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -38,30 +38,32 @@ function ProfileButton({ user }) {
     history.push("/orders");
   };
 
+  const comingSoon = () => {
+    alert("Coming soon!");
+  };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
-      <div className="account-info">
-        <div className="open-menu">
-          <div className="open-menu-text" onClick={openMenu}>
-            <p>Hello, {user.firstName}</p>
-            <p>Account & Lists</p>
-          </div>
+    <div className="account-info" ref={containerRef}>
+      <div className="open-menu-text" onClick={openMenu}>
+        <div className="text-decorating">
+        <p>Hello, {user.firstName}</p>
+        <p>Account & Lists</p>
         </div>
-        <ul className={ulClassName} ref={ulRef}>
-          <li>{user.username}</li>
-          <li>{user.firstName} {user.lastName}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={viewOrders}>View orders</button>
-          </li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
       </div>
-    </>
+      <ul className={ulClassName} ref={ulRef}>
+        <li>{user.username}</li>
+        <li>{user.firstName} {user.lastName}</li>
+        <li>{user.email}</li>
+        <li>
+          <button onClick={comingSoon}>View orders</button>
+        </li>
+        <li>
+          <button onClick={logout}>Log Out</button>
+        </li>
+      </ul>
+    </div>
   );
 }
 

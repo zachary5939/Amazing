@@ -31,12 +31,7 @@ function Navigation({ isLoaded }) {
 
   let sessionLinks;
   if (sessionUser) {
-    sessionLinks = (
-      <li>
-        <NavLink to="/orders">Orders</NavLink>
-        <ProfileButton user={sessionUser} />
-      </li>
-    );
+    sessionLinks = <ProfileButton user={sessionUser} />;
   } else {
     sessionLinks = (
       <li className="login-item">
@@ -46,34 +41,41 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <nav className="navbar">
-      <ul className="nav-list">
-        <li>
-          <div className='logo-container'></div>
-          <NavLink exact to="/">
-            <img src={logo} alt="Amazing Logo" className="logo-image" />
-          </NavLink>
-        </li>
-        <li>
-          <input
-            type="text"
-            placeholder="Search coming soon..."
-            className="search-bar"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-          />
-          <button onClick={comingSoon} className="search-button">Search</button>
-        </li>
-        {isLoaded && sessionLinks}
-        <li>
-          <NavLink to="/cart">
-            <i className="fa-solid fa-cart-shopping"></i>
-          </NavLink>
-        </li>
-      </ul>
-    </nav>
+    <>
+      <nav className="navbar">
+        <ul className="nav-list">
+          <li>
+            <NavLink exact to="/">
+              <img src={logo} alt="Amazing Logo" className="logo-image" />
+            </NavLink>
+          </li>
+          <li className="search-container">
+            <input
+              type="text"
+              placeholder="Search coming soon..."
+              className="search-bar"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            />
+            <button onClick={comingSoon} className="search-button">Search</button>
+          </li>
+          {isLoaded && <li>{sessionLinks}</li>}
+          <li>
+            <NavLink to="/cart">
+              <i className="fa-solid fa-cart-shopping"></i>
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+      <div className="categories-container">
+        <NavLink to="/products">All products</NavLink>
+        <NavLink to="/products/category/1">Electronics</NavLink>
+        <NavLink to="/products/category/2">Entertainment</NavLink>
+        <NavLink to="/products/category/3">Home</NavLink>
+        <NavLink to="/products/category/4">Grocery</NavLink>
+      </div>
+    </>
   );
 }
-
 export default Navigation;

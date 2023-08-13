@@ -1,5 +1,5 @@
 import "./ProductPage.css";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchProductById } from "../../store/products";
@@ -11,10 +11,15 @@ function ProductPage() {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const user = useSelector((state) => state.session.user);
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(fetchProductById(productId));
     }, [dispatch, productId]);
+
+    const notLoggedIn = () => {
+        history.push("/login");
+    };
 
     const handleAddToCart = async () => {
         try {
@@ -65,7 +70,7 @@ function ProductPage() {
                 {user ? (
                     <button onClick={handleAddToCart}>Buy Now</button>
                 ) : (
-                    <button disabled>Please login to purchase</button>
+                    <button onClick={notLoggedIn}>Please login to purchase</button>
                 )}
             </div>
         </div>

@@ -18,7 +18,7 @@ function LandingPage() {
     return (
         <div className="home-container">
             <div className="splash-screen">
-                <img src={logo} alt="Amazing Logo" className="logo-image" />
+                <img src={logo} alt="Amazing Logo" className="logo-image2" />
                 <h1 className="product-title">The all new Echo Show</h1>
             </div>
             <div className="product-container">

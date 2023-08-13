@@ -46,7 +46,7 @@
 .update-quantity-button,
 .remove-button,
 .review-button {
-    background-color: yellow;
+    background-color: #fddd4e;
     border: none;
     margin: 5px 0;
     padding: 5px 10px;
@@ -87,7 +87,7 @@
 }
 
 .complete-purchase-button {
-    background-color: yellow;
+    background-color: #fddd4e;
     border: none;
     padding: 10px 20px;
     margin-top: 20px;
@@ -98,3 +98,71 @@
     align-items: center;
     text-align: center;
 }
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    gap: 20px;
+}
+
+.website-logo {
+    max-width: 500px;
+    height: auto;
+}
+
+.login-button {
+    background-color: #fddd4e;
+    border: none;
+    margin-top: 30px;
+    padding: 10px 20px;
+    padding-left:56px;
+    padding-right:62px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.plz-login {
+    font-size:22px;
+    font-weight:700;
+}
+
+/* ... Previous CSS ... */
+
+/* Make all text color white in the navbar */
+.navbar a, .navbar .fa-solid {
+    color: white !important;
+  }
+
+  .navbar .search-bar, .navbar .search-button {
+    margin: 0 10px;  /* Spacing between search bar and button */
+  }
+
+  .search-container {
+    flex: 1;  /* This will allow search bar to take all available space */
+  }
+
+  .login-item a:hover, .categories-container a:hover {
+    text-decoration: underline;
+  }
+
+  /* To handle even spacing for the navbar items */
+  .nav-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;  /* Full width */
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: start;
+  }
+
+  /* ... Rest of the CSS ... */
