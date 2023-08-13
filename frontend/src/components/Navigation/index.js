@@ -1,15 +1,15 @@
-import React from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-import ProfileButton from './ProfileButton';
+import React from "react";
+import { NavLink, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import ProfileButton from "./ProfileButton";
 import logo from "../../img/amazinglogo.png";
-import * as sessionActions from '../../store/session';
+import * as sessionActions from "../../store/session";
 import { searchProductsByName } from "../../store/products";
-import './Navigation.css';
+import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,7 +34,7 @@ function Navigation({ isLoaded }) {
     sessionLinks = <ProfileButton user={sessionUser} />;
   } else {
     sessionLinks = (
-      <li className="login-item">
+      <li className="nav-login-item">
         <NavLink to="/login">Hello, sign in</NavLink>
       </li>
     );
@@ -42,23 +42,25 @@ function Navigation({ isLoaded }) {
 
   return (
     <>
-      <nav className="navbar">
+      <nav className="nav-bar">
         <ul className="nav-list">
           <li>
             <NavLink exact to="/">
               <img src={logo} alt="Amazing Logo" className="logo-image" />
             </NavLink>
           </li>
-          <li className="search-container">
+          <li className="nav-search-container">
             <input
               type="text"
               placeholder="Search coming soon..."
-              className="search-bar"
+              className="nav-search-bar"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             />
-            <button onClick={comingSoon} className="search-button">Search</button>
+            <button onClick={comingSoon} className="nav-search-button">
+              Search
+            </button>
           </li>
           {isLoaded && <li>{sessionLinks}</li>}
           <li>
@@ -68,7 +70,7 @@ function Navigation({ isLoaded }) {
           </li>
         </ul>
       </nav>
-      <div className="categories-container">
+      <div className="nav-categories-container">
         <NavLink to="/products">All products</NavLink>
         <NavLink to="/products/category/1">Electronics</NavLink>
         <NavLink to="/products/category/2">Entertainment</NavLink>

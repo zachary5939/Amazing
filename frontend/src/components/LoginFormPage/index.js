@@ -54,13 +54,13 @@ function LoginFormPage() {
   };
 
   return (
-    <div className="container">
-      <div className="logo-container">
-        <img src={logo} alt="Amazing Logo" className="logo-image" />
+    <div className="login-container-main">
+      <div className="login-logo-container">
+        <img src={logo} alt="Amazing Logo" className="login-logo-image" />
       </div>
-      <div className="login-container">
+      <div className="login-content-container">
         <h1>Sign In</h1>
-        <form className="login-credentials" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit}>
           <label>
             Username or Email
             <input
@@ -70,7 +70,7 @@ function LoginFormPage() {
               required
             />
           </label>
-          {errors.credential && <p className="error-message">{errors.credential}</p>}
+          {errors.credential && <p className="login-error-message">{errors.credential}</p>}
           <label>
             Password
             <input
@@ -80,12 +80,12 @@ function LoginFormPage() {
               required
             />
           </label>
-          {errors.password && <p className="error-message">{errors.password}</p>}
+          {errors.password && <p className="login-error-message">{errors.password}</p>}
           <button type="submit">Log In</button>
           <button type="button" onClick={handleDemoUserClick}>Demo User</button>
         </form>
       </div>
-      <div className="new">
+      <div className="login-new">
       </div>
     </div>
   );

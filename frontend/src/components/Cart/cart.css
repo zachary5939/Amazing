@@ -1,19 +1,15 @@
-.cart {
+.cartComp-cart {
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#root .cart {
-    font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;
-   }
+#root .cartComp-cart {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
 
-   .cart ul li{
-    width:843px;
-   }
-
-.cart-item {
+.cartComp-cart-item {
     display: flex;
     justify-content: space-between;
     border: 1px solid #ccc;
@@ -21,31 +17,31 @@
     margin-bottom: 10px;
 }
 
-.product-details {
+.cartComp-product-details {
     display: flex;
 }
 
-.product-image {
+.cartComp-product-image {
     width: 80px;
     margin-right: 20px;
 }
 
-.product-name,
-.product-description,
-.product-price,
-.product-quantity {
+.cartComp-product-name,
+.cartComp-product-description,
+.cartComp-product-price,
+.cartComp-product-quantity {
     margin: 5px 0;
 }
 
-.product-actions {
+.cartComp-product-actions {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
-.update-quantity-button,
-.remove-button,
-.review-button {
+.cartComp-update-quantity-button,
+.cartComp-remove-button,
+.cartComp-review-button {
     background-color: #fddd4e;
     border: none;
     margin: 5px 0;
@@ -53,7 +49,7 @@
     cursor: pointer;
 }
 
-.confirm-modal {
+.cartComp-confirm-modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -64,29 +60,17 @@
     z-index: 1000;
 }
 
-.quantity-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    max-width: 400px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
-}
-
-.error-message {
+.cartComp-error-message {
     color: red;
 }
 
-.grand-total {
+.cartComp-grand-total {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.complete-purchase-button {
+.cartComp-complete-purchase-button {
     background-color: #fddd4e;
     border: none;
     padding: 10px 20px;
@@ -99,7 +83,7 @@
     text-align: center;
 }
 
-.info-container {
+.cartComp-info-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -108,18 +92,16 @@
     gap: 20px;
 }
 
-.website-logo {
+.cartComp-website-logo {
     max-width: 500px;
     height: auto;
 }
 
-.login-button {
+.cartComp-login-button {
     background-color: #fddd4e;
     border: none;
     margin-top: 30px;
     padding: 10px 20px;
-    padding-left:56px;
-    padding-right:62px;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -128,41 +110,7 @@
     border-radius: 5px;
 }
 
-.plz-login {
-    font-size:22px;
-    font-weight:700;
+.cartComp-plz-login {
+    font-size: 22px;
+    font-weight: 700;
 }
-
-/* ... Previous CSS ... */
-
-/* Make all text color white in the navbar */
-.navbar a, .navbar .fa-solid {
-    color: white !important;
-  }
-
-  .navbar .search-bar, .navbar .search-button {
-    margin: 0 10px;  /* Spacing between search bar and button */
-  }
-
-  .search-container {
-    flex: 1;  /* This will allow search bar to take all available space */
-  }
-
-  .login-item a:hover, .categories-container a:hover {
-    text-decoration: underline;
-  }
-
-  /* To handle even spacing for the navbar items */
-  .nav-list {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;  /* Full width */
-  }
-
-  .logo-container {
-    display: flex;
-    justify-content: start;
-  }
-
-  /* ... Rest of the CSS ... */

@@ -8,7 +8,8 @@ function ProfileButton({ user }) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-  const containerRef = useRef(); // Ref for the entire container
+  const containerRef = useRef();
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   const openMenu = () => {
     setShowMenu(prev => !prev);
@@ -42,14 +43,12 @@ function ProfileButton({ user }) {
     alert("Coming soon!");
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-
   return (
-    <div className="account-info" ref={containerRef}>
-      <div className="open-menu-text" onClick={openMenu}>
-        <div className="text-decorating">
-        <p>Hello, {user.firstName}</p>
-        <p>Account & Lists</p>
+    <div className="profile-container" ref={containerRef}>
+      <div className="profile-trigger" onClick={openMenu}>
+        <div className="profile-text">
+          <p>Hello, {user.firstName}</p>
+          <p>Account & Lists</p>
         </div>
       </div>
       <ul className={ulClassName} ref={ulRef}>
