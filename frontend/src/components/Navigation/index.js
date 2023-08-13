@@ -24,18 +24,13 @@ function Navigation({ isLoaded }) {
     }
   };
 
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-  };
-
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = <ProfileButton user={sessionUser} />;
   } else {
     sessionLinks = (
       <li className="nav-login-item">
-        <NavLink to="/login">Hello, sign in</NavLink>
+        <NavLink to="/login">Sign in</NavLink>
       </li>
     );
   }
@@ -74,7 +69,7 @@ function Navigation({ isLoaded }) {
         <NavLink to="/products">All products</NavLink>
         <NavLink to="/products/category/1">Electronics</NavLink>
         <NavLink to="/products/category/2">Entertainment</NavLink>
-        <NavLink to="/products/category/3">Home</NavLink>
+        <NavLink to="/products/category/3">Home Goods</NavLink>
         <NavLink to="/products/category/4">Grocery</NavLink>
       </div>
     </>

@@ -1,8 +1,5 @@
-// frontend/src/components/LoginFormModal/index.js
-
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
-import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { login } from "../../store/session";
@@ -18,9 +15,14 @@ function LoginFormPage() {
   const { closeModal } = useModal();
   const history = useHistory();
 
+  const signUp = () => {
+    history.push("/signup");
+  };
+
   const handleDemoUserClick = () => {
     const demoCredential = "demo@user.io";
     const demoPassword = "password";
+
 
     dispatch(sessionActions.login({ credential: demoCredential, password: demoPassword }))
       .then(() => {
@@ -86,6 +88,8 @@ function LoginFormPage() {
         </form>
       </div>
       <div className="login-new">
+        <h4>New to Amazing?</h4>
+        <button type="submit" onClick={signUp}>Sign Up</button>
       </div>
     </div>
   );
