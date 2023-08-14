@@ -91,13 +91,6 @@ module.exports = {
           timestamp: new Date(),
         },
         {
-          userId: 2,
-          productId:10,
-          rating: 3,
-          text: "I can't have dairy but eat them anyways :)",
-          timestamp: new Date(),
-        },
-        {
           userId: 5,
           productId:11,
           rating: 4,
@@ -112,7 +105,7 @@ module.exports = {
           timestamp: new Date(),
         },
         {
-          userId: 6,
+          userId: 7,
           productId:13,
           rating: 5,
           text: "One of the best games ever made!",

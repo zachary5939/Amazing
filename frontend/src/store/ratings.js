@@ -39,6 +39,17 @@ export const fetchRatings = (productId) => async (dispatch) => {
   }
 };
 
+export const fetchAllRatings = () => async (dispatch) => {
+  try {
+    const response = await csrfFetch('/api/ratings');
+    const ratingData = await response.json();
+    dispatch(fetchRatingsSuccess(ratingData));
+  } catch (error) {
+    console.error('Error fetching all ratings:', error);
+  }
+};
+
+
 export const addRating = (userId, productId, rating, text) => async (dispatch) => {
   try {
     const response = await csrfFetch('/api/ratings', {

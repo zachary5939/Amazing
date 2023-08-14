@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Product, Category, Rating } = require("../../db/models");
+const { Product, Category, Rating, User } = require("../../db/models");
 const { Op } = require("sequelize");
 const asyncHandler = require("express-async-handler");
 const { requireAuth } = require("../../utils/auth.js");
@@ -94,7 +94,11 @@ router.get("/:productId/ratings", asyncHandler(async (req, res) => {
       },
       include: [
           { model: Product, as: "product" },
-          // { model: User, as: "user" },
+          {
+              model: User,
+              as: "user",
+              attributes: ["id", "username", "firstName", "lastName"]
+          },
       ]
   });
 
