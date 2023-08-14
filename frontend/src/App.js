@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import ProductPage from "./components/ProductPage";
 import Cart from "./components/Cart";
+import Reviews from "./components/Reviews";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,9 @@ function App() {
         </Route>
         <Route path="/cart">
           <Cart />
+        </Route>
+        <Route path="/reviews">
+          <Reviews />
         </Route>
         <Redirect to="/" />
       </Switch>

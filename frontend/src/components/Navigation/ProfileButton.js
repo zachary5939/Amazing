@@ -39,6 +39,10 @@ function ProfileButton({ user }) {
     history.push("/orders");
   };
 
+  const viewReviews = () => {
+    history.push("/reviews");
+  };
+
   const comingSoon = () => {
     alert("Coming soon!");
   };
@@ -57,6 +61,9 @@ function ProfileButton({ user }) {
         <li>{user.email}</li>
         <li>
           <button onClick={comingSoon}>View orders</button>
+        </li>
+        <li>
+          <button onClick={viewReviews}>View reviews</button>
         </li>
         <li>
           <button onClick={logout}>Log Out</button>

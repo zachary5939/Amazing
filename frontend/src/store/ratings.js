@@ -7,6 +7,7 @@ const FETCH_RATINGS = 'ratings/FETCH_RATINGS';
 const ADD_RATING = 'ratings/ADD_RATING';
 const UPDATE_RATING = 'ratings/UPDATE_RATING';
 const REMOVE_RATING = 'ratings/REMOVE_RATING';
+const USER_RATINGS = 'ratings/USER_RATINGS';
 
 // Action Creators
 export const fetchRatingsSuccess = (ratings) => ({
@@ -27,6 +28,11 @@ export const updateRatingSuccess = (rating) => ({
 export const removeRatingSuccess = (ratingId) => ({
   type: REMOVE_RATING,
   payload: ratingId,
+});
+
+export const userRatingsSuccess = (ratings) => ({
+  type: USER_RATINGS,
+  payload: ratings,
 });
 
 export const fetchRatings = (productId) => async (dispatch) => {
@@ -108,6 +114,21 @@ export const removeRating = (ratingId) => async (dispatch) => {
   }
 };
 
+export const fetchUserRatings = (userId) => async (dispatch) => {
+  if (!userId) {
+    console.error('User ID not provided.');
+    return;
+  }
+
+  try {
+    const response = await csrfFetch(`/api/ratings/users/${userId}/ratings`);
+    const ratingData = await response.json();
+    dispatch(userRatingsSuccess(ratingData));
+  } catch (error) {
+    console.error('Error fetching user ratings:', error);
+  }
+};
+
 // Reducer
 const initialState = {
   items: [],
@@ -120,6 +141,11 @@ const ratingsReducer = (state = initialState, action) => {
         ...state,
         items: action.payload,
       };
+      case USER_RATINGS:
+        return {
+          ...state,
+          items: action.payload,
+        };
     case ADD_RATING:
       return {
         ...state,

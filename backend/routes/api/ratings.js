@@ -1,6 +1,6 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-const { Rating, Product } = require("../../db/models");
+const { Rating, Product, User } = require("../../db/models");
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.get("/:id", asyncHandler(async (req, res) => {
     const rating = await Rating.findByPk(ratingId, {
         include: [
             { model: Product, as: "product" },
-            // { model: User, as: "user" },
+            { model: User, as: "user" },
         ]
     });
 
@@ -55,5 +55,33 @@ router.post("/", asyncHandler(async (req, res) => {
     const newRating = await Rating.create({ userId, productId, rating, text, timestamp: new Date() });
     res.status(201).json(newRating);
 }));
+
+// Get all ratings by a user
+router.get("/users/:userId/ratings", asyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+    const ratings = await Rating.findAll({
+        where: {
+            userId: userId
+        },
+        include: [
+            {
+                model: Product,
+                as: "product"
+            },
+            {
+                model: User,
+                as: "user",
+                attributes: ["id", "username", "firstName", "lastName"]
+            }
+        ]
+    });
+
+    if (ratings && ratings.length) {
+        res.json(ratings);
+    } else {
+        res.status(404).json({ error: "No ratings found for this user" });
+    }
+}));
+
 
 module.exports = router;
