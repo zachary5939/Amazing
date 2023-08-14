@@ -1,7 +1,9 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
+
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
@@ -21,6 +23,12 @@ module.exports = {
         },
         productId: {
           type: Sequelize.INTEGER,
+          references: {
+            model: 'Products',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         rating: {
           type: Sequelize.INTEGER,
@@ -55,6 +63,7 @@ module.exports = {
       options
     );
   },
+
   async down(queryInterface, Sequelize) {
     options.tableName = "Ratings";
     await queryInterface.dropTable(options);

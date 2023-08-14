@@ -106,6 +106,13 @@ module.exports = {
           price: 4.99,
           categoryId: 4,
         },
+        {
+          name: "Persona 5 Royal",
+          description: "Lorem Ipsum",
+          imageUrl: "https://m.media-amazon.com/images/I/819o7LKSYsL._SL1500_.jpg",
+          price: 59.99,
+          categoryId: 2,
+        },
       ],
       options
     );

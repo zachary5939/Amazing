@@ -21,25 +21,46 @@ module.exports = {
           hashedPassword: bcrypt.hashSync("password"),
         },
         {
-          firstName: "Just",
-          lastName: "AnotherGuy",
+          firstName: "Zachary",
+          lastName: "Stallings",
           email: "user1@user.io",
-          username: "FakeUser1",
-          hashedPassword: bcrypt.hashSync("password2"),
+          username: "zachary",
+          hashedPassword: bcrypt.hashSync("password"),
         },
         {
-          firstName: "Third",
-          lastName: "Person",
+          firstName: "Omar",
+          lastName: "El Sahlah",
           email: "user2@user.io",
-          username: "FakeUser2",
-          hashedPassword: bcrypt.hashSync("password3"),
+          username: "omar",
+          hashedPassword: bcrypt.hashSync("password"),
         },
         {
-          firstName: "Fourth",
-          lastName: "Person",
+          firstName: "Sam",
+          lastName: "Handelsman",
           email: "user3@user.io",
-          username: "FakeUser3",
-          hashedPassword: bcrypt.hashSync("password4"),
+          username: "sam",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          firstName: "Jason",
+          lastName: "Murphy",
+          email: "user4@user.io",
+          username: "jason",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          firstName: "JP",
+          lastName: "Park",
+          email: "user5@user.io",
+          username: "JPark",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          firstName: "Joey",
+          lastName: "Enright",
+          email: "user6@user.io",
+          username: "joey",
+          hashedPassword: bcrypt.hashSync("password"),
         },
       ],
       options
@@ -52,7 +73,7 @@ module.exports = {
     return queryInterface.bulkDelete(
       options,
       {
-        username: { [Op.in]: ["demo", "FakeUser1", "FakeUser2", "FakeUser3"] },
+        username: { [Op.in]: ["demo", "zachary", "omar", "sam", "jason", "JPark", "joey"] },
       },
       options
     );
