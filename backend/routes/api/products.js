@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const { Product, Category } = require("../../db/models");
+const { Product, Category, Rating } = require("../../db/models");
 const { Op } = require("sequelize");
-
+const asyncHandler = require("express-async-handler");
 const { requireAuth } = require("../../utils/auth.js");
 const { handleValidationErrors } = require("../../utils/validation.js");
 
@@ -84,5 +84,25 @@ router.get("/category/:categoryId", async (req, res, next) => {
     next(error);
   }
 });
+
+// Get all ratings for a product
+router.get("/:productId/ratings", asyncHandler(async (req, res) => {
+  const productId = req.params.productId;
+  const ratings = await Rating.findAll({
+      where: {
+          productId: productId,
+      },
+      include: [
+          { model: Product, as: "product" },
+          // { model: User, as: "user" },
+      ]
+  });
+
+  if (ratings && ratings.length) {
+      res.json(ratings);
+  } else {
+      res.status(404).json({ error: "No ratings found for this product" });
+  }
+}));
 
 module.exports = router;
