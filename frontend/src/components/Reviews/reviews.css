@@ -13,6 +13,7 @@
 
 .review-item {
     display: flex;
+    justify-content: space-between;
     border: 1px solid #e0e0e0;
     padding: 10px;
     width: 800px;
@@ -26,10 +27,17 @@
     margin-right: 10px;
 }
 
+.review-content {
+    display: flex;
+    flex-grow: 1;
+}
+
 .review-details {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex-grow: 1;
+    margin-right: 20px;
 }
 
 .review-product-name {
@@ -53,14 +61,47 @@
     margin-bottom: 5px;
 }
 
-.edit-review-btn {
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.review-btn {
     background-color: yellow;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 100px;
+    text-align: center;
 }
 
-.edit-review-btn:hover {
+.edit-review-btn:hover,
+.delete-review-btn:hover {
     background-color: #f5f5d5;
 }
+
+.delete-review-btn {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.delete-review-btn:hover {
+    background-color: #ff8888;
+}
+
+#root .review-item .delete-review-btn{
+    font-size:12px;
+    font-weight:500;
+   }
+
+   #root .review-details a{
+    color:#000000;
+    text-decoration:none;
+   }
+
+   #root .review-details a:hover{
+    color:#ad7412;
+    text-decoration:underline;
+   }
