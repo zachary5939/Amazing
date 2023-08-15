@@ -6,7 +6,7 @@ import { csrfFetch } from "./csrf";
 const FETCH_ALL_PRODUCTS_SUCCESS = 'products/FETCH_PRODUCTS_SUCCESS';
 const FETCH_PRODUCT_SUCCESS = 'products/FETCH_PRODUCT_SUCCESS';
 const SEARCH_RESULTS = "products/SEARCH_RESULTS";
-
+const CLEAR_RATINGS = 'ratings/CLEAR_RATINGS';
 // Action Creators
 const fetchProductsSuccess = (products) => ({
   type: FETCH_ALL_PRODUCTS_SUCCESS,
@@ -21,6 +21,10 @@ const fetchProductSuccess = (product) => ({
 export const setSearchResults = (results) => ({
   type: SEARCH_RESULTS,
   payload: results,
+});
+
+export const clearRatings = () => ({
+  type: CLEAR_RATINGS,
 });
 
 export const searchProductsByName = (name, history) => async (dispatch) => {
@@ -91,6 +95,11 @@ const productsReducer = (state = initialState, action) => {
           return acc;
         }, {});
         return { ...state, allProducts: productsObj };
+            case CLEAR_RATINGS:
+      return {
+        ...state,
+        items: [],
+      };
     default:
       return state;
   }

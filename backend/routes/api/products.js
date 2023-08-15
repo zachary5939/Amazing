@@ -85,7 +85,6 @@ router.get("/category/:categoryId", async (req, res, next) => {
   }
 });
 
-// Get all ratings for a product
 router.get("/:productId/ratings", asyncHandler(async (req, res) => {
   const productId = req.params.productId;
   const ratings = await Rating.findAll({
@@ -102,11 +101,8 @@ router.get("/:productId/ratings", asyncHandler(async (req, res) => {
       ]
   });
 
-  if (ratings && ratings.length) {
-      res.json(ratings);
-  } else {
-      res.status(404).json({ error: "No ratings found for this product" });
-  }
+  res.json(ratings);
 }));
+
 
 module.exports = router;

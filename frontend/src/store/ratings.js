@@ -147,10 +147,12 @@ const initialState = {
 const ratingsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_RATINGS:
-      return {
+    console.log('Setting ratings to:', action.payload);
+    return {
         ...state,
         items: action.payload,
-      };
+    };
+
       case USER_RATINGS:
         return {
           ...state,
