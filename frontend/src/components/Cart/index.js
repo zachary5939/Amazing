@@ -203,7 +203,6 @@ function Cart() {
       </ul>
       <p className="cartComp-grand-total">Grand Total: ${grandTotal.toFixed(2)}</p>
       <button className="cartComp-complete-purchase-button" onClick={comingSoon}>Complete Purchase</button>
-          {/* Error modal for already reviewed product */}
     {showErrorModal && (
       <div className="error-modal">
         <p>You've already reviewed this product. To manage your reviews, check out your review page.</p>
@@ -211,8 +210,6 @@ function Cart() {
         <button onClick={() => setShowErrorModal(false)}>Close</button>
       </div>
     )}
-
-    {/* Existing confirm modal for removal */}
     {showConfirmModal && (
       <div className="cartComp-confirm-modal">
         <p className="delete-text">Are you sure you want to remove this item?</p>

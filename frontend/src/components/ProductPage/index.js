@@ -2,7 +2,7 @@ import "./ProductPage.css";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useMemo } from "react";
-import { fetchProductById, clearRatings } from "../../store/products";
+import { fetchProductById } from "../../store/products";
 import { fetchCartItems, addToCart } from "../../store/cart";
 import { fetchRatings } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,12 +24,6 @@ function ProductPage() {
     if (user) {
       dispatch(fetchCartItems(user.id));
     }
-
-    // Cleanup function
-    return () => {
-      // Dispatch an action to clear the ratings from the state
-      dispatch(clearRatings());
-    };
 }, [dispatch, productId, user]);
 
 
