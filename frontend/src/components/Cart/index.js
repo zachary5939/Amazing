@@ -10,7 +10,7 @@ function Cart() {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-  const userReviews = useSelector((state) => state.ratings.items);
+  const allReviews = useSelector(state => state.ratings.byProductId || {});
 
   // Get raw cart items and then sort them safely
   const rawCartItems = useSelector((state) => state.cart.items);
@@ -36,14 +36,11 @@ function Cart() {
     return acc;
   }, 0);
 
-
   useEffect(() => {
     if (sessionUser) {
       dispatch(fetchCartItems(sessionUser.id));
     }
   }, [dispatch, sessionUser]);
-
-  // console.log(cartItems, "cartItems");
 
   const handleUpdateQuantity = async (cartItemId) => {
     try {
@@ -88,9 +85,9 @@ function Cart() {
   };
 
   const hasReviewedProduct = (productId) => {
-    return userReviews.some((review) => review.productId === productId);
+    const reviewsForProduct = allReviews[productId] || [];
+    return reviewsForProduct.some((review) => review.productId === productId);
   };
-
 
   const navigateToReview = (product) => {
     if (hasReviewedProduct(product.id)) {
@@ -99,9 +96,6 @@ function Cart() {
       history.push(`/newreview/${product.id}`);
     }
   };
-
-
-
 
   const loginPlease = () => {
     history.push("/login");
@@ -114,31 +108,6 @@ function Cart() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  if (!sessionUser) {
-    return (
-      <div className="cartComp-info-container">
-        <p className="cartComp-plz-login">Please sign in to view your cart.</p>
-        <img src={logo} alt="Amazing Logo" className="cartComp-website-logo" />
-        <Link to="/login">
-          <button className="cartComp-login-button">Login to view cart</button>
-        </Link>
-      </div>
-    );
-  }
-
-  if (!cartItems || cartItems.length === 0) {
-    return (
-      <div className="cartComp-info-container">
-        <p className="cartComp-plz-login">{sessionUser?.firstName}, your cart is empty!</p>
-        <img src={logo} alt="Amazing Logo" className="cartComp-website-logo" />
-        <Link to="/products">
-          <button className="cartComp-login-button">View All Products!</button>
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className="cartComp-cart">
       <h2>{sessionUser?.firstName}'s Cart</h2>

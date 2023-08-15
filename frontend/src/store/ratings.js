@@ -36,13 +36,18 @@ export const userRatingsSuccess = (ratings) => ({
 
 export const fetchRatings = (productId) => async (dispatch) => {
   try {
-    const response = await csrfFetch(`/api/products/${productId}/ratings`);
-    const ratingData = await response.json();
-    dispatch(fetchRatingsSuccess(ratingData));
+    const response = await csrfFetch(`/api/ratings/product/${productId}`);
+    const ratingsData = await response.json();
+    dispatch({
+      type: FETCH_RATINGS,
+      payload: { ratings: ratingsData, productId }
+    });
   } catch (error) {
     console.error('Error fetching ratings:', error);
   }
 };
+
+
 
 export const fetchAllRatings = () => async (dispatch) => {
   try {
@@ -131,7 +136,7 @@ export const fetchUserRatings = (userId) => async (dispatch) => {
   }
 
   try {
-    const response = await csrfFetch(`/api/ratings/users/${userId}/ratings`);
+    const response = await csrfFetch(`/api/ratings/user/${userId}`);
     const ratingData = await response.json();
     dispatch(userRatingsSuccess(ratingData));
   } catch (error) {
@@ -147,22 +152,23 @@ const initialState = {
 const ratingsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_RATINGS:
-    console.log('Setting ratings to:', action.payload);
-    return {
-        ...state,
-        items: action.payload,
-    };
-
+      console.log('Setting ratings to:', action.payload.ratings);
+      return {
+          ...state,
+          items: action.payload.ratings,
+      };
       case USER_RATINGS:
         return {
           ...state,
           items: action.payload,
         };
-    case ADD_RATING:
-      return {
-        ...state,
-        items: [...state.items, action.payload],
-      };
+        case ADD_RATING:
+          console.log("Current items:", state.items);
+          console.log("Payload:", action.payload);
+          return {
+            ...state,
+            items: [...state.items, action.payload],
+          };
       case UPDATE_RATING: {
         const updatedRating = action.payload;
         const updatedRatings = state.items.map((item) =>
