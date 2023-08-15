@@ -85,7 +85,6 @@ function Reviews() {
   };
 
 
-
   if (!ratings.length) {
     return (
       <div className="empty-reviews-container">

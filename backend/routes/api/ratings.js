@@ -26,11 +26,17 @@ router.get("/:id", asyncHandler(async (req, res) => {
 router.put("/:id", asyncHandler(async (req, res) => {
     const ratingId = req.params.id;
     const { userId, productId, rating, text } = req.body;
-    const existingRating = await Rating.findByPk(ratingId);
+
+    const existingRating = await Rating.findByPk(ratingId, {
+        include: [Product]
+    });
 
     if (existingRating) {
         await existingRating.update({ userId, productId, rating, text });
-        res.json(existingRating);
+        res.json({
+            ...existingRating.toJSON(),
+            product: existingRating.Product
+        });
     } else {
         res.status(404).json({ error: "Rating not found" });
     }

@@ -161,16 +161,16 @@ const ratingsReducer = (state = initialState, action) => {
         ...state,
         items: [...state.items, action.payload],
       };
-    case UPDATE_RATING: {
-      const updatedRating = action.payload;
-      const updatedRatings = state.items.map((item) =>
-        item.id === updatedRating.id ? updatedRating : item
-      );
-      return {
-        ...state,
-        items: updatedRatings,
-      };
-    }
+      case UPDATE_RATING: {
+        const updatedRating = action.payload;
+        const updatedRatings = state.items.map((item) =>
+          item.id === updatedRating.id ? updatedRating : item
+        );
+        return {
+          ...state,
+          items: updatedRatings,
+        };
+      }
     case REMOVE_RATING:
       return {
         ...state,

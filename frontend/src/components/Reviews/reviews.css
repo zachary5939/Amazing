@@ -167,3 +167,24 @@
    #root .review-item .fa-star:hover{
     color:#ffb406;
    }
+
+
+   .rating-container .star {
+    color: #e0e0e0;
+    cursor: pointer;
+    margin-right: 3px;
+  }
+
+  .rating-container .star.active {
+    color: #db9900;
+  }
+
+  .rating-container .star:hover {
+    color: #ffb406;
+  }
+
+  .hovered-rating-text {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #333;
+  }
