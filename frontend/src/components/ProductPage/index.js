@@ -83,11 +83,11 @@ function ProductPage() {
     <div className="product-page">
       <div className="product-page__top-section">
         <div className="product-page__image-container">
-          <img src={product.imageUrl} alt={product.name} />
+          <img src={product?.imageUrl} alt={product.name} />
         </div>
 
         <div className="product-page__center">
-          <h2>{product.name}</h2>
+          <h2>{product?.name}</h2>
 
           <div>
             {[...Array(fullStars)].map((_, index) => (
@@ -144,25 +144,28 @@ function ProductPage() {
       </div>
 
       <div className="product-reviews-container">
-        <h2>Reviews</h2>
-        {ratings && ratings?.length ? (
-          ratings.map((rating) => (
+    <h2>Reviews</h2>
+    {ratings && ratings.length ? (
+        ratings.map((rating) => (
             <div key={rating.id} className="product-review">
-              <p>
-                <strong>Reviewer:</strong> {rating?.user?.username}
-              </p>
-              <p>
-                <strong>Rating:</strong> {rating?.rating} / 5
-              </p>
-              <p>
-                <strong>Review:</strong> {rating?.text}
-              </p>
+                {rating?.user?.username ? (
+                    <p>
+                        <strong>Reviewer:</strong> {rating.user.username}
+                    </p>
+                ) : null}
+                <p>
+                    <strong>Rating:</strong> {rating?.rating} / 5
+                </p>
+                <p>
+                    <strong>Review:</strong> {rating?.text}
+                </p>
             </div>
-          ))
-        ) : (
-          <p>No reviews available for this product.</p>
-        )}
-      </div>
+        ))
+    ) : (
+        <p>No reviews available for this product.</p>
+    )}
+</div>
+
     </div>
   );
 }

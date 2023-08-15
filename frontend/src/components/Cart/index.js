@@ -10,6 +10,7 @@ function Cart() {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
+  const userReviews = useSelector((state) => state.ratings.items);
 
   // Get raw cart items and then sort them safely
   const rawCartItems = useSelector((state) => state.cart.items);
@@ -27,7 +28,7 @@ function Cart() {
   const [showUpdateQuantityPopup, setShowUpdateQuantityPopup] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState(null);
   const [updateQuantities, setUpdateQuantities] = useState({});
-
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const grandTotal = cartItems.reduce((acc, item) => {
     if (item && item.product) {
       return acc + item.product.price * item.quantity;
@@ -86,12 +87,20 @@ function Cart() {
     alert("Feature coming soon!");
   };
 
-  const navigateToReview = (product) => {
-    history.push({
-      pathname: '/newreview',
-      state: { product },
-    });
+  const hasReviewedProduct = (productId) => {
+    return userReviews.some((review) => review.productId === productId);
   };
+
+
+  const navigateToReview = (product) => {
+    if (hasReviewedProduct(product.id)) {
+      setShowErrorModal(true);
+    } else {
+      history.push(`/newreview/${product.id}`);
+    }
+  };
+
+
 
 
   const loginPlease = () => {
@@ -194,7 +203,24 @@ function Cart() {
       </ul>
       <p className="cartComp-grand-total">Grand Total: ${grandTotal.toFixed(2)}</p>
       <button className="cartComp-complete-purchase-button" onClick={comingSoon}>Complete Purchase</button>
-    </div>
+          {/* Error modal for already reviewed product */}
+    {showErrorModal && (
+      <div className="error-modal">
+        <p>You've already reviewed this product. To manage your reviews, check out your review page.</p>
+        <button onClick={() => history.push("/reviews")}>Go to Reviews</button>
+        <button onClick={() => setShowErrorModal(false)}>Close</button>
+      </div>
+    )}
+
+    {/* Existing confirm modal for removal */}
+    {showConfirmModal && (
+      <div className="cartComp-confirm-modal">
+        <p className="delete-text">Are you sure you want to remove this item?</p>
+        <button className="delete-button" onClick={confirmRemove}>Yes</button>
+        <button className="delete-button" onClick={handleCloseConfirmModal}>No</button>
+      </div>
+    )}
+  </div>
   );
 }
 

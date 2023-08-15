@@ -48,7 +48,7 @@ function App() {
         <Route exact path="/reviews">
           <Reviews />
         </Route>
-        <Route path="/newreview">
+        <Route path="/newreview/:productId">
           <CreateReview />
         </Route>
         <Redirect to="/" />

@@ -78,12 +78,14 @@ export const addRating = (userId, productId, rating, text) => async (dispatch) =
 
     const newRating = await response.json();
     dispatch(addRatingSuccess(newRating));
+    dispatch(fetchRatings(productId));
 
     return product;
   } catch (error) {
     console.error('Error adding rating:', error);
   }
 };
+
 
 export const updateRating = (ratingId, rating, text) => async (dispatch) => {
   try {

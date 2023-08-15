@@ -52,7 +52,16 @@ router.delete("/:id", asyncHandler(async (req, res) => {
 // Post a rating for a product
 router.post("/", asyncHandler(async (req, res) => {
     const { userId, productId, rating, text } = req.body;
-    const newRating = await Rating.create({ userId, productId, rating, text, timestamp: new Date() });
+    console.log(req.body, "req");
+    const newRating = await Rating.create({
+        userId: userId,
+        productId: productId,
+        rating: rating,
+        text: text,
+        timestamp: new Date()
+      });
+      console.log('Received review data:', { userId, productId, rating, text });
+
     res.status(201).json(newRating);
 }));
 
