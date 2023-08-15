@@ -42,7 +42,7 @@ function Cart() {
     }
   }, [dispatch, sessionUser]);
 
-  console.log(cartItems, "cartItems");
+  // console.log(cartItems, "cartItems");
 
   const handleUpdateQuantity = async (cartItemId) => {
     try {
@@ -86,6 +86,12 @@ function Cart() {
     alert("Feature coming soon!");
   };
 
+  const navigateToReview = (product) => {
+    history.push({
+      pathname: '/newreview',
+      state: { product },
+    });
+  };
 
 
   const loginPlease = () => {
@@ -115,7 +121,7 @@ function Cart() {
   if (!cartItems || cartItems.length === 0) {
     return (
       <div className="cartComp-info-container">
-        <p className="cartComp-plz-login">{sessionUser.firstName}, your cart is empty!</p>
+        <p className="cartComp-plz-login">{sessionUser?.firstName}, your cart is empty!</p>
         <img src={logo} alt="Amazing Logo" className="cartComp-website-logo" />
         <Link to="/products">
           <button className="cartComp-login-button">View All Products!</button>
@@ -126,7 +132,7 @@ function Cart() {
 
   return (
     <div className="cartComp-cart">
-      <h2>{sessionUser.firstName}'s Cart</h2>
+      <h2>{sessionUser?.firstName}'s Cart</h2>
       <ul>
           {cartItems.map((cartItem) => (
               <li key={cartItem.id} className="cartComp-cart-item">
@@ -174,7 +180,7 @@ function Cart() {
                       )}
 
                       <button className="cartComp-remove-button" onClick={() => handleOpenConfirmModal(cartItem.id)}>Remove</button>
-                      <button onClick={comingSoon} className="cartComp-review-button">Review</button>
+                      <button onClick={() => navigateToReview(cartItem.product)} className="cartComp-review-button">Review</button>
                   </div>
                   {showConfirmModal && (
                       <div className="cartComp-confirm-modal">

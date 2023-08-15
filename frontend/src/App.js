@@ -10,6 +10,7 @@ import Products from "./components/Products";
 import ProductPage from "./components/ProductPage";
 import Cart from "./components/Cart";
 import Reviews from "./components/Reviews";
+import CreateReview from "./components/CreateReview";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,8 +45,11 @@ function App() {
         <Route path="/cart">
           <Cart />
         </Route>
-        <Route path="/reviews">
+        <Route exact path="/reviews">
           <Reviews />
+        </Route>
+        <Route path="/newreview">
+          <CreateReview />
         </Route>
         <Redirect to="/" />
       </Switch>

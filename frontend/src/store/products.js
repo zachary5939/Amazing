@@ -51,6 +51,7 @@ export const fetchProductById = (productId) => async (dispatch) => {
     const response = await csrfFetch(`/api/products/${productId}`);
     const product = await response.json();
     dispatch(fetchProductSuccess(product));
+    return product;
   } catch (error) {
     console.error(`Error fetching product with ID ${productId}:`, error);
   }

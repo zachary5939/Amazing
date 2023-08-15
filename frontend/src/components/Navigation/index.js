@@ -2,11 +2,15 @@ import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faMagnifyingGlass, faCartShopping } from "@fortawesome/free-solid-svg-icons"
 import ProfileButton from "./ProfileButton";
 import logo from "../../img/amazinglogo.png";
 import * as sessionActions from "../../store/session";
 import { searchProductsByName } from "../../store/products";
 import "./Navigation.css";
+library.add(faMagnifyingGlass, faCartShopping);
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -28,12 +32,9 @@ function Navigation({ isLoaded }) {
   if (sessionUser) {
     sessionLinks = <ProfileButton user={sessionUser} />;
   } else {
-    sessionLinks = (
-      <li className="nav-login-item">
-        <NavLink to="/login">Sign in</NavLink>
-      </li>
-    );
+    sessionLinks = <NavLink to="/login">Sign in</NavLink>;
   }
+
 
   return (
     <>
@@ -54,10 +55,11 @@ function Navigation({ isLoaded }) {
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             />
             <button onClick={comingSoon} className="nav-search-button">
-              Search
+              <FontAwesomeIcon icon={["fa-solid", "fa-magnifying-glass"]} />
             </button>
           </li>
-          {isLoaded && <li>{sessionLinks}</li>}
+          {isLoaded && <li className="nav-login-item">{sessionLinks}</li>}
+
           <li>
             <NavLink to="/cart">
               <i className="fa-solid fa-cart-shopping"></i>

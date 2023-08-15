@@ -47,6 +47,20 @@
     margin: 5px 0;
     padding: 5px 10px;
     cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out;
+    border-radius: 3px;
+}
+
+.cartComp-update-quantity-button:hover {
+    box-shadow:0px 0px 3px 0px #000000;
+}
+
+.cartComp-remove-button:hover {
+    box-shadow:0px 0px 3px 0px #000000;
+}
+
+.cartComp-review-button:hover {
+    box-shadow:0px 0px 3px 0px #000000;
 }
 
 .cartComp-confirm-modal {
@@ -151,3 +165,19 @@
  padding-left:25px;
  padding-right:29px;
 }
+
+.cartComp-cart ul li{
+    width:757px;
+   }
+
+
+   .cartComp-cart-item .cartComp-product-actions .cartComp-review-button{
+    margin-left:0px;
+    width:117px;
+   }
+
+
+   .cartComp-cart-item .cartComp-product-actions .cartComp-remove-button{
+    margin-left:0px;
+    width:116px;
+   }

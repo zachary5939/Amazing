@@ -71,16 +71,15 @@ input:focus {
 
 .error-message {
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: -20px; /* position the error above the input field */
+    left: 0; /* align the error to the start of the input field */
     color: red;
     font-size: 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 110px; /* increased width */
-    pointer-events: none; /* ensure the input stays clickable */
+    max-width: 100%; /* make it the full width of the input field */
+    pointer-events: none;
 }
 
 #root .signup-form-container {

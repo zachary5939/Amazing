@@ -105,3 +105,65 @@
     color:#ad7412;
     text-decoration:underline;
    }
+
+   .empty-reviews-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 50px;
+    text-align: center;
+}
+
+.show-products-btn {
+    background-color: yellow;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.show-products-btn:hover {
+    background-color: #f5f5d5;
+}
+
+
+#root h1{
+    justify-content:center;
+    align-items:center;
+    left:4px;
+   }
+   #root .empty-reviews-container p{
+    font-weight:500;
+   }
+
+   #root .empty-reviews-container img{
+    width:568px;
+   }
+   #root .show-products-btn{
+    position:relative;
+    top:33px;
+   }
+
+   #root .review-item .rating-container{
+    color:#db9900;
+   }
+
+   /* #root .review-item .rating-container:hover{
+    color:#ffb406;
+   } */
+
+   #root .review-item .delete-review-btn{
+    position:relative;
+    bottom:-53px;
+   }
+
+
+   #root .review-item .fa-star{
+    cursor: pointer;
+   }
+
+   #root .review-item .fa-star:hover{
+    color:#ffb406;
+   }

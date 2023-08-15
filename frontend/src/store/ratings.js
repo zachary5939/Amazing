@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
+import { fetchProductById } from "./products"
 import { csrfFetch } from "./csrf";
 
 // Action Types
@@ -57,7 +56,14 @@ export const fetchAllRatings = () => async (dispatch) => {
 
 
 export const addRating = (userId, productId, rating, text) => async (dispatch) => {
+  let product;
   try {
+    product = await dispatch(fetchProductById(productId));
+    if (!product) {
+      console.error('Failed to retrieve product for review.');
+      return null;
+    }
+
     const response = await csrfFetch('/api/ratings', {
       method: 'POST',
       headers: {
@@ -72,6 +78,8 @@ export const addRating = (userId, productId, rating, text) => async (dispatch) =
 
     const newRating = await response.json();
     dispatch(addRatingSuccess(newRating));
+
+    return product;
   } catch (error) {
     console.error('Error adding rating:', error);
   }

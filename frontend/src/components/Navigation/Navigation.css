@@ -121,3 +121,42 @@ body {
 .profile-text {
   color: white;
 }
+
+.nav-search-container {
+  flex-grow: 1;
+  display: flex;
+  position: relative;
+}
+
+.nav-search-bar {
+  padding: 5px 10px;
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.nav-search-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  border-radius: 0 4px 4px 0;
+  background-color: #333;
+  border: none;
+  cursor: pointer;
+  color: #FFF;
+}
+
+.nav-list a i.fa-solid.fa-cart-shopping {
+  color: #FFF;
+}
+
+.nav-list .nav-search-button{
+  background-color:#e5c275;
+ }
+
+ .nav-list .nav-search-button .fa-magnifying-glass{
+  color:#1c1616;
+ }
+ 
