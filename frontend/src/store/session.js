@@ -93,17 +93,23 @@ export const restoreUser = () => async (dispatch) => {
         password,
       }),
     });
+
+    const data = await response.json();
+
     if (response.ok) {
-      const data = await response.json();
       dispatch(setUser(data.user));
+      return data;
     } else {
-      const data = await response.json();
       if (data.errors) {
         console.error(data.errors);
+        throw data.errors;
+      } else {
+        throw new Error('Something went wrong during signup.');
       }
     }
-    return response;
 };
+
+
 
 
   export const createUserThunk = (user) => async (dispatch) => {

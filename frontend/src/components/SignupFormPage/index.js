@@ -38,9 +38,11 @@ function SignupFormPage() {
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            setErrors(data.errors);
+            setErrors(prevErrors => ({ ...prevErrors, ...data.errors }));
           }
         });
+
+
     }
     return setErrors({
       confirmPassword:
@@ -64,6 +66,7 @@ function SignupFormPage() {
             required
             placeholder="Email"
           />
+          {errors.general && <span className="error-message">{errors.general}</span>}
           {errors.email && <span className="error-message">{errors.email}</span>}
         </div>
         <div className="input-container">
@@ -74,7 +77,7 @@ function SignupFormPage() {
             required
             placeholder="Username"
           />
-          {errors.username && <span className="error-message">{errors.username}</span>}
+          {errors.username && <span className="error-message">{errors.username[0]}</span>}
         </div>
         <div className="input-container">
           <input
