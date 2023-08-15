@@ -37,6 +37,7 @@ function SignupFormPage() {
         })
         .catch(async (res) => {
           const data = await res.json();
+          console.log("Received Error:", data);  // <-- Add this line
           if (data && data.errors) {
             setErrors(prevErrors => ({ ...prevErrors, ...data.errors }));
           }
@@ -66,7 +67,6 @@ function SignupFormPage() {
             required
             placeholder="Email"
           />
-          {errors.general && <span className="error-message">{errors.general}</span>}
           {errors.email && <span className="error-message">{errors.email}</span>}
         </div>
         <div className="input-container">
@@ -77,7 +77,7 @@ function SignupFormPage() {
             required
             placeholder="Username"
           />
-          {errors.username && <span className="error-message">{errors.username[0]}</span>}
+          {errors.username && <span className="error-message">{errors.username}</span>}
         </div>
         <div className="input-container">
           <input

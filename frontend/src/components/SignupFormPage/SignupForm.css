@@ -70,15 +70,16 @@ input:focus {
 }
 
 .error-message {
-    position: absolute;
-    top: -20px; /* position the error above the input field */
-    left: 0; /* align the error to the start of the input field */
+    /* position: absolute; */
+    top: 40px;
+    /* top: -20px; */
+    left: 0;
     color: red;
     font-size: 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* make it the full width of the input field */
+    max-width: 100%;
     pointer-events: none;
 }
 

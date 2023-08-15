@@ -49,10 +49,10 @@ router.post("", validateSignup, async (req, res) => {
   } catch (error) {
     console.error('Error during user creation:', error);
     if (error.name === 'SequelizeUniqueConstraintError' && error.fields && error.fields.includes('username')) {
-        return res.status(400).json({ errors: { username: ['Username is already taken.'] } });
+      return res.status(400).json({ errors: { username: ['Username is already taken.'] } });
     }
     return res.status(500).json({ error: error.message });
-}
+  }
 });
 
 
