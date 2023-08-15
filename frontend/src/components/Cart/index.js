@@ -101,6 +101,31 @@ function Cart() {
     history.push("/login");
   };
 
+
+  if (!sessionUser) {
+    return (
+      <div className="cartComp-info-container">
+        <p className="cartComp-plz-login">Please sign in to view your cart.</p>
+        <img src={logo} alt="Amazing Logo" className="cartComp-website-logo" />
+        <Link to="/login">
+          <button className="cartComp-login-button">Login to view cart</button>
+        </Link>
+      </div>
+    );
+  }
+
+  if (!cartItems || cartItems.length === 0) {
+    return (
+      <div className="cartComp-info-container">
+        <p className="cartComp-plz-login">{sessionUser?.firstName}, your cart is empty!</p>
+        <img src={logo} alt="Amazing Logo" className="cartComp-website-logo" />
+        <Link to="/products">
+          <button className="cartComp-login-button">View All Products!</button>
+        </Link>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return <div>Loading...</div>;
   }

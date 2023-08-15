@@ -46,7 +46,7 @@ function Products() {
                 {normalizedProducts.map((product) => (
                     <div key={product.id} className="product-item">
                         <Link to={`/products/${product.id}`}>
-                            <img src={product.imageUrl} alt={product.name} />
+                            <img src={product.imageUrl} alt={product?.name} />
                         </Link>
                         <div className="product-details">
                             <h3 className="product-name">
