@@ -93,11 +93,18 @@ export const restoreUser = () => async (dispatch) => {
         password,
       }),
     });
-    const data = await response.json();
-    dispatch(setUser(data.user));
-    console.log("signup", response)
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setUser(data.user));
+    } else {
+      const data = await response.json();
+      if (data.errors) {
+        console.error(data.errors);
+      }
+    }
     return response;
-  };
+};
+
 
   export const createUserThunk = (user) => async (dispatch) => {
     const response = await csrfFetch("/api/users", {
