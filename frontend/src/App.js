@@ -11,6 +11,8 @@ import ProductPage from "./components/ProductPage";
 import Cart from "./components/Cart";
 import Reviews from "./components/Reviews";
 import CreateReview from "./components/CreateReview";
+import Footer from "./components/Footer";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="app-container">
       <Navigation isLoaded={isLoaded} />
       <Switch>
         <Route exact path="/">
@@ -53,7 +55,8 @@ function App() {
         </Route>
         <Redirect to="/" />
       </Switch>
-    </>
+      <Footer />
+    </div>
   );
 }
 

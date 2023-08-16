@@ -66,7 +66,6 @@ router.post("/", asyncHandler(async (req, res) => {
 }));
 
 // Edit a rating for a product
-// Edit a rating for a product
 router.put("/:id", asyncHandler(async (req, res) => {
     const ratingId = req.params.id;
     const { userId, productId, rating, text } = req.body;
