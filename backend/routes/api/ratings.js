@@ -17,7 +17,20 @@ router.get("/product/:productId", asyncHandler(async (req, res) => {
     res.json(ratingsForProduct);
 }));
 
-
+// Get all ratings
+router.get("/", asyncHandler(async (req, res) => {
+    const ratings = await Rating.findAll({
+        include: [
+            { model: Product, as: 'product' },
+            { model: User, as: 'user' }
+        ]
+    });
+    if (ratings && ratings.length) {
+        res.json(ratings);
+    } else {
+        res.status(404).json({ error: "No ratings found" });
+    }
+}));
 
 // Get all ratings by a user
 router.get("/user/:userId", asyncHandler(async (req, res) => {

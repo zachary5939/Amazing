@@ -34,6 +34,7 @@ export const userRatingsSuccess = (ratings) => ({
   payload: ratings,
 });
 
+
 export const fetchRatings = (productId) => async (dispatch) => {
   try {
     const response = await csrfFetch(`/api/ratings/product/${productId}`);
@@ -48,7 +49,6 @@ export const fetchRatings = (productId) => async (dispatch) => {
 };
 
 
-
 export const fetchAllRatings = () => async (dispatch) => {
   try {
     const response = await csrfFetch('/api/ratings');
@@ -58,6 +58,23 @@ export const fetchAllRatings = () => async (dispatch) => {
     console.error('Error fetching all ratings:', error);
   }
 };
+
+export const fetchRatingsForProducts = (productIds) => async (dispatch) => {
+  try {
+    // Fetch ratings for all product IDs and wait for all requests to finish
+    const responses = await Promise.all(productIds.map(productId => csrfFetch(`/api/ratings/product/${productId}`)));
+    const allRatingsData = await Promise.all(responses.map(response => response.json()));
+    const ratings = [].concat(...allRatingsData);  // Flatten the array of arrays
+
+    dispatch({
+      type: FETCH_RATINGS,
+      payload: { ratings }
+    });
+  } catch (error) {
+    console.error('Error fetching ratings:', error);
+  }
+};
+
 
 
 export const addRating = (userId, productId, rating, text) => async (dispatch) => {
@@ -147,16 +164,17 @@ export const fetchUserRatings = (userId) => async (dispatch) => {
 // Reducer
 const initialState = {
   items: [],
+  productRatings: {},
 };
 
 const ratingsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_RATINGS:
-      console.log('Setting ratings to:', action.payload.ratings);
+    case FETCH_RATINGS: {
       return {
           ...state,
           items: action.payload.ratings,
       };
+    }
       case USER_RATINGS:
         return {
           ...state,
@@ -183,7 +201,7 @@ const ratingsReducer = (state = initialState, action) => {
       return {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
-      };
+        };
     default:
       return state;
   }

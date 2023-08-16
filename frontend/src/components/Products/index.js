@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { fetchAllRatings } from "../../store/ratings";
+import { fetchAllRatings, fetchRatingsForProducts } from "../../store/ratings";
 import './products.css';
 
 function Products() {
@@ -11,7 +11,7 @@ function Products() {
     const products = useSelector((state) => state.products.allProducts);
     const { categoryId } = useParams();
     const normalizedProducts = Object.values(products || {});
-    const ratings = useSelector((state) => state.ratings.items);
+    const ratings = useSelector((state) => state.ratings?.items || []);
 
     useEffect(() => {
         if (categoryId) {
@@ -19,8 +19,17 @@ function Products() {
         } else {
             dispatch(productActions.fetchAllProducts());
         }
-        dispatch(fetchAllRatings());
     }, [dispatch, categoryId]);
+
+    //watch for changes in `products`
+    useEffect(() => {
+        if (products && Object.keys(products).length) {
+            const productIds = normalizedProducts.map(product => product.id);
+            dispatch(fetchRatingsForProducts(productIds));
+        }
+    }, [dispatch, products]);
+
+
 
     const getCategoryName = (categoryId) => {
       switch (categoryId) {
@@ -33,11 +42,11 @@ function Products() {
     }
 
     const getAverageRating = (productId) => {
-      const productRatings = ratings.filter(rating => rating.productId === productId);
-      const total = productRatings.reduce((acc, rating) => acc + rating.rating, 0);
-      return productRatings.length ? (total / productRatings.length).toFixed(2) : 'No reviews';
+        const productRatings = ratings.filter(rating => String(rating.productId) === String(productId));
+        const total = productRatings.reduce((acc, rating) => acc + rating.rating, 0);
+        return productRatings.length ? (total / productRatings.length).toFixed(2) : 'No reviews';
     }
-    console.log(ratings);
+
 
     return (
         <div>
@@ -53,7 +62,7 @@ function Products() {
                                 <Link to={`/products/${product.id}`}>{product.name}</Link>
                             </h3>
                             <p className='description'>{product.description}</p>
-                            <p className="review-placeholder">Average Rating: {getAverageRating(product.id)}</p>
+                            <p className="review-placeholder">Average Rating: {getAverageRating(product?.id)}</p>
                             <p className="product-price">Price: ${product.price}</p>
                         </div>
                     </div>

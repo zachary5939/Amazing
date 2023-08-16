@@ -27,7 +27,7 @@ function ProductPage() {
     }, [dispatch, productId, user]);
 
 
-  //The useMemo hook only runs when one of its dependencies update.
+  //the useMemo hook only runs when one of its dependencies update.
   //https://legacy.reactjs.org/docs/hooks-reference.html#usememo
 
   const productQuantityInCart = useMemo(() => {
