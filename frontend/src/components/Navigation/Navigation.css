@@ -74,24 +74,72 @@ body {
 
 .profile-container {
   cursor: pointer;
-  position: relative;
+  position: relative; /* this is important for absolute positioning of children */
   z-index: 10;
 }
 
 .profile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 15px;
-  list-style: none;
+  position: absolute; /* dropdown will now float above content */
+  top: 100%; /* align it to the bottom of the .profile-container */
+  left: 0; /* align it to the left of the .profile-container */
+  display: flex;
+  width: 300px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white;
   border-radius: 4px;
-  padding: 10px;
+  overflow: hidden;
+}
+.nav-login-item ul{
+  transform:translatex(-148px) translatey(12px);
+ }
+
+
+.profile-dropdown {
+  display: flex;
+  width: 300px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.profile-dropdown li {
+.profile-dropdown .user-details {
+  flex: 1;
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-dropdown .user-details li {
   padding: 5px 10px;
+}
+
+.profile-dropdown .actions {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-dropdown .actions button {
+  background-color: #fddd4e;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin: 5px 0;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.profile-dropdown .actions button:hover {
+  background-color: #fccc2e;
 }
 
 .profile-dropdown.hidden {
@@ -154,9 +202,8 @@ body {
 
 .nav-list .nav-search-button{
   background-color:#e5c275;
- }
+}
 
- .nav-list .nav-search-button .fa-magnifying-glass{
+.nav-list .nav-search-button .fa-magnifying-glass{
   color:#1c1616;
- }
- 
+}

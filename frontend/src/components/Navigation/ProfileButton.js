@@ -56,21 +56,25 @@ function ProfileButton({ user }) {
         </div>
       </div>
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={comingSoon}>View orders</button>
-        </li>
-        <li>
-          <button onClick={viewReviews}>View reviews</button>
-        </li>
-        <li>
-          <button onClick={logout}>Log Out</button>
-        </li>
+        <div className="user-details">
+            <li>Hi, {user.firstName}!</li>
+            <li>{user.username}</li>
+            <li>{user.email}</li>
+        </div>
+        <div className="actions">
+            <li>
+              <button onClick={comingSoon}>View orders</button>
+            </li>
+            <li>
+              <button onClick={viewReviews}>View reviews</button>
+            </li>
+            <li>
+              <button onClick={logout}>Log Out</button>
+            </li>
+        </div>
       </ul>
     </div>
-  );
+);
 }
 
 export default ProfileButton;

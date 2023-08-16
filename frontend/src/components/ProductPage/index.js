@@ -9,22 +9,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 
 function ProductPage() {
-  const dispatch = useDispatch();
-  const product = useSelector((state) => state.products.productById);
-  const { productId } = useParams();
-  const [quantity, setQuantity] = useState(1);
-  const user = useSelector((state) => state.session.user);
-  const history = useHistory();
-  const cartItems = useSelector((state) => state.cart.items);
-  const ratings = useSelector((state) => state.ratings.items);
+    const dispatch = useDispatch();
+    const product = useSelector((state) => state.products.productById);
+    const { productId } = useParams();
+    const [quantity, setQuantity] = useState(1);
+    const user = useSelector((state) => state.session.user);
+    const history = useHistory();
+    const cartItems = useSelector((state) => state.cart.items);
+    const ratings = useSelector((state) => state.ratings.items);
 
-  useEffect(() => {
-    dispatch(fetchProductById(productId));
-    dispatch(fetchRatings(productId));
-    if (user) {
-      dispatch(fetchCartItems(user.id));
-    }
-}, [dispatch, productId, user]);
+    useEffect(() => {
+        dispatch(fetchProductById(productId));
+        dispatch(fetchRatings(productId));
+        if (user) {
+            dispatch(fetchCartItems(user.id));
+        }
+    }, [dispatch, productId, user]);
 
 
   //The useMemo hook only runs when one of its dependencies update.
@@ -145,30 +145,38 @@ function ProductPage() {
       </div>
 
       <div className="product-reviews-container">
-    <h2>Reviews</h2>
-    {ratings && ratings.length ? (
-        ratings.map((rating) => (
-            <div key={rating.id} className="product-review">
-                {rating?.user?.username ? (
-                    <p>
-                        <strong>Reviewer:</strong> {rating.user.username}
-                    </p>
-                ) : null}
-                <p>
-                    <strong>Rating:</strong> {rating?.rating} / 5
-                </p>
-                <p>
-                    <strong>Review:</strong> {rating?.text}
-                </p>
+                <h2>Reviews</h2>
+                {ratings && ratings.length ? (
+                    ratings.map((rating) => (
+                        <div key={rating.id} className="product-review">
+                            {rating?.user?.username ? (
+                                <p>
+                                    <strong>Reviewer:</strong> {rating.user.username}
+                                </p>
+                            ) : null}
+                            <div className="review-rating">
+                                {[...Array(Math.floor(rating.rating))].map((_, index) => (
+                                    <FontAwesomeIcon className="star" icon={faStar} key={index} />
+                                ))}
+                                {[...Array(rating.rating % 1 >= 0.5 ? 1 : 0)].map((_, index) => (
+                                    <FontAwesomeIcon className="star" icon={faStarHalfAlt} key={index} />
+                                ))}
+                                {[...Array(5 - Math.floor(rating.rating) - (rating.rating % 1 >= 0.5 ? 1 : 0))].map((_, index) => (
+                                    <FontAwesomeIcon className="star" icon={faStar} key={index} opacity={0.2} />
+                                ))}
+                            </div>
+                            <p>
+                                <strong>Review:</strong> {rating?.text}
+                            </p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No reviews available for this product.</p>
+                )}
             </div>
-        ))
-    ) : (
-        <p>No reviews available for this product.</p>
-    )}
-</div>
-
-    </div>
-  );
+        </div>
+    );
 }
+
 
 export default ProductPage;

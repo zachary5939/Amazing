@@ -1,46 +1,47 @@
 .home-container {
-display:grid;
-grid-template-areas:1 2;
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 
 .splash-screen {
-    padding-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
 }
 
-.home-container .splash-screen h1{
-    grid-template-columns:auto 1fr !important;
-    font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;
-   }
+.home-container .splash-screen h1 {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
 
-   .splash-screen h1{
-    display:flex;
-    justify-content:flex-start;
-    padding-left:90px;
-    width:374px;
-   }
+.splash-screen h1 {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 90px;
+    width: 374px;
+}
 
-   /* Image */
-#root .home-container .splash-screen img{
-    width:665px !important;
-    display:flex;
-    justify-content:flex-start;
-    align-items:flex-start;
+#root .home-container .splash-screen img {
+    max-width: 100%;
+    height: auto;
     padding-top: 30px;
-   }
+}
 
-   /* Image */
-   #root .splash-screen img{
-    max-width:371px;
-    padding-left:79px;
-   }
+#root .splash-screen img {
+    max-width: 371px;
+    padding-left: 79px;
+}
 
-
-   .product-container {
+.product-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: -50px;
+    position: relative;
+    z-index: 2;
 }
 
 .square {
@@ -50,15 +51,18 @@ grid-template-areas:1 2;
     align-items: center;
     justify-content: center;
     background-color: #f0f0f0;
-    padding: 20px;
     text-align: center;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .square img {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     margin-bottom: 10px;
 }
 
@@ -72,3 +76,23 @@ grid-template-areas:1 2;
     padding: 5px 10px;
     margin: 0;
 }
+
+#root .square img{
+    height:517px;
+    width:85%;
+   }
+
+   #root .square{
+    top:-169px;
+    background-color:#e4e1e1;
+    transform:translatex(0px) translatey(0px);
+    width:608px;
+    height:608px;
+    min-width:0px;
+   }
+
+   #root .product-container{
+    height:496px;
+    padding-left:29px;
+    padding-right:34px;
+   }
