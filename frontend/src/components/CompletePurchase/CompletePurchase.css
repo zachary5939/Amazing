@@ -1,0 +1,49 @@
+.complete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 500px;
+    height: auto;
+    max-height: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.complete-heading {
+    margin-bottom: 20px;
+}
+
+.complete-logo {
+    width: 400px;
+    margin: 20px 0;
+}
+
+.complete-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #fddd4e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.complete-button:hover {
+    background-color: #fccc2e;
+}
+
+/* List Item */
+.profile-dropdown .user-details li{
+    transform:translatex(-26px) translatey(0px);
+    width:130px;
+   }
+
+   /* User details */
+   .nav-login-item .profile-dropdown .user-details{
+    width:153px;
+    transform:translatex(-21px) translatey(0px);
+   }

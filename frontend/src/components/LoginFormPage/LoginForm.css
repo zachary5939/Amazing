@@ -56,14 +56,14 @@ input:focus {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background-color: yellow;
+    background-color: #fddd4e;
     color: #000;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .login-new button:hover {
-    background-color: #ffd60a;
+    background-color: #fccc2e;
 }
 
 .login-error-message {
@@ -91,7 +91,7 @@ input:focus {
 #root .login-logo-container img{
     transform: translatey(-109px);
    }
-   
+
    #root .login-content-container{
     transform: translatey(-89px);
    }
@@ -107,4 +107,28 @@ input:focus {
 
    #root .login-container-main{
     transform:translatex(0px) translatey(0px);
+   }
+
+   /* Login new */
+#root .login-new{
+    height:24px;
+   }
+
+   /* Button */
+   #root .login-form button{
+    background-color:#fddd4e;
+    cursor: pointer;
+    border-style:none;
+    height:34px;
+    transform:translatex(41px) translatey(20px);
+   }
+
+   /* Button */
+   #root .app-container .login-container-main .login-content-container .login-form button{
+    width:74% !important;
+   }
+
+   /* Login container main */
+   #root .login-container-main{
+    height:801px;
    }

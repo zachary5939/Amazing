@@ -74,14 +74,14 @@ body {
 
 .profile-container {
   cursor: pointer;
-  position: relative; /* this is important for absolute positioning of children */
+  position: relative;
   z-index: 10;
 }
 
 .profile-dropdown {
-  position: absolute; /* dropdown will now float above content */
-  top: 100%; /* align it to the bottom of the .profile-container */
-  left: 0; /* align it to the left of the .profile-container */
+  position: absolute;
+  top: 100%;
+  left: 0;
   display: flex;
   width: 300px;
   border: 1px solid #ddd;
@@ -112,6 +112,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-decoration: none;
+  list-style-type: none;
 }
 
 .profile-dropdown .user-details li {
@@ -125,6 +127,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
+  list-style-type: none;
 }
 
 .profile-dropdown .actions button {
@@ -207,3 +211,14 @@ body {
 .nav-list .nav-search-button .fa-magnifying-glass{
   color:#1c1616;
 }
+
+/* Button */
+.actions li button{
+  transform:translatex(-27px) translatey(0px);
+ }
+
+ /* Button */
+ #root .app-container .nav-bar .nav-list .nav-login-item .profile-container .profile-dropdown .actions li button{
+  width:122% !important;
+ }
+
