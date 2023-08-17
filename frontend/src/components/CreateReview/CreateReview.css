@@ -1,9 +1,82 @@
-.rating-container .star {
-    color: #e0e0e0;
-    cursor: pointer;
-    margin-right: 3px;
-  }
+/* CreateReview.css */
 
-  .rating-container .star.active {
-    color: orange;
-  }
+.review-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Adjusted to reduce whitespace */
+  padding: 10% 0; /* Added some padding to give space from header and footer */
+}
+
+.product-image-container img {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.review-form-container {
+  margin-left: 50px;
+}
+
+textarea {
+  position: relative;
+  width: 300px;
+  height: 100px;
+  padding-right: 60px;
+  resize: none;
+}
+
+.character-counter {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 0 5px;
+}
+
+.submit-button {
+  background-color: yellow;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: gold;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+#root form .character-counter{
+  padding-bottom:34px;
+  transform:translatex(-429px) translatey(-74px);
+  min-height:182px;
+ }
+
+ * Review form container */
+#root .review-form-container{
+ height:295px;
+ position:relative;
+ top:-200px;
+ transform:translatex(14px) translatey(144px);
+}
+
+/* Image */
+#root .product-image-container img{
+ position:relative;
+ bottom:214px;
+ display:inline-block;
+ transform:translatex(-9px) translatey(163px);
+}
+
+/* Review container */
+#root .review-container{
+ height:331px;
+}
+
+/* Character counter */
+#root form .character-counter{
+ transform:translatex(4px) translatey(0px);
+}

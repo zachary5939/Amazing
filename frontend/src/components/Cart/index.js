@@ -86,16 +86,19 @@ function Cart() {
 
   const hasReviewedProduct = (productId) => {
     const reviewsForProduct = allReviews[productId] || [];
-    return reviewsForProduct.some((review) => review.productId === productId);
+    return reviewsForProduct.some((review) => review.productId === productId && review.userId === sessionUser.id);
   };
 
   const navigateToReview = (product) => {
+    console.log(allReviews); // Debugging
+    console.log(hasReviewedProduct(product.id)); // Debugging
     if (hasReviewedProduct(product.id)) {
       setShowErrorModal(true);
     } else {
       history.push(`/newreview/${product.id}`);
     }
   };
+
 
   const loginPlease = () => {
     history.push("/login");

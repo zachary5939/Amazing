@@ -13,7 +13,8 @@ function ReviewForm() {
   const { productId } = useParams();
   const [rating, setRating] = useState(0);
   const [text, setText] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null); // Step 1
+  const [charCount, setCharCount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
   const product = useSelector((state) => state.products.productById);
   const [hoveredStar, setHoveredStar] = useState(null);
 
@@ -23,31 +24,27 @@ function ReviewForm() {
     onStarClick,
     onStarHover,
     onStarLeave,
-  }) => {
-    return (
-      <div className="rating-container">
-        {[...Array(5)].map((_, index) => (
-          <FontAwesomeIcon
-            className={`star ${
-              index + 1 <= (editing && hoveredStar ? hoveredStar : rating)
-                ? "active"
-                : ""
-            }`}
-            icon={faStar}
-            key={index}
-            onClick={() => editing && onStarClick && onStarClick(index + 1)}
-            onMouseEnter={() =>
-              editing && onStarHover && onStarHover(index + 1)
-            }
-            onMouseLeave={() => editing && onStarLeave && onStarLeave()}
-          />
-        ))}
-        {editing && hoveredStar && (
-          <span className="hovered-rating-text">{hoveredStar}/5</span>
-        )}
-      </div>
-    );
-  };
+  }) => (
+    <div className="rating-container">
+      {[...Array(5)].map((_, index) => (
+        <FontAwesomeIcon
+          className={`star ${
+            index + 1 <= (editing && hoveredStar ? hoveredStar : rating)
+              ? "active"
+              : ""
+          }`}
+          icon={faStar}
+          key={index}
+          onClick={() => editing && onStarClick && onStarClick(index + 1)}
+          onMouseEnter={() => editing && onStarHover && onStarHover(index + 1)}
+          onMouseLeave={() => editing && onStarLeave && onStarLeave()}
+        />
+      ))}
+      {editing && hoveredStar && (
+        <span className="hovered-rating-text">{hoveredStar}/5</span>
+      )}
+    </div>
+  );
 
   useEffect(() => {
     dispatch(fetchProductById(productId));
@@ -56,45 +53,67 @@ function ReviewForm() {
   const user = useSelector((state) => state.session.user);
   const userId = user?.id;
 
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+    setCharCount(e.target.value.length);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Reset error message at the start
+    setErrorMessage(null);
+
     if (rating === 0) {
-        setErrorMessage("Please give it a rating, 1 through 5");
-        return;
+      setErrorMessage("Please give it a rating, 1 through 5");
+      return;
     }
+
     if (!text.trim()) {
-        setErrorMessage("You haven't written a review.");
-        return;
+      setErrorMessage("You haven't written a review.");
+      return;
     }
+
+    if (text.length > 240) {
+      setErrorMessage("Your review exceeds the 240 character limit.");
+      return;
+    }
+
     dispatch(addRating(userId, product.id, rating, text));
     history.push(`/products/${product.id}`);
-};
+  };
 
   return (
-    <div>
-      <h2>Review for {product?.name}</h2>
-      <img src={product?.imageUrl} alt={product?.name} />
-      {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="review-container">
+      <div className="product-image-container">
+        <img src={product?.imageUrl} alt={product?.name} />
+      </div>
+      <div className="review-form-container">
+        <h2>Review for {product?.name}</h2>
+        <form onSubmit={handleSubmit}>
+          {" "}
           <StarRating
             rating={rating}
             editing={true}
             onStarClick={(number) => setRating(number)}
           />
-        </div>
-        <div>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Write your review here..."
-          />
-        </div>
-        <div>
-          <button type="submit">Submit Review</button>
-        </div>
-      </form>
+          <div className="text-area-container">
+            <textarea
+              maxLength="240"
+              value={text}
+              onChange={handleTextChange}
+              placeholder="Write your review here..."
+            />
+            <div className="character-counter">{charCount}/240</div>
+          </div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          <button className="submit-button" type="submit">
+            Submit Review
+          </button>
+        </form>{" "}
+      </div>
     </div>
   );
 }
+
 export default ReviewForm;
