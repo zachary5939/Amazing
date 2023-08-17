@@ -110,4 +110,19 @@ router.delete('/:cartItemId', asyncHandler(async (req, res) => {
   }
 }));
 
+// Remove all items from cart for a given userId
+router.delete('/user/:userId', asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  const cartItems = await Cart.findAll({ where: { userId } });
+
+  if (cartItems.length) {
+    await Cart.destroy({ where: { userId } });
+    res.status(204).end();
+  } else {
+    res.status(404).json({ message: 'No cart items found for the given user' });
+  }
+}));
+
+
 module.exports = router;

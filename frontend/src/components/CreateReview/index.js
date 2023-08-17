@@ -99,6 +99,7 @@ function ReviewForm() {
           />
           <div className="text-area-container">
             <textarea
+            className="review-box"
               maxLength="240"
               value={text}
               onChange={handleTextChange}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartItems, updateCartItemQuantity, removeFromCart } from "../../store/cart";
+import { fetchCartItems, updateCartItemQuantity, removeFromCart, clearUserCart } from "../../store/cart";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../../img/amazinglogoblack.png";
@@ -54,6 +54,12 @@ function Cart() {
       console.error('Error updating quantity:', error);
     }
   };
+
+  const completePurchase = () => {
+    dispatch(clearUserCart(sessionUser.id));
+    history.push("/complete");
+  };
+
 
   const handleOpenConfirmModal = (cartItemId) => {
     setShowConfirmModal(true);
@@ -140,82 +146,78 @@ function Cart() {
     <div className="cartComp-cart">
       <h2>{sessionUser?.firstName}'s Cart</h2>
       <ul>
-          {cartItems.map((cartItem) => (
-              <li key={cartItem.id} className="cartComp-cart-item">
-                  <div className="cartComp-product-details">
-                  <Link to={`/products/${cartItem?.product?.id}`}>
-                          <img
-                              src={cartItem?.product?.imageUrl}
-                              alt={cartItem?.product?.name}
-                              className="cartComp-product-image"
-                          />
-                      </Link>
-                      <div>
-                          <p className="cartComp-product-name">{cartItem?.product?.name}</p>
-                          <p className="cartComp-product-description">{cartItem?.product?.description}</p>
-                          <p className="cartComp-product-price">Price: ${Number(cartItem?.product?.price).toFixed(2)}</p>
-                          <p className="cartComp-product-quantity">Quantity: {cartItem?.quantity}</p>
-                      </div>
-                  </div>
-                  <div className="cartComp-product-actions">
-                      {itemToUpdate === cartItem.id ? (
-                          <>
-                              <select
-                                  value={updateQuantities[cartItem.id] || cartItem.quantity}
-                                  onChange={(e) => setUpdateQuantities({
-                                      ...updateQuantities,
-                                      [cartItem.id]: parseInt(e.target.value, 10)
-                                  })}
-                              >
-                                  {[...Array(10).keys()].map((num) => (
-                                      <option key={num + 1} value={num + 1}>
-                                          {num + 1}
-                                      </option>
-                                  ))}
-                              </select>
-                              <button onClick={() => handleUpdateQuantity(cartItem.id)}>Confirm</button>
-                              <button onClick={handleCloseUpdateQuantityPopup}>Cancel</button>
-                          </>
-                      ) : (
-                          <>
-                              <p className="cartComp-total-price">
-                                  Total: ${(cartItem?.product?.price * cartItem?.quantity).toFixed(2)}
-                              </p>
-                              <button className="cartComp-update-quantity-button" onClick={() => handleOpenUpdateQuantityPopup(cartItem.id)}>Update Quantity</button>
-                          </>
-                      )}
+        {cartItems.map(({ id, product, quantity }) => (
+          <React.Fragment key={id}>
+            <li className="cartComp-cart-item">
+              <div className="cartComp-product-details">
+                <Link to={`/products/${product?.id}`}>
+                  <img
+                    src={product?.imageUrl}
+                    alt={product?.name}
+                    className="cartComp-product-image"
+                  />
+                </Link>
+                <div>
+                  <p className="cartComp-product-name">{product?.name}</p>
+                  <p className="cartComp-product-description">{product?.description}</p>
+                  <p className="cartComp-product-price">Price: ${Number(product?.price).toFixed(2)}</p>
+                  <p className="cartComp-product-quantity">Quantity: {quantity}</p>
+                </div>
+              </div>
+              <div className="cartComp-product-actions">
+                {itemToUpdate === id ? (
+                  <>
+                    <select
+                      value={updateQuantities[id] || quantity}
+                      onChange={(e) => setUpdateQuantities({
+                        ...updateQuantities,
+                        [id]: parseInt(e.target.value, 10)
+                      })}
+                    >
+                      {[...Array(10).keys()].map((num) => (
+                        <option key={num + 1} value={num + 1}>
+                          {num + 1}
+                        </option>
+                      ))}
+                    </select>
+                    <button onClick={() => handleUpdateQuantity(id)}>Confirm</button>
+                    <button onClick={handleCloseUpdateQuantityPopup}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <p className="cartComp-total-price">
+                      Total: ${(product?.price * quantity).toFixed(2)}
+                    </p>
+                    <button className="cartComp-update-quantity-button" onClick={() => handleOpenUpdateQuantityPopup(id)}>Update Quantity</button>
+                  </>
+                )}
 
-                      <button className="cartComp-remove-button" onClick={() => handleOpenConfirmModal(cartItem.id)}>Remove</button>
-                      <button onClick={() => navigateToReview(cartItem.product)} className="cartComp-review-button">Review</button>
-                  </div>
-                  {showConfirmModal && (
-                      <div className="cartComp-confirm-modal">
-                          <p className="delete-text">Are you sure you want to remove this item?</p>
-                          <button className="delete-button" onClick={confirmRemove}>Yes</button>
-                          <button className="delete-button" onClick={handleCloseConfirmModal}>No</button>
-                      </div>
-                  )}
-              </li>
-          ))}
+                <button className="cartComp-remove-button" onClick={() => handleOpenConfirmModal(id)}>Remove</button>
+                <button onClick={() => navigateToReview(product)} className="cartComp-review-button">Review</button>
+              </div>
+            </li>
+            {showConfirmModal && (
+              <div className="cartComp-confirm-modal">
+                <p className="delete-text">Are you sure you want to remove this item?</p>
+                <button className="delete-button" onClick={confirmRemove}>Yes</button>
+                <button className="delete-button" onClick={handleCloseConfirmModal}>No</button>
+              </div>
+            )}
+          </React.Fragment>
+        ))}
       </ul>
       <p className="cartComp-grand-total">Grand Total: ${grandTotal.toFixed(2)}</p>
-      <button className="cartComp-complete-purchase-button" onClick={comingSoon}>Complete Purchase</button>
-    {showErrorModal && (
-      <div className="error-modal">
-        <p>You've already reviewed this product. To manage your reviews, check out your review page.</p>
-        <button onClick={() => history.push("/reviews")}>Go to Reviews</button>
-        <button onClick={() => setShowErrorModal(false)}>Close</button>
-      </div>
-    )}
-    {showConfirmModal && (
-      <div className="cartComp-confirm-modal">
-        <p className="delete-text">Are you sure you want to remove this item?</p>
-        <button className="delete-button" onClick={confirmRemove}>Yes</button>
-        <button className="delete-button" onClick={handleCloseConfirmModal}>No</button>
-      </div>
-    )}
-  </div>
+      <button className="cartComp-complete-purchase-button" onClick={completePurchase}>Complete Purchase</button>
+      {showErrorModal && (
+        <div className="error-modal">
+          <p>You've already reviewed this product. To manage your reviews, check out your review page.</p>
+          <button onClick={() => history.push("/reviews")}>Go to Reviews</button>
+          <button onClick={() => setShowErrorModal(false)}>Close</button>
+        </div>
+      )}
+    </div>
   );
+
 }
 
 export default Cart;

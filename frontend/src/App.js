@@ -12,6 +12,7 @@ import Cart from "./components/Cart";
 import Reviews from "./components/Reviews";
 import CreateReview from "./components/CreateReview";
 import Footer from "./components/Footer";
+import CompletePurchase from "./components/CompletePurchase";
 
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
         </Route>
         <Route path="/cart">
           <Cart />
+        </Route>
+        <Route exact path="/complete">
+          <CompletePurchase />
         </Route>
         <Route exact path="/reviews">
           <Reviews />

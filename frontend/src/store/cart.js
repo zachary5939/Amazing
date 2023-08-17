@@ -7,6 +7,7 @@ const FETCH_CART_ITEMS_SUCCESS = 'cart/FETCH_CART_ITEMS_SUCCESS';
 const ADD_TO_CART_SUCCESS = 'cart/ADD_TO_CART_SUCCESS';
 const UPDATE_CART_ITEM_SUCCESS = 'cart/UPDATE_CART_ITEM_SUCCESS';
 const REMOVE_FROM_CART_SUCCESS = 'cart/REMOVE_FROM_CART_SUCCESS';
+const CLEAR_CART = 'cart/CLEAR_CART';
 
 // Action Creators
 export const fetchCartItemsSuccess = (cartItems) => ({
@@ -27,6 +28,10 @@ export const updateCartItemSuccess = (cartItem) => ({
 export const removeFromCartSuccess = (cartItemId) => ({
   type: REMOVE_FROM_CART_SUCCESS,
   payload: cartItemId,
+});
+
+export const clearCart = () => ({
+  type: CLEAR_CART,
 });
 
 export const fetchCartItems = (userId) => async (dispatch) => {
@@ -104,6 +109,24 @@ export const updateCartItemQuantity = (cartItemId, quantity) => async (dispatch)
     console.error('Error updating cart item quantity:', error);
   }
 };
+
+export const clearUserCart = (userId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/cart/user/${userId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to clear the cart for the user');
+    }
+
+    dispatch(clearCart());
+  } catch (error) {
+    console.error('Error clearing the cart for the user:', error);
+  }
+};
+
+
 // Reducer
 const initialState = {
   items: [],
@@ -138,6 +161,11 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
       };
+      case CLEAR_CART:
+        return {
+          ...state,
+          items: [],
+        };
     default:
       return state;
   }
