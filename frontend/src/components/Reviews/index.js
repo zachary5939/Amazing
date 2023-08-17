@@ -66,24 +66,35 @@ function Reviews() {
     setEditingReview(null);
   };
 
-  const StarRating = ({ rating, editing = false, onStarClick, onStarHover, onStarLeave }) => {
+  const StarRating = ({
+    rating,
+    editing = false,
+    onStarClick,
+    onStarHover,
+    onStarLeave,
+  }) => {
     return (
       <div className="rating-container">
         {[...Array(5)].map((_, index) => (
           <FontAwesomeIcon
-            className={`star ${index < (editing ? hoveredStar : rating) ? 'active' : ''}`}
+            className={`star ${
+              index < (editing ? hoveredStar : rating) ? "active" : ""
+            }`}
             icon={faStar}
             key={index}
             onClick={() => editing && onStarClick && onStarClick(index + 1)}
-            onMouseEnter={() => editing && onStarHover && onStarHover(index + 1)}
+            onMouseEnter={() =>
+              editing && onStarHover && onStarHover(index + 1)
+            }
             onMouseLeave={() => editing && onStarLeave && onStarLeave()}
           />
         ))}
-        {editing && hoveredStar && <span className="hovered-rating-text">{hoveredStar}/5</span>}
+        {editing && hoveredStar && (
+          <span className="hovered-rating-text">{hoveredStar}/5</span>
+        )}
       </div>
     );
   };
-
 
   if (!ratings.length) {
     return (
@@ -104,16 +115,18 @@ function Reviews() {
   return (
     <div>
       {showConfirmModal && (
-        <div className="cartComp-confirm-modal">
-          <p className="delete-text">
-            Are you sure you want to remove this review?
-          </p>
-          <button className="delete-button" onClick={confirmDelete}>
-            Yes
-          </button>
-          <button className="delete-button" onClick={handleCloseConfirmModal}>
-            No
-          </button>
+        <div className="modal-background">
+          <div className="cartComp-confirm-modal">
+            <p className="delete-text">
+              Are you sure you want to remove this review?
+            </p>
+            <button className="delete-button" onClick={confirmDelete}>
+              Yes
+            </button>
+            <button className="delete-button" onClick={handleCloseConfirmModal}>
+              No
+            </button>
+          </div>
         </div>
       )}
 
@@ -139,13 +152,20 @@ function Reviews() {
                 {editingReview === rating.id ? (
                   <>
                     <textarea
+                      className="edit-review"
                       value={updatedText}
                       onChange={handleTextChange}
+                      maxLength="240"
                     />
+                    <div className="character-count">
+                      {updatedText.length}/240
+                    </div>
                     <div className="rating-container">
                       {[...Array(5)].map((_, index) => (
                         <FontAwesomeIcon
-                          className={`star ${index < updatedRating ? 'active' : ''}`}
+                          className={`star ${
+                            index < updatedRating ? "active" : ""
+                          }`}
                           icon={faStar}
                           key={index}
                           onClick={() => handleStarClick(index + 1)}
