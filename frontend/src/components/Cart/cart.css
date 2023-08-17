@@ -181,3 +181,17 @@
     margin-left:0px;
     width:116px;
    }
+
+   .cartComp-action-button {
+    background-color: #fddd4e;
+    border: none;
+    margin: 5px 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.cartComp-action-button:hover {
+    box-shadow:0px 0px 3px 0px #000000;
+}

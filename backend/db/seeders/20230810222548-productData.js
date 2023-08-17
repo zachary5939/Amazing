@@ -17,7 +17,7 @@ module.exports = {
           name: "MacBook Pro 14 inch Laptop",
           description: "Lorem Ipsum",
           imageUrl:
-            "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
+            "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6455/6455369_sd.jpg",
           price: 999.99,
           categoryId: 1,
         },
@@ -25,7 +25,7 @@ module.exports = {
           name: "Nintendo Switch OLED Model",
           description: "Lorem Ipsum",
           imageUrl:
-            "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
+            "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6470/6470923_sd.jpg",
           price: 349.99,
           categoryId: 1,
         },
@@ -33,7 +33,7 @@ module.exports = {
           name: "PlayStation 5",
           description: "Lorem Ipsum",
           imageUrl:
-            "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
+            "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6523/6523167_sd.jpg",
           price: 499.99,
           categoryId: 1,
         },

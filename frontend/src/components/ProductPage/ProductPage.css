@@ -76,3 +76,10 @@
 #root .app-container .product-page .product-reviews-container .product-review p{
     width:37% !important;
    }
+/* Product page  top section */
+#root .product-page .product-page__top-section{
+    padding-right:219px;
+    transform:translatex(0px) translatey(0px);
+    padding-left:127px;
+   }
+

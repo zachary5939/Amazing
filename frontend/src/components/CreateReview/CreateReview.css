@@ -4,17 +4,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh; /* Adjusted to reduce whitespace */
-  padding: 10% 0; /* Added some padding to give space from header and footer */
+  height: 80vh;
+  padding: 10%;
 }
 
 .product-image-container img {
   max-width: 400px;
   max-height: 400px;
+  display: block; /* Ensuring the image behaves as block to center it */
+  margin: 0 auto;
 }
 
 .review-form-container {
   margin-left: 50px;
+  display: flex;
+  flex-direction: column; /* Adjust the direction for proper layout */
+  align-items: center; /* Center the content within the container */
 }
 
 .review-box {
@@ -23,12 +28,10 @@
   height: 100px;
   padding-right: 60px;
   resize: none;
+  margin-bottom: 10px; /* Space out the text area from the character counter */
 }
 
 .character-counter {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
   padding: 0 5px;
 }
 
@@ -48,37 +51,6 @@
 .error-message {
   color: red;
   margin-top: 10px;
-}
-#root form .character-counter{
-  padding-bottom:34px;
-  transform:translatex(-429px) translatey(-74px);
-  min-height:182px;
- }
-
- * Review form container */
-#root .review-form-container{
- height:295px;
- position:relative;
- top:-200px;
- transform:translatex(14px) translatey(144px);
-}
-
-/* Image */
-#root .product-image-container img{
- position:relative;
- bottom:214px;
- display:inline-block;
- transform:translatex(-9px) translatey(163px);
-}
-
-/* Review container */
-#root .review-container{
- height:331px;
-}
-
-/* Character counter */
-#root form .character-counter{
- transform:translatex(4px) translatey(0px);
 }
 
 .modal-background {
@@ -112,11 +84,33 @@
 
 /* Delete button */
 #root .cartComp-confirm-modal .delete-button{
-  position:relative;
-  left:160px;
-  margin-right:59px;
-  margin-left:-41px;
-  width:69px;
-  min-height:32px;
+  margin-right: 59px;
+  margin-left: auto;
+  width: 69px;
+  min-height: 32px;
+}
+
+/* Form Division */
+#root form{
+  width:586px;
+  transform:translatex(0px) translatey(0px);
+ }
+
+ /* Text Area */
+ #root form textarea{
+  width:522px;
+  font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;
+ }
+
+ /* Rating container */
+ #root form .rating-container{
+  display:flex;
+  justify-content:center;
+  font-size:23px;
+ }
+
+/* Review container */
+#root .review-container{
+  height:180px;
  }
 

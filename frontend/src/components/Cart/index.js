@@ -146,65 +146,65 @@ function Cart() {
     <div className="cartComp-cart">
       <h2>{sessionUser?.firstName}'s Cart</h2>
       <ul>
-        {cartItems.map(({ id, product, quantity }) => (
-          <React.Fragment key={id}>
-            <li className="cartComp-cart-item">
-              <div className="cartComp-product-details">
-                <Link to={`/products/${product?.id}`}>
-                  <img
-                    src={product?.imageUrl}
-                    alt={product?.name}
-                    className="cartComp-product-image"
-                  />
-                </Link>
-                <div>
-                  <p className="cartComp-product-name">{product?.name}</p>
-                  <p className="cartComp-product-description">{product?.description}</p>
-                  <p className="cartComp-product-price">Price: ${Number(product?.price).toFixed(2)}</p>
-                  <p className="cartComp-product-quantity">Quantity: {quantity}</p>
-                </div>
-              </div>
-              <div className="cartComp-product-actions">
-                {itemToUpdate === id ? (
-                  <>
-                    <select
-                      value={updateQuantities[id] || quantity}
-                      onChange={(e) => setUpdateQuantities({
-                        ...updateQuantities,
-                        [id]: parseInt(e.target.value, 10)
-                      })}
-                    >
-                      {[...Array(10).keys()].map((num) => (
-                        <option key={num + 1} value={num + 1}>
-                          {num + 1}
-                        </option>
-                      ))}
-                    </select>
-                    <button onClick={() => handleUpdateQuantity(id)}>Confirm</button>
-                    <button onClick={handleCloseUpdateQuantityPopup}>Cancel</button>
-                  </>
-                ) : (
-                  <>
-                    <p className="cartComp-total-price">
-                      Total: ${(product?.price * quantity).toFixed(2)}
-                    </p>
-                    <button className="cartComp-update-quantity-button" onClick={() => handleOpenUpdateQuantityPopup(id)}>Update Quantity</button>
-                  </>
-                )}
+{cartItems.map(({ id, product, quantity }) => (
+  <React.Fragment key={id}>
+    <li className="cartComp-cart-item">
+      <div className="cartComp-product-details">
+        <Link to={`/products/${product?.id}`}>
+          <img
+            src={product?.imageUrl}
+            alt={product?.name}
+            className="cartComp-product-image"
+          />
+        </Link>
+        <div>
+          <p className="cartComp-product-name">{product?.name}</p>
+          <p className="cartComp-product-description">{product?.description}</p>
+          <p className="cartComp-product-price">Price: ${Number(product?.price).toFixed(2)}</p>
+          <p className="cartComp-product-quantity">Quantity: {quantity}</p>
+        </div>
+      </div>
+      <div className="cartComp-product-actions">
+        {itemToUpdate === id ? (
+          <>
+            <select
+              value={updateQuantities[id] || quantity}
+              onChange={(e) => setUpdateQuantities({
+                ...updateQuantities,
+                [id]: parseInt(e.target.value, 10)
+              })}
+            >
+              {[...Array(10).keys()].map((num) => (
+                <option key={num + 1} value={num + 1}>
+                  {num + 1}
+                </option>
+              ))}
+            </select>
+            <button className="cartComp-update-quantity-button" onClick={() => handleUpdateQuantity(id)}>Confirm</button>
+            <button className="cartComp-remove-button" onClick={handleCloseUpdateQuantityPopup}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <p className="cartComp-total-price">
+              Total: ${(product?.price * quantity).toFixed(2)}
+            </p>
+            <button className="cartComp-update-quantity-button" onClick={() => handleOpenUpdateQuantityPopup(id)}>Update Quantity</button>
+          </>
+        )}
 
-                <button className="cartComp-remove-button" onClick={() => handleOpenConfirmModal(id)}>Remove</button>
-                <button onClick={() => navigateToReview(product)} className="cartComp-review-button">Review</button>
-              </div>
-            </li>
-            {showConfirmModal && (
-              <div className="cartComp-confirm-modal">
-                <p className="delete-text">Are you sure you want to remove this item?</p>
-                <button className="delete-button" onClick={confirmRemove}>Yes</button>
-                <button className="delete-button" onClick={handleCloseConfirmModal}>No</button>
-              </div>
-            )}
-          </React.Fragment>
-        ))}
+        <button className="cartComp-remove-button" onClick={() => handleOpenConfirmModal(id)}>Remove</button>
+        <button onClick={() => navigateToReview(product)} className="cartComp-review-button">Review</button>
+      </div>
+    </li>
+    {showConfirmModal && (
+      <div className="cartComp-confirm-modal">
+        <p className="delete-text">Are you sure you want to remove this item?</p>
+        <button className="delete-button" onClick={confirmRemove}>Yes</button>
+        <button className="delete-button" onClick={handleCloseConfirmModal}>No</button>
+      </div>
+    )}
+  </React.Fragment>
+))}
       </ul>
       <p className="cartComp-grand-total">Grand Total: ${grandTotal.toFixed(2)}</p>
       <button className="cartComp-complete-purchase-button" onClick={completePurchase}>Complete Purchase</button>
