@@ -37,7 +37,6 @@ function SignupFormPage() {
         })
         .catch(async (res) => {
           const data = await res.json();
-          console.log("Received Error:", data);  // <-- Add this line
           if (data && data.errors) {
             setErrors(prevErrors => ({ ...prevErrors, ...data.errors }));
           }

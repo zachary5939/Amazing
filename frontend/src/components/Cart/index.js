@@ -96,8 +96,6 @@ function Cart() {
   };
 
   const navigateToReview = (product) => {
-    console.log(allReviews); // Debugging
-    console.log(hasReviewedProduct(product.id)); // Debugging
     if (hasReviewedProduct(product.id)) {
       setShowErrorModal(true);
     } else {

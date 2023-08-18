@@ -5,7 +5,7 @@ import * as sessionActions from "../../store/session";
 
 function QuantityPopup({ cartItemId, onClose }) {
     const dispatch = useDispatch();
-    const userId = useSelector(state => state.session.userId); // Fetch the userId from Redux state.
+    const userId = useSelector(state => state.session.userId);
 
     const [quantity, setQuantity] = useState(1);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -13,7 +13,7 @@ function QuantityPopup({ cartItemId, onClose }) {
     const handleUpdateQuantity = async () => {
         try {
             await dispatch(updateCartItemQuantity(cartItemId, quantity));
-            await dispatch(fetchCartItems(userId));  // Use the userId here
+            await dispatch(fetchCartItems(userId));
             onClose();
         } catch (error) {
             console.error('Error updating quantity:', error);
