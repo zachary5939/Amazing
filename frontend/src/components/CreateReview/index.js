@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addRating } from "../../store/ratings";
 import { useParams, useHistory } from "react-router-dom";
 import { fetchProductById } from "../../store/products";
+import { fetchCartItems } from "../../store/cart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../img/amazinglogoblack.png";
 import "./CreateReview.css";
 
 function ReviewForm() {
@@ -16,7 +18,9 @@ function ReviewForm() {
   const [charCount, setCharCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
   const product = useSelector((state) => state.products.productById);
+  const cartItems = useSelector((state) => state.cart.items);
   const [hoveredStar, setHoveredStar] = useState(null);
+
 
   const StarRating = ({
     rating,
@@ -45,13 +49,47 @@ function ReviewForm() {
       )}
     </div>
   );
+  const user = useSelector((state) => state.session.user);
+  const userId = user?.id;
 
   useEffect(() => {
     dispatch(fetchProductById(productId));
-  }, [dispatch, productId]);
+    if (userId) {
+      dispatch(fetchCartItems(userId));
+    }
+  }, [dispatch, productId, userId]);
 
-  const user = useSelector((state) => state.session.user);
-  const userId = user?.id;
+  const isInCart = cartItems.some(item => item.productId === +productId);
+
+  if (!user) {
+    return (
+      <div className="not-signed-in-container">
+        <h1 className="not-signed-in-header">You need to be signed in to do that.</h1>
+        <img className="not-signed-in-logo" src={logo} alt="Amazing Logo" />
+        <button
+          className="not-signed-in-login-button"
+          onClick={() => history.push('/login')}
+        >
+          Log in
+        </button>
+      </div>
+    );
+  }
+
+  if (!isInCart) {
+    return (
+      <div className="not-signed-in-container">
+        <h1 className="not-signed-in-header">You need to add this product to your cart in order to review it.</h1>
+        <img className="not-signed-in-logo" src={logo} alt="Amazing Logo" />
+        <button
+          className="not-signed-in-login-button"
+          onClick={() => history.push('/products')}
+        >
+          View All Products
+        </button>
+      </div>
+    );
+  }
 
   const handleTextChange = (e) => {
     setText(e.target.value);
@@ -61,7 +99,6 @@ function ReviewForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Reset error message at the start
     setErrorMessage(null);
 
     if (rating === 0) {

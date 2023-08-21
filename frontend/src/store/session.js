@@ -61,7 +61,7 @@ export const login = (user) => async (dispatch) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw errorData.errors; // Throw the error to be caught in the catch block
+      throw errorData.errors;
     }
 
     const data = await response.json();
@@ -69,7 +69,7 @@ export const login = (user) => async (dispatch) => {
     return response;
   } catch (error) {
     console.error("Error during login:", error);
-    throw error; // Re-throw the error for component-level handling
+    throw error;
   }
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import LandingPage from "./components/LandingPage";
@@ -13,7 +13,7 @@ import Reviews from "./components/Reviews";
 import CreateReview from "./components/CreateReview";
 import Footer from "./components/Footer";
 import CompletePurchase from "./components/CompletePurchase";
-
+import NotFound from "./components/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,7 +57,9 @@ function App() {
         <Route path="/newreview/:productId">
           <CreateReview />
         </Route>
-        <Redirect to="/" />
+        <Route path="*">
+          <NotFound />
+        </Route>
       </Switch>
       <Footer />
     </div>

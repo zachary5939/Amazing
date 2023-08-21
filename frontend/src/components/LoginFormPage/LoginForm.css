@@ -1,5 +1,5 @@
-/* Container */
-.login-container-main {
+
+.login-form-page {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,13 +8,12 @@
     background-color: #f5f5f5;
 }
 
-.login-logo-container img {
+.login-form-page__logo-container img {
     width: 150px;
     height: auto;
     margin-bottom: 20px;
 }
-
-.login-content-container {
+.login-form-page__content-container {
     background-color: #fff;
     padding: 70px;
     border: 1px solid #ccc;
@@ -22,7 +21,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+.login-form-page h1 {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -33,12 +32,12 @@ h1 {
     gap: 10px;
 }
 
-.input-container {
+.login-form__label {
     position: relative;
     width: 100%;
 }
 
-input {
+.login-form__input {
     padding-right: 120px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -48,11 +47,20 @@ input {
     width: 100%;
 }
 
-input:focus {
+.login-form__input:focus {
     border-color: #0077b6;
 }
 
-.login-new button {
+.login-form__error-message {
+    color: red;
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1px;
+}
+
+
+.login-form__button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -62,73 +70,33 @@ input:focus {
     transition: background-color 0.3s ease;
 }
 
-.login-new button:hover {
+.login-form__button:hover {
     background-color: #fccc2e;
 }
 
-.login-error-message {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: red;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 110px;
-    pointer-events: none;
-}
-
-.login-new {
+.login-form-page__new-user {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-
-#root .login-logo-container img{
-    transform: translatey(-109px);
-   }
-
-   #root .login-content-container{
-    transform: translatey(-89px);
-   }
-
-   #root .login-new h4{
-    transform: translatey(-69px);
-   }
-
-   #root .login-new button{
-    transform: translatey(-83px);
-    width:224px;
-   }
-
-   #root .login-container-main{
-    transform:translatex(0px) translatey(0px);
-   }
-
-   /* Login new */
-#root .login-new{
-    height:24px;
-   }
-
-   /* Button */
-   #root .login-form button{
-    background-color:#fddd4e;
+.login-form-page__new-user-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #fddd4e;
+    color: #000;
     cursor: pointer;
-    border-style:none;
-    height:34px;
-    transform:translatex(41px) translatey(20px);
-   }
+    transition: background-color 0.3s ease;
+}
 
-   /* Button */
-   #root .app-container .login-container-main .login-content-container .login-form button{
-    width:74% !important;
-   }
+.login-form-page__new-user-button:hover {
+    background-color: #fccc2e;
+}
 
-   /* Login container main */
-   #root .login-container-main{
-    height:801px;
+/* Login form  button */
+.login-form-page .login-form .login-form__button{
+    transform:translatex(92px) translatey(27px);
+    width:67%;
    }

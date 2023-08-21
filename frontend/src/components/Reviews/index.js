@@ -98,19 +98,26 @@ function Reviews() {
 
   if (!ratings.length) {
     return (
-      <div className="empty-reviews-container">
-        <h1>{user?.firstName}, you haven't reviewed anything!</h1>
-        <p>Browse our products and add something to your cart to review it!</p>
-        <img src={logo} alt="Logo" />
-        <button
-          className="show-products-btn"
-          onClick={() => history.push("/products")}
-        >
-          Show me products
-        </button>
-      </div>
+        <div className="empty-reviews-container">
+            <h1>
+                {user ? `${user.firstName}, you haven't reviewed anything!` : "Please login to browse your reviews"}
+            </h1>
+
+            {user ? (
+                <p>Browse our products and add something to your cart to review it!</p>
+            ) : null}
+
+            <img src={logo} alt="Logo" />
+
+            <button
+                className="show-products-btn"
+                onClick={() => history.push(user ? "/products" : "/login")}
+            >
+                {user ? "Show me products" : "Login"}
+            </button>
+        </div>
     );
-  }
+}
 
   return (
     <div>

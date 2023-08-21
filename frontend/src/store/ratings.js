@@ -61,10 +61,9 @@ export const fetchAllRatings = () => async (dispatch) => {
 
 export const fetchRatingsForProducts = (productIds) => async (dispatch) => {
   try {
-    // Fetch ratings for all product IDs and wait for all requests to finish
     const responses = await Promise.all(productIds.map(productId => csrfFetch(`/api/ratings/product/${productId}`)));
     const allRatingsData = await Promise.all(responses.map(response => response.json()));
-    const ratings = [].concat(...allRatingsData);  // Flatten the array of arrays
+    const ratings = [].concat(...allRatingsData);
 
     dispatch({
       type: FETCH_RATINGS,

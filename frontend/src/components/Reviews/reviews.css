@@ -120,7 +120,7 @@
 }
 
 .show-products-btn {
-    background-color: yellow;
+    background-color: #fddd4e;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -129,7 +129,7 @@
 }
 
 .show-products-btn:hover {
-    background-color: #f5f5d5;
+    background-color: #fae275;;
 }
 
 #root h1{
@@ -206,4 +206,3 @@
 #root .review-item .delete-review-btn{
     transform:translatex(0px) translatey(43px);
    }
-

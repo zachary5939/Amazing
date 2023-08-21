@@ -65,7 +65,6 @@ export const addToCart = (userId, productId, quantity) => async (dispatch) => {
 
     const cartItem = await response.json();
 
-    // Fetch updated cart items after adding to cart
     dispatch(addToCartSuccess(cartItem));
   } catch (error) {
     console.error('Error adding to cart:', error);

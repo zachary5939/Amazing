@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems, updateCartItemQuantity, removeFromCart, clearUserCart } from "../../store/cart";
+import { fetchUserRatings } from "../../store/ratings";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../../img/amazinglogoblack.png";
@@ -38,6 +39,7 @@ function Cart() {
 
   useEffect(() => {
     if (sessionUser) {
+      dispatch(fetchUserRatings(sessionUser.id));
       dispatch(fetchCartItems(sessionUser.id));
     }
   }, [dispatch, sessionUser]);
@@ -92,8 +94,9 @@ function Cart() {
 
   const hasReviewedProduct = (productId) => {
     const reviewsForProduct = allReviews[productId] || [];
-    return reviewsForProduct.some((review) => review.productId === productId && review.userId === sessionUser.id);
+    return reviewsForProduct.some((review) => review.userId === sessionUser.id);
   };
+
 
   const navigateToReview = (product) => {
     if (hasReviewedProduct(product.id)) {

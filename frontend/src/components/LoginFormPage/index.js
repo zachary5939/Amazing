@@ -23,8 +23,12 @@ function LoginFormPage() {
     const demoCredential = "demo@user.io";
     const demoPassword = "password";
 
-
-    dispatch(sessionActions.login({ credential: demoCredential, password: demoPassword }))
+    dispatch(
+      sessionActions.login({
+        credential: demoCredential,
+        password: demoPassword,
+      })
+    )
       .then(() => {
         closeModal();
         history.push("/");
@@ -47,7 +51,11 @@ function LoginFormPage() {
         history.push("/");
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
           setErrors(error.response.data.errors);
         } else {
           setErrors({ credential: "Invalid credentials. Please try again." });
@@ -56,40 +64,67 @@ function LoginFormPage() {
   };
 
   return (
-    <div className="login-container-main">
-      <div className="login-logo-container">
-        <img src={logo} alt="Amazing Logo" className="login-logo-image" />
+    <div className="login-form-page">
+      <div className="login-form-page__logo-container">
+        <img
+          src={logo}
+          alt="Amazing Logo"
+          className="login-form-page__logo-image"
+        />
       </div>
-      <div className="login-content-container">
+      <div className="login-form-page__content-container">
         <h1>Sign In</h1>
+        {errors.credential && (
+          <p className="login-form__error-message">{errors.credential}</p>
+        )}
         <form className="login-form" onSubmit={handleSubmit}>
-          <label>
+          <label className="login-form__label">
             Username or Email
             <input
               type="text"
               value={credential}
               onChange={(e) => setCredential(e.target.value)}
+              className="login-form__input"
               required
             />
           </label>
-          {errors.credential && <p className="login-error-message">{errors.credential}</p>}
-          <label>
+          {errors.credential && (
+            <p className="login-form__error-message">{errors.credential}</p>
+          )}
+          <label className="login-form__label">
             Password
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="login-form__input"
               required
             />
           </label>
-          {errors.password && <p className="login-error-message">{errors.password}</p>}
-          <button type="submit">Log In</button>
-          <button type="button" onClick={handleDemoUserClick}>Demo User</button>
+          {errors.password && (
+            <p className="login-form__error-message">{errors.password}</p>
+          )}
+          <button type="submit" className="login-form__button">
+            Log In
+          </button>
+          <button
+            type="button"
+            onClick={handleDemoUserClick}
+            className="login-form__button"
+          >
+            Demo User
+          </button>
         </form>
       </div>
-      <div className="login-new">
+      <div className="login-form-page__new-user">
         <h4>New to Amazing?</h4>
-        <button type="submit" onClick={signUp}>Sign Up</button>
+        <button
+          type="submit"
+          onClick={signUp}
+          className="login-form-page__new-user-button"
+        >
+          Sign Up
+        </button>
       </div>
     </div>
   );
