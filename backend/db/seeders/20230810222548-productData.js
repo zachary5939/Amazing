@@ -64,7 +64,7 @@ module.exports = {
           name: "Keurig Single-Serve Coffee Makers",
           description: "Lorem Ipsum",
           imageUrl:
-            "https://upload.wikimedia.org/wikipedia/en/thumb/2/26/ManonTheMoonTheEndofDay.jpg/220px-ManonTheMoonTheEndofDay.jpg",
+            "https://i5.walmartimages.com/seo/Keurig-K-Duo-Essentials-Black-Single-Serve-K-Cup-Pod-Coffee-Maker-Black_12823d58-a105-4739-9e5e-b6b4a8cba187.06b909d5b4121050b7b8aaaebbc80127.jpeg",
           price: 89.99,
           categoryId: 3,
         },
