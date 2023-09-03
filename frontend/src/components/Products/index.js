@@ -19,7 +19,6 @@ function Products() {
     if (categoryId) {
       dispatch(productActions.fetchProductsByCategory(categoryId));
     } else if (!Object.keys(products).length) {
-      // Only fetch all products if the products are not already populated (e.g., by a search)
       dispatch(productActions.fetchAllProducts());
     }
   }, [dispatch, categoryId, products]);
