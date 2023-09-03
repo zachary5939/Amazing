@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faMagnifyingGlass, faCartShopping } from "@fortawesome/free-solid-svg-icons"
+import {
+  faMagnifyingGlass,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 import ProfileButton from "./ProfileButton";
 import logo from "../../img/amazinglogo.png";
 import * as sessionActions from "../../store/session";
@@ -24,9 +27,15 @@ function Navigation({ isLoaded }) {
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
-      dispatch(searchProductsByName(searchTerm, history));
+      dispatch(searchProductsByName(searchTerm))
+      .then(success => {
+        if (success) {
+          history.push('/products');
+        }
+      });
     }
   };
+
 
   let sessionLinks;
   if (sessionUser) {
@@ -34,7 +43,6 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = <NavLink to="/login">Sign in</NavLink>;
   }
-
 
   return (
     <>
@@ -48,13 +56,13 @@ function Navigation({ isLoaded }) {
           <li className="nav-search-container">
             <input
               type="text"
-              placeholder="Search coming soon..."
+              placeholder="Search..."
               className="nav-search-bar"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             />
-            <button onClick={comingSoon} className="nav-search-button">
+            <button onClick={handleSearch} className="nav-search-button">
               <FontAwesomeIcon icon={["fa-solid", "fa-magnifying-glass"]} />
             </button>
           </li>

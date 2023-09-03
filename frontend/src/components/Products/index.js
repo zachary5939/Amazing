@@ -18,10 +18,12 @@ function Products() {
   useEffect(() => {
     if (categoryId) {
       dispatch(productActions.fetchProductsByCategory(categoryId));
-    } else {
+    } else if (!Object.keys(products).length) {
+      // Only fetch all products if the products are not already populated (e.g., by a search)
       dispatch(productActions.fetchAllProducts());
     }
-  }, [dispatch, categoryId]);
+  }, [dispatch, categoryId, products]);
+
 
   //watch for changes in `products`
   useEffect(() => {

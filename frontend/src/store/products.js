@@ -27,15 +27,17 @@ export const clearRatings = () => ({
   type: CLEAR_RATINGS,
 });
 
-export const searchProductsByName = (name, history) => async (dispatch) => {
+export const searchProductsByName = (name) => async (dispatch) => {
   const response = await fetch(`/api/products/search?name=${name}`);
 
   if (response.ok) {
     const products = await response.json();
     dispatch(setSearchResults(products));
-    history.push('/products');
+    return true;
   }
+  return false;
 };
+
 
 export const fetchAllProducts = () => async (dispatch) => {
   try {
