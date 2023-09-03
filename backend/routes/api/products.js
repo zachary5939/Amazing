@@ -24,8 +24,8 @@ router.get('/search', async (req, res) => {
 
   // Check if we are in production (using Postgres)
   if (process.env.NODE_ENV === "production") {
-    operator = Op.iLike; //iLike for case-insensitive postgres
-    transformedSearchQuery = searchQuery;
+    operator = Op.iLike; // Use iLike for Postgres
+    transformedSearchQuery = searchQuery; // Keep the query as is for Postgres
   }
 
   try {
@@ -48,6 +48,30 @@ router.get('/search', async (req, res) => {
   }
 });
 
+
+// //search products. NOTE: iLike is case-insensitive for postgres ONLY!! it will not work on localhost.
+// router.get('/search', async (req, res) => {
+//   const searchQuery = req.query.name;
+
+//   try {
+//     const products = await Product.findAll({
+//       where: {
+//         name: {
+//           [Op.iLike]: `%${searchQuery}%`
+//         }
+//       }
+//     });
+
+//     if (!products.length) {
+//       return res.status(404).json({ error: 'No products found' });
+//     }
+
+//     res.json(products);
+//   } catch (error) {
+//     console.error('Error searching products:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
 
 // Get a product by ID
 router.get('/:id', async (req, res) => {
