@@ -77,6 +77,7 @@ export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
 const initialState = {
   allProducts: {},
   productById: {},
+  searched: false,
 };
 
 const productsReducer = (state = initialState, action) => {

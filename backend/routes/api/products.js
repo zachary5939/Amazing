@@ -23,7 +23,7 @@ router.get('/search', async (req, res) => {
     const products = await Product.findAll({
       where: {
         name: {
-          [Op.like]: `%${searchQuery}%`
+          [Op.iLike]: `%${searchQuery}%`
         }
       }
     });

@@ -1,7 +1,7 @@
 import * as productActions from "../../store/products";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { fetchAllRatings, fetchRatingsForProducts } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,8 @@ function Products() {
   const { categoryId } = useParams();
   const normalizedProducts = Object.values(products || {});
   const ratings = useSelector((state) => state.ratings?.items || []);
+  const searched = useSelector((state) => state.products.searched);
+  
 
   useEffect(() => {
     if (categoryId) {
@@ -32,7 +34,13 @@ function Products() {
     }
   }, [dispatch, products]);
 
+
+
   const getCategoryName = (categoryId) => {
+    if (searched) {
+      return "Search Results";
+    }
+
     switch (categoryId) {
       case "1":
         return "Electronics";
@@ -46,6 +54,7 @@ function Products() {
         return "All Products";
     }
   };
+
 
   const getAverageRating = (productId) => {
     const productRatings = ratings.filter(
