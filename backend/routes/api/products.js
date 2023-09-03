@@ -16,14 +16,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+//search products.
 router.get('/search', async (req, res) => {
   const searchQuery = req.query.name;
+  let operator = Op.like;
+  let transformedSearchQuery = searchQuery.toLowerCase(); // Default for SQLite
+
+  // Check if we are in production (using Postgres)
+  if (process.env.NODE_ENV === "production") {
+    operator = Op.iLike; //iLike for case-insensitive postgres
+    transformedSearchQuery = searchQuery;
+  }
 
   try {
     const products = await Product.findAll({
       where: {
         name: {
-          [Op.iLike]: `%${searchQuery}%`
+          [operator]: `%${transformedSearchQuery}%`
         }
       }
     });
@@ -38,6 +47,7 @@ router.get('/search', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // Get a product by ID
 router.get('/:id', async (req, res) => {
