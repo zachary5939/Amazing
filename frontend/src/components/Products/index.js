@@ -15,16 +15,21 @@ function Products() {
   const normalizedProducts = Object.values(products || {});
   const ratings = useSelector((state) => state.ratings?.items || []);
   const searched = useSelector((state) => state.products.searched);
-  
+
+  const searchedProducts = useSelector(
+    (state) => state.products.searchedProducts
+  );
 
   useEffect(() => {
     if (categoryId) {
+      dispatch(productActions.resetSearchState()); // Clear the search state when a category is selected
       dispatch(productActions.fetchProductsByCategory(categoryId));
-    } else if (!Object.keys(products).length) {
-      dispatch(productActions.fetchAllProducts());
+    } else if (searched) {
+      return;
+    } else {
+      dispatch(productActions.fetchAllProducts()); // Fetch all products when on default `/products` route
     }
-  }, [dispatch, categoryId, products]);
-
+  }, [dispatch, categoryId, searched]);
 
   //watch for changes in `products`
   useEffect(() => {
@@ -33,8 +38,6 @@ function Products() {
       dispatch(fetchRatingsForProducts(productIds));
     }
   }, [dispatch, products]);
-
-
 
   const getCategoryName = (categoryId) => {
     if (searched) {
@@ -55,6 +58,9 @@ function Products() {
     }
   };
 
+  const displayProducts = searched
+    ? Object.values(searchedProducts)
+    : normalizedProducts;
 
   const getAverageRating = (productId) => {
     const productRatings = ratings.filter(
@@ -100,7 +106,7 @@ function Products() {
     <div>
       <h2 className="category-name">{getCategoryName(categoryId)}</h2>
       <div className="products-container">
-        {normalizedProducts.map((product) => (
+        {displayProducts.map((product) => (
           <div key={product.id} className="product-item">
             <Link to={`/products/${product.id}`}>
               <img src={product.imageUrl} alt={product?.name} />

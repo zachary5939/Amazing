@@ -7,7 +7,12 @@ const FETCH_ALL_PRODUCTS_SUCCESS = 'products/FETCH_PRODUCTS_SUCCESS';
 const FETCH_PRODUCT_SUCCESS = 'products/FETCH_PRODUCT_SUCCESS';
 const SEARCH_RESULTS = "products/SEARCH_RESULTS";
 const CLEAR_RATINGS = 'ratings/CLEAR_RATINGS';
+const RESET_SEARCH_STATE = 'products/RESET_SEARCH_STATE';
 // Action Creators
+export const resetSearchState = () => ({
+  type: RESET_SEARCH_STATE,
+});
+
 const fetchProductsSuccess = (products) => ({
   type: FETCH_ALL_PRODUCTS_SUCCESS,
   payload: products,
@@ -26,6 +31,8 @@ export const setSearchResults = (results) => ({
 export const clearRatings = () => ({
   type: CLEAR_RATINGS,
 });
+
+
 
 export const searchProductsByName = (name) => async (dispatch) => {
   const response = await fetch(`/api/products/search?name=${name}`);
@@ -77,6 +84,7 @@ export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
 const initialState = {
   allProducts: {},
   productById: {},
+  searchedProducts: {},
   searched: false,
 };
 
@@ -93,16 +101,22 @@ const productsReducer = (state = initialState, action) => {
         productById: action.payload,
       };
       case SEARCH_RESULTS:
-        const productsObj = action.payload.reduce((acc, product) => {
+        const searchedProductsObj = action.payload.reduce((acc, product) => {
           acc[product.id] = product;
           return acc;
         }, {});
-        return { ...state, allProducts: productsObj };
+        return { ...state, searchedProducts: searchedProductsObj, searched: true };
             case CLEAR_RATINGS:
       return {
         ...state,
         items: [],
       };
+      case RESET_SEARCH_STATE:
+        return {
+          ...state,
+          searchedProducts: {},
+          searched: false,
+        };
     default:
       return state;
   }
