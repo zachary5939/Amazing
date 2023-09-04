@@ -14,6 +14,8 @@ import CreateReview from "./components/CreateReview";
 import Footer from "./components/Footer";
 import CompletePurchase from "./components/CompletePurchase";
 import NotFound from "./components/NotFound";
+import Search from "./components/Search";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +58,9 @@ function App() {
         </Route>
         <Route path="/newreview/:productId">
           <CreateReview />
+        </Route>
+        <Route path="/search">
+          <Search />
         </Route>
         <Route path="*">
           <NotFound />

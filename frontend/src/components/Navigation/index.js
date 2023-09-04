@@ -30,11 +30,12 @@ function Navigation({ isLoaded }) {
       dispatch(searchProductsByName(searchTerm))
       .then(success => {
         if (success) {
-          history.push('/products');
+          history.push('/search');
         }
       });
     }
   };
+
 
 
   let sessionLinks;
