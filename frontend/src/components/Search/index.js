@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { fetchAllRatings, fetchRatingsForProducts } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,15 +12,18 @@ function Search() {
   const dispatch = useDispatch();
   const searchedProducts = useSelector((state) => state.products.searchedProducts);
   const ratings = useSelector((state) => state.ratings?.items || []);
+  const location = useLocation();
+  const searchTerm = new URLSearchParams(location.search).get('term');
 
   useEffect(() => {
-    // Fetching products by name
-    dispatch(productActions.searchProductsByName()).then(() => {
-      // Once searched products are fetched, get their IDs to fetch their ratings
-      const productIds = Object.values(searchedProducts).map(product => product.id);
-      dispatch(fetchRatingsForProducts(productIds));
-    });
-  }, [dispatch, searchedProducts]); // Added searchedProducts to the dependency list
+    if (searchTerm) {
+      dispatch(productActions.searchProductsByName(searchTerm)).then(() => {
+        // Once searched products are fetched, get their IDs to fetch their ratings
+        const productIds = Object.values(searchedProducts).map(product => product.id);
+        dispatch(fetchRatingsForProducts(productIds));
+      });
+    }
+  }, [dispatch, searchTerm, searchedProducts]);
 
   const getAverageRating = (productId) => {
     const productRatings = ratings.filter(
