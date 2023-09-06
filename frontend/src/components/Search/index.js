@@ -17,13 +17,18 @@ function Search() {
 
   useEffect(() => {
     if (searchTerm) {
-      dispatch(productActions.searchProductsByName(searchTerm)).then(() => {
-        // Once searched products are fetched, get their IDs to fetch their ratings
-        const productIds = Object.values(searchedProducts).map(product => product.id);
-        dispatch(fetchRatingsForProducts(productIds));
-      });
+      dispatch(productActions.searchProductsByName(searchTerm));
     }
-  }, [dispatch, searchTerm, searchedProducts]);
+  }, [dispatch, searchTerm]);
+
+  useEffect(() => {
+    if (searchedProducts && Object.keys(searchedProducts).length) {
+      const productIds = Object.values(searchedProducts).map(product => product.id);
+      dispatch(fetchRatingsForProducts(productIds));
+    }
+  }, [dispatch, searchedProducts]);
+
+
 
   const getAverageRating = (productId) => {
     const productRatings = ratings.filter(
@@ -72,17 +77,17 @@ function Search() {
         {Object.values(searchedProducts || {}).map((product) => (
           <div key={product.id} className="product-item">
             <Link to={`/products/${product.id}`}>
-              <img src={product.imageUrl} alt={product?.name} />
+              <img src={product?.imageUrl} alt={product?.name} />
             </Link>
             <div className="product-details">
               <h3 className="product-name">
-                <Link to={`/products/${product.id}`}>{product.name}</Link>
+                <Link to={`/products/${product.id}`}>{product?.name}</Link>
               </h3>
-              <p className="description">{product.description}</p>
+              <p className="description">{product?.description}</p>
               <div>
                 <StarRating average={getAverageRating(product?.id)} />
               </div>
-              <p className="product-price">Price: ${product.price}</p>
+              <p className="product-price">Price: ${product?.price}</p>
             </div>
           </div>
         ))}

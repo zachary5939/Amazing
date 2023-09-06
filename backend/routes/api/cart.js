@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const { Cart, Product } = require('../../db/models');
+const { Cart, Product, Purchases } = require('../../db/models');
 
 const router = express.Router();
 
@@ -64,6 +64,47 @@ router.post('/', asyncHandler(async (req, res) => {
 
   res.json(updatedCartItems);
 }));
+
+// Route to complete purchase and move items from cart to purchases
+router.post('/complete-purchase', asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+
+  // Fetch all items from user's cart
+  const cartItems = await Cart.findAll({
+    where: {
+      userId: userId
+    },
+    include: {
+      model: Product,
+      as: 'product',
+    },
+  });
+
+  if (!cartItems.length) {
+    return res.status(400).send({ message: "Cart is empty" });
+  }
+
+  // Add each cart item to Purchases
+  for (const item of cartItems) {
+    await Purchases.create({
+      userId: item.userId,
+      productId: item.productId,
+      quantity: item.quantity,
+      totalPrice: item.product.price * item.quantity,
+      purchaseDate: new Date(),
+    });
+  }
+
+  // Empty the user's cart
+  await Cart.destroy({
+    where: {
+      userId: userId
+    }
+  });
+
+  res.status(201).send({ message: "Purchase complete" });
+}));
+
 
 // Update cart item quantity
 router.put('/:cartItemId', asyncHandler(async (req, res) => {
