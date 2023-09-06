@@ -1,6 +1,7 @@
 'use strict';
 const {
-  Model
+  Model,
+  Validator
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Purchase extends Model {
@@ -18,8 +19,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Purchase.init({
-    userId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: true,
+      },
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: true,
+      },
+    },
     quantity: DataTypes.INTEGER,
     totalPrice: DataTypes.DECIMAL,
     purchaseDate: DataTypes.DATE

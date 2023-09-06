@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     width: 80%;
-    max-width: 500px;
+    max-width: 550px;
     height: auto;
     max-height: 400px;
     margin: 50px auto;
@@ -23,6 +23,8 @@
 }
 
 .complete-button {
+    max-width: 100%;
+    margin: 0 10px; /* Adding some spacing between the buttons */
     padding: 10px 20px;
     font-size: 1rem;
     background-color: #fddd4e;
@@ -34,6 +36,13 @@
 
 .complete-button:hover {
     background-color: #fccc2e;
+}
+
+.buttons-container2 {
+    display: flex;
+    padding-top: 20px;
+    justify-content: center;
+    width: 100%;
 }
 
 /* List Item */

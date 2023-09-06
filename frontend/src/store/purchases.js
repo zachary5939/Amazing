@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const FETCH_PURCHASES = 'purchases/FETCH_PURCHASES';
 const USER_PURCHASES = 'purchases/USER_PURCHASES';
 const RESET_PURCHASES = 'purchases/RESET_PURCHASES';
+const FINALIZE_PURCHASE = 'purchases/FINALIZE_PURCHASE';
 
 // Action Creators
 export const fetchPurchasesSuccess = (purchases) => ({
@@ -15,6 +16,12 @@ export const userPurchasesSuccess = (purchases) => ({
   type: USER_PURCHASES,
   payload: purchases,
 });
+
+export const finalizePurchaseSuccess = (purchases) => ({
+  type: FINALIZE_PURCHASE,
+  payload: purchases,
+});
+
 
 export const resetPurchases = (purchases) => ({
   type: RESET_PURCHASES,
@@ -43,6 +50,29 @@ export const fetchUserPurchases = (userId) => async (dispatch) => {
   }
 };
 
+export const finalizePurchase = (userId) => async (dispatch) => {
+  try {
+    console.log("Sending userId:", userId);  // just for debugging, it should print a number now.
+
+    const response = await csrfFetch('/api/purchases/finalize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    if (response.ok) {
+      dispatch(finalizePurchaseSuccess());
+      // Reset the purchases or perform additional steps
+    }
+  } catch (error) {
+    console.error('Error finalizing purchase:', error);
+  }
+};
+
+
+
 // Reducer
 const initialState = {
   items: [],
@@ -60,11 +90,16 @@ const purchasesReducer = (state = initialState, action) => {
         ...state,
         items: action.payload,
       };
-      case RESET_PURCHASES:
-        return {
-          ...state,
-          items: [],
-        };
+    case RESET_PURCHASES:
+      return {
+        ...state,
+        items: [],
+      };
+    case FINALIZE_PURCHASE:
+      return {
+        ...state,
+        items: [],
+      };
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems, updateCartItemQuantity, removeFromCart, clearUserCart } from "../../store/cart";
+import { finalizePurchase } from "../../store/purchases";
 import { fetchUserRatings } from "../../store/ratings";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -58,10 +59,10 @@ function Cart() {
   };
 
   const completePurchase = () => {
+    dispatch(finalizePurchase(sessionUser.id));
     dispatch(clearUserCart(sessionUser.id));
     history.push("/complete");
-  };
-
+};
 
   const handleOpenConfirmModal = (cartItemId) => {
     setShowConfirmModal(true);
