@@ -18,6 +18,15 @@ function Purchases() {
     }
   }, [dispatch, userId]);
 
+  function formatPrice(price) {
+    if (typeof price === 'number') {
+      return price.toFixed(2);
+    }
+    return Number(price)?.toFixed(2) || '0.00';
+  }
+
+
+
   let sortedPurchases = [...purchases];
   switch (sortType) {
     case 'productName':
@@ -65,7 +74,7 @@ function Purchases() {
             <div className="purchaseDetails_unique">
               <div>Product Name: {purchase?.product?.name}</div>
               <div>Quantity: {purchase?.quantity}</div>
-              <div>Total Price: ${purchase?.totalPrice.toFixed(2)}</div>
+              <div>Total Price: ${formatPrice(purchase?.totalPrice)}</div>
               <div>
                 Date of Purchase:
                 {new Date(purchase?.purchaseDate).toLocaleDateString()}
