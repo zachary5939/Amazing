@@ -58,17 +58,17 @@ function Purchases() {
         {sortedPurchases.map((purchase) => (
           <li key={purchase.id} className="purchaseItem_unique">
             <img
-              src={purchase.product.imageUrl}
-              alt={purchase.product.name}
+              src={purchase?.product?.imageUrl}
+              alt={purchase?.product?.name}
               className="purchaseImage_unique"
             />
             <div className="purchaseDetails_unique">
-              <div>Product Name: {purchase.product.name}</div>
-              <div>Quantity: {purchase.quantity}</div>
-              <div>Total Price: ${purchase.totalPrice.toFixed(2)}</div>
+              <div>Product Name: {purchase?.product?.name}</div>
+              <div>Quantity: {purchase?.quantity}</div>
+              <div>Total Price: ${purchase?.totalPrice.toFixed(2)}</div>
               <div>
                 Date of Purchase:
-                {new Date(purchase.purchaseDate).toLocaleDateString()}
+                {new Date(purchase?.purchaseDate).toLocaleDateString()}
               </div>
             </div>
           </li>
