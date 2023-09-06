@@ -22,12 +22,12 @@ function Products() {
 
   useEffect(() => {
     if (categoryId) {
-      dispatch(productActions.resetSearchState()); // Clear the search state when a category is selected
+      dispatch(productActions.resetSearchState());
       dispatch(productActions.fetchProductsByCategory(categoryId));
     } else if (searched) {
       return;
     } else {
-      dispatch(productActions.fetchAllProducts()); // Fetch all products when on default `/products` route
+      dispatch(productActions.fetchAllProducts());
     }
   }, [dispatch, categoryId, searched]);
 

@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import CompletePurchase from "./components/CompletePurchase";
 import NotFound from "./components/NotFound";
 import Search from "./components/Search";
+import Purchases from './components/Purchases';
 
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
         </Route>
         <Route exact path="/products/:productId">
           <ProductPage />
+        </Route>
+          <Route exact path="/purchases">
+            <Purchases />
         </Route>
         <Route path="/cart">
           <Cart />

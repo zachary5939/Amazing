@@ -43,9 +43,9 @@ function ProfileButton({ user }) {
     history.push("/reviews");
   };
 
-  const comingSoon = () => {
-    alert("Coming soon!");
-  };
+  const viewPurchases = () => {
+    history.push("/purchases");
+  }
 
   return (
     <div className="profile-container" ref={containerRef}>
@@ -63,7 +63,7 @@ function ProfileButton({ user }) {
         </div>
         <div className="actions">
             <li>
-              <button onClick={comingSoon}>View orders</button>
+              <button onClick={viewPurchases}>View orders</button>
             </li>
             <li>
               <button onClick={viewReviews}>View reviews</button>
