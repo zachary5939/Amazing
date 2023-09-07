@@ -100,5 +100,41 @@ router.delete('/:id', asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Purchase deleted successfully' });
 }));
 
+// Update quantity for a purchase by its ID
+//{{url}}/purchases/:id
+router.put('/:id', asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { quantity } = req.body;
+
+  // Validate ID and quantity
+  if (!id) {
+    return res.status(400).json({ message: 'Purchase ID is required' });
+  }
+
+  if (quantity === undefined || quantity <= 0) {
+    return res.status(400).json({ message: 'Valid quantity is required' });
+  }
+
+  const purchase = await Purchase.findByPk(id, {
+    include: {
+      model: Product,
+      as: 'product',
+    }
+  });
+
+  if (!purchase) {
+    return res.status(404).json({ message: 'No purchase found with the provided ID' });
+  }
+
+  const totalPrice = purchase.product.price * quantity;
+
+  purchase.quantity = quantity;
+  purchase.totalPrice = totalPrice;
+
+  await purchase.save();
+
+  res.status(200).json({ message: 'Purchase updated successfully', purchase });
+}));
+
 
 module.exports = router;

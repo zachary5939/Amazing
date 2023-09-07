@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Purchases.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserPurchases, deletePurchase } from "../../store/purchases";
+import {
+  fetchUserPurchases,
+  deletePurchase,
+  updatePurchaseQuantity,
+} from "../../store/purchases";
 
 function Purchases() {
   const dispatch = useDispatch();
@@ -18,6 +22,10 @@ function Purchases() {
     }
   }, [dispatch, userId]);
 
+  useEffect(() => {
+    console.log("Purchases have changed:", purchases);
+  }, [purchases]);
+
   function formatPrice(price) {
     if (typeof price === "number") {
       return price.toFixed(2);
@@ -30,6 +38,18 @@ function Purchases() {
       dispatch(deletePurchase(purchaseId));
     }
   }
+
+  const handleUpdateQuantity = async (purchaseId, newQuantity) => {
+    try {
+      await dispatch(updatePurchaseQuantity(purchaseId, newQuantity));
+      if (userId) {
+        await dispatch(fetchUserPurchases(userId));
+      }
+    } catch (error) {
+      console.error('Error updating purchase quantity:', error);
+    }
+  };
+
 
   let sortedPurchases = [...purchases];
   switch (sortType) {
@@ -83,7 +103,22 @@ function Purchases() {
             />
             <div className="purchaseDetails_unique">
               <div>{purchase?.product?.name}</div>
-              <div>Quantity: {purchase?.quantity}</div>
+              <div>
+                Quantity:
+                <select
+                  key={purchase?.quantity}
+                  value={purchase?.quantity}
+                  onChange={(e) =>
+                    handleUpdateQuantity(purchase.id, parseInt(e.target.value))
+                  }
+                >
+                  {[...Array(10)].map((_, idx) => (
+                    <option key={idx} value={idx + 1}>
+                      {idx + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div>Total Price: ${formatPrice(purchase?.totalPrice)}</div>
               <div>
                 Date of Purchase:

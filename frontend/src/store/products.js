@@ -8,6 +8,8 @@ const FETCH_PRODUCT_SUCCESS = 'products/FETCH_PRODUCT_SUCCESS';
 const SEARCH_RESULTS = "products/SEARCH_RESULTS";
 const CLEAR_RATINGS = 'ratings/CLEAR_RATINGS';
 const RESET_SEARCH_STATE = 'products/RESET_SEARCH_STATE';
+const UPDATE_PRODUCT_SUCCESS = 'products/UPDATE_PRODUCT_SUCCESS';
+
 // Action Creators
 export const resetSearchState = () => ({
   type: RESET_SEARCH_STATE,
@@ -32,6 +34,10 @@ export const clearRatings = () => ({
   type: CLEAR_RATINGS,
 });
 
+const updateProductSuccess = (product) => ({
+  type: UPDATE_PRODUCT_SUCCESS,
+  payload: product,
+});
 
 
 export const searchProductsByName = (name) => async (dispatch) => {
@@ -80,6 +86,26 @@ export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
   }
 };
 
+export const updateProduct = (productData) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/products/${productData.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(productData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update product');
+    }
+
+    const updatedProduct = await response.json();
+    dispatch(updateProductSuccess(updatedProduct));
+    return updatedProduct;
+  } catch (error) {
+    console.error('Error updating product:', error);
+  }
+};
+
+
 // Reducer
 const initialState = {
   allProducts: {},
@@ -117,6 +143,17 @@ const productsReducer = (state = initialState, action) => {
           searchedProducts: {},
           searched: false,
         };
+        case UPDATE_PRODUCT_SUCCESS:
+          return {
+            ...state,
+            allProducts: {
+              ...state.allProducts,
+              [action.payload.id]: action.payload,
+            },
+            productById: action.payload.id === state.productById.id
+              ? action.payload
+              : state.productById
+          };
     default:
       return state;
   }
