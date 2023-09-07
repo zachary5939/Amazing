@@ -24,7 +24,8 @@
 }
 
 .product-item img {
-    width: 100px;
+    width: auto;
+    max-width: 100px;
     height: 100px;
     object-fit: cover;
     margin-right: 10px;
@@ -60,3 +61,16 @@
     color: #db9900;
 }
 
+.starrating {
+    padding-top: 8px;
+}
+
+/* Description */
+#root .app-container div .products-container .product-item .product-details .description{
+    width:62% !important;
+   }
+
+   /* Image */
+   #root .product-item img{
+    padding-top:23px;
+   }

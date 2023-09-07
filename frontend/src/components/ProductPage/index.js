@@ -151,7 +151,7 @@ function ProductPage() {
                         <div key={rating.id} className="product-review">
                             {rating?.user?.username ? (
                                 <p>
-                                    <strong>Reviewer:</strong> {rating.user.username}
+                                    <strong>Reviewer:</strong> {rating.user.firstName} {rating.user.lastName}
                                 </p>
                             ) : null}
                             <div className="review-rating">

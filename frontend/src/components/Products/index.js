@@ -115,10 +115,10 @@ function Products() {
               <h3 className="product-name">
                 <Link to={`/products/${product.id}`}>{product.name}</Link>
               </h3>
-              <p className="description">{product.description}</p>
-              <div>
+              <div className="starrating">
                 <StarRating average={getAverageRating(product?.id)} />
               </div>
+              <p className="description">{product.description}</p>
               <p className="product-price">Price: ${product.price}</p>
             </div>
           </div>
