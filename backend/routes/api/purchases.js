@@ -81,4 +81,24 @@ router.post('/finalize', asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Cart finalized and purchases created' });
 }));
 
+// Delete a purchase by its ID
+//{{url}}/purchases/:id
+router.delete('/:id', asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: 'Purchase ID is required' });
+  }
+
+  const purchase = await Purchase.findByPk(id);
+
+  if (!purchase) {
+    return res.status(404).json({ message: 'No purchase found with the provided ID' });
+  }
+
+  await purchase.destroy();
+  res.status(200).json({ message: 'Purchase deleted successfully' });
+}));
+
+
 module.exports = router;

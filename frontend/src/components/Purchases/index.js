@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Purchases.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserPurchases } from "../../store/purchases";
+import { fetchUserPurchases, deletePurchase } from "../../store/purchases";
 
 function Purchases() {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ function Purchases() {
   const userId = user ? user.id : null;
   const purchases = useSelector((state) => state.purchases.items);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortType, setSortType] = useState('recent');
+  const [sortType, setSortType] = useState("recent");
 
   useEffect(() => {
     if (userId) {
@@ -19,27 +19,37 @@ function Purchases() {
   }, [dispatch, userId]);
 
   function formatPrice(price) {
-    if (typeof price === 'number') {
+    if (typeof price === "number") {
       return price.toFixed(2);
     }
-    return Number(price)?.toFixed(2) || '0.00';
+    return Number(price)?.toFixed(2) || "0.00";
   }
 
-
+  function handleDelete(purchaseId) {
+    if (window.confirm("Are you sure you want to delete this purchase?")) {
+      dispatch(deletePurchase(purchaseId));
+    }
+  }
 
   let sortedPurchases = [...purchases];
   switch (sortType) {
-    case 'productName':
-      sortedPurchases.sort((a, b) => a.product.name.localeCompare(b.product.name));
+    case "productName":
+      sortedPurchases.sort((a, b) =>
+        a.product.name.localeCompare(b.product.name)
+      );
       break;
-    case 'price':
+    case "price":
       sortedPurchases.sort((a, b) => b.totalPrice - a.totalPrice);
       break;
-    case 'oldest':
-      sortedPurchases.sort((a, b) => new Date(a.purchaseDate) - new Date(b.purchaseDate));
+    case "oldest":
+      sortedPurchases.sort(
+        (a, b) => new Date(a.purchaseDate) - new Date(b.purchaseDate)
+      );
       break;
     default:
-      sortedPurchases.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+      sortedPurchases.sort(
+        (a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate)
+      );
   }
 
   if (isLoading) {
@@ -72,13 +82,14 @@ function Purchases() {
               className="purchaseImage_unique"
             />
             <div className="purchaseDetails_unique">
-              <div>Product Name: {purchase?.product?.name}</div>
+              <div>{purchase?.product?.name}</div>
               <div>Quantity: {purchase?.quantity}</div>
               <div>Total Price: ${formatPrice(purchase?.totalPrice)}</div>
               <div>
                 Date of Purchase:
                 {new Date(purchase?.purchaseDate).toLocaleDateString()}
               </div>
+              <button onClick={() => handleDelete(purchase.id)}>Delete</button>
             </div>
           </li>
         ))}

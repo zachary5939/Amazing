@@ -5,6 +5,7 @@ const FETCH_PURCHASES = 'purchases/FETCH_PURCHASES';
 const USER_PURCHASES = 'purchases/USER_PURCHASES';
 const RESET_PURCHASES = 'purchases/RESET_PURCHASES';
 const FINALIZE_PURCHASE = 'purchases/FINALIZE_PURCHASE';
+const DELETE_PURCHASE = 'purchases/DELETE_PURCHASE';
 
 // Action Creators
 export const fetchPurchasesSuccess = (purchases) => ({
@@ -26,6 +27,11 @@ export const finalizePurchaseSuccess = (purchases) => ({
 export const resetPurchases = (purchases) => ({
   type: RESET_PURCHASES,
   payload: purchases,
+});
+
+export const deletePurchaseSuccess = (purchaseId) => ({
+  type: DELETE_PURCHASE,
+  payload: purchaseId,
 });
 
 export const fetchUserPurchases = (userId) => async (dispatch) => {
@@ -71,7 +77,23 @@ export const finalizePurchase = (userId) => async (dispatch) => {
   }
 };
 
+export const deletePurchase = (purchaseId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/purchases/${purchaseId}`, {
+      method: 'DELETE',
+    });
 
+    if (response.ok) {
+      dispatch(deletePurchaseSuccess(purchaseId));
+    } else {
+      // Handle potential errors returned from the server
+      const data = await response.json();
+      console.error('Error deleting purchase:', data.message);
+    }
+  } catch (error) {
+    console.error('Error deleting purchase:', error);
+  }
+};
 
 // Reducer
 const initialState = {
@@ -100,6 +122,11 @@ const purchasesReducer = (state = initialState, action) => {
         ...state,
         items: [],
       };
+      case DELETE_PURCHASE:
+        return {
+          ...state,
+          items: state.items.filter(item => item.id !== action.payload),
+        };
     default:
       return state;
   }
