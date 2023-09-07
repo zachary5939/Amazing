@@ -13,24 +13,22 @@ const s3 = new S3Client({
 
 const s3Storage = multerS3({
   s3,
-  bucket: "airbnb-clone-2",
+  bucket: "amazingimg",
   metadata: (req, file, cb) => {
     cb(null, { fieldName: file.fieldname });
   },
   key: (req, file, cb) => {
     const fileName =
-      "spotImages/" +
-      req.user.id +
-      `/${req.params.spotId}/` +
-      Date.now() +
-      "_" +
-      file.originalname;
+      "products/" +           // Storing under products folder
+      req.user.id + "/" +     // User's unique folder
+      Date.now() + "_" +      // Timestamp to ensure unique filename
+      file.originalname;      // The original uploaded filename
     cb(null, fileName);
   },
 });
 const s3ReviewStorage = multerS3({
   s3,
-  bucket: "airbnb-clone-2",
+  bucket: "amazingimg",
   metadata: (req, file, cb) => {
     cb(null, { fieldName: file.fieldname });
   },
@@ -66,7 +64,7 @@ function sanitizeFile(file, cb) {
 
 const deleteS3Obj = async (key) => {
   const command = new DeleteObjectCommand({
-    Bucket: "airbnb-clone-2",
+    Bucket: "amazingimg",
     Key: key,
   });
   try {

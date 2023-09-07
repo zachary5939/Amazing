@@ -16,6 +16,7 @@ import CompletePurchase from "./components/CompletePurchase";
 import NotFound from "./components/NotFound";
 import Search from "./components/Search";
 import Purchases from './components/Purchases';
+import ProductForm from "./components/ProductForm";
 
 
 function App() {
@@ -56,6 +57,9 @@ function App() {
         </Route>
         <Route exact path="/complete">
           <CompletePurchase />
+        </Route>
+        <Route exact path="/newproduct">
+          <ProductForm />
         </Route>
         <Route exact path="/reviews">
           <Reviews />

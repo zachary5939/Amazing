@@ -1,9 +1,20 @@
-const router = require("express").Router();
+const express = require('express');
+const router = express.Router();
+const multer = require('multer');
 const { Product, Category, Rating, User, Purchases } = require("../../db/models");
 const { Op } = require("sequelize");
 const asyncHandler = require("express-async-handler");
 const { requireAuth } = require("../../utils/auth.js");
 const { handleValidationErrors } = require("../../utils/validation.js");
+const { s3Storage, sanitizeFile } = require("../../utils/s3.js");
+
+const upload = multer({
+  storage: s3Storage,
+  fileFilter: (req, file, cb) => {
+    sanitizeFile(file, cb);
+  },
+  limits: { fileSize: 5 * 1024 * 1024 },  // Limit file size to 5MB
+});
 
 //get all products
 router.get('/', async (req, res) => {
@@ -47,6 +58,37 @@ router.get('/search', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+router.post('/upload', requireAuth, upload.single('image'), async (req, res) => {
+  // The image will be uploaded to S3 once this route is hit
+
+  if (!req.file) {
+      return res.status(400).json({ error: 'Please upload a valid image.' });
+  }
+
+  const { name, description, price, categoryId } = req.body;
+
+  // Validate the required fields
+  if (!name || !description) {
+      return res.status(400).json({ error: 'Name and description are required.' });
+  }
+
+  try {
+      const newProduct = await Product.create({
+          name,
+          description,
+          imageUrl: req.file.location,
+          price: price || null,
+          categoryId: categoryId || null,
+      });
+
+      res.json(newProduct);
+  } catch (error) {
+      console.error('Error saving product with image:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 
 // //search products. NOTE: iLike is case-insensitive for postgres ONLY!! it will not work on localhost.
