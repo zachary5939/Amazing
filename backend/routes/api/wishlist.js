@@ -29,6 +29,32 @@ router.get('/', asyncHandler(async (req, res) => {
     res.json(userWishlists);
     }));
 
+    router.post('/', asyncHandler(async (req, res) => {
+        const { userId, productId } = req.body;
+
+        if (!userId || !productId) {
+            return res.status(400).json({ error: "Both userId and productId are required." });
+        }
+
+        // Check if the item is already in the user's wishlist
+        const existingWishlistItem = await Wishlist.findOne({
+            where: { userId, productId }
+        });
+
+        if (existingWishlistItem) {
+            return res.status(409).json({ message: "Item already exists in the user's wishlist." });
+        }
+
+        const newWishlistItem = await Wishlist.create({ userId, productId });
+
+        if (!newWishlistItem) {
+            return res.status(500).json({ message: "Failed to add item to the wishlist." });
+        }
+
+        res.status(201).json(newWishlistItem);
+    }));
+
+
 // Delete a product from a user's wishlist
 router.delete('/', asyncHandler(async (req, res) => {
     const { userId, productId } = req.query;
