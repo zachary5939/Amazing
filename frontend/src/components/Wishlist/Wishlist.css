@@ -59,21 +59,22 @@
     padding: 0.5em 1em;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
-    color: #ffffff;
+    background-color: #fddd4e;
+    color: black;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .wishlist-item-buttons button:hover {
-    background-color: #0056b3;
+    background-color: #fdd521;
 }
 
 /* Remove from wishlist button */
 .wishlist-item-buttons button:last-child {
     background-color: #dc3545;
+    color: white;
 }
 
 .wishlist-item-buttons button:last-child:hover {
-    background-color: #c82333;
+    background-color: #f51329;
 }

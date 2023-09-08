@@ -36,10 +36,10 @@ function Wishlist() {
             <div className="wishlist-item-details">
               <h2>{item?.product?.name}</h2>
               <p>
-                Price:{" "}
+                Price:{}
                 {typeof item?.product?.price === "number"
-                  ? `$${item.product.price.toFixed(2)}`
-                  : `Invalid Price: ${JSON.stringify(item?.product?.price)}`}
+                  ? ` $${item.product.price.toFixed(2)}`
+                  : ` $${JSON.stringify(item?.product?.price)}`}
               </p>
               <p>{item?.product?.description}</p>
               <div className="wishlist-item-buttons">
