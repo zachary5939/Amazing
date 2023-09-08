@@ -35,7 +35,7 @@ function Wishlist() {
                         />
                         <div className="wishlist-item-details">
                             <h2>{item?.product?.name}</h2>
-                            <p>Price: ${item?.product?.price?.toFixed(2)}</p>
+                            <p>Price: {typeof item?.product?.price === 'number' ? `$${item.product.price.toFixed(2)}` : 'N/A'}</p>
                             <p>{item?.product?.description}</p>
                             <div className="wishlist-item-buttons">
                                 <button
