@@ -17,7 +17,7 @@ router.get('/', asyncHandler(async (req, res) => {
             {
                 model: Product,
                 as: 'product',
-                attributes: ['id', 'name', 'price', 'description', 'imageURL', 'categoryId']
+                attributes: ['id', 'name', 'price', 'description', 'imageUrl', 'categoryId']
             },
             ]
     });
