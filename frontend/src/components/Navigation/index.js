@@ -27,16 +27,11 @@ function Navigation({ isLoaded }) {
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
-      dispatch(searchProductsByName(searchTerm))
-      .then(success => {
-        if (success) {
-          history.push('/search');
-        }
+      dispatch(searchProductsByName(searchTerm)).then(() => {
+        history.push("/search");
       });
     }
   };
-
-
 
   let sessionLinks;
   if (sessionUser) {

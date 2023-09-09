@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserWishlists, deleteFromWishlist } from "../../store/wishlist";
 import { useHistory } from "react-router-dom";
 import { fetchAllProducts } from "../../store/products";
-// import { fetchRatings } from '../../store/ratings';
 
 function Wishlist() {
   const dispatch = useDispatch();
@@ -16,7 +15,6 @@ function Wishlist() {
     if (sessionUser) {
       dispatch(fetchUserWishlists(sessionUser.id));
       dispatch(fetchAllProducts());
-      // dispatch(fetchRatings());
     }
   }, [dispatch, sessionUser]);
 
