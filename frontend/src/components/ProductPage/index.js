@@ -7,6 +7,7 @@ import { fetchCartItems, addToCart } from "../../store/cart";
 import { fetchRatings } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
+import { addToWishlist } from "../../store/wishlist";
 
 function ProductPage() {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function ProductPage() {
     const history = useHistory();
     const cartItems = useSelector((state) => state.cart.items);
     const ratings = useSelector((state) => state.ratings.items);
+    const [inWishlist, setInWishlist] = useState(false);
 
     useEffect(() => {
         dispatch(fetchProductById(productId));
@@ -50,6 +52,19 @@ function ProductPage() {
     const total = ratings.reduce((acc, curr) => acc + curr.rating, 0);
     return (total / ratings.length).toFixed(2);
   }, [ratings]);
+
+  const handleAddToWishlist = async () => {
+    try {
+      if (user) {
+        await dispatch(addToWishlist(user.id, product.id));
+        alert("Successfully added to wishlist");
+      } else {
+        history.push("/login");
+      }
+    } catch (error) {
+      alert("Failed to add to wishlist");
+    }
+  };
 
   const handleAddToCart = async () => {
     try {
@@ -141,6 +156,7 @@ function ProductPage() {
           ) : (
             <button onClick={notLoggedIn}>Please login to purchase</button>
           )}
+          <button onClick={handleAddToWishlist}>Add to Wishlist</button>
         </div>
       </div>
 

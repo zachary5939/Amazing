@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import * as sessionActions from '../../store/session';
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import * as sessionActions from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   const openMenu = () => {
-    setShowMenu(prev => !prev);
+    setShowMenu((prev) => !prev);
   };
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -35,8 +35,8 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
-  const viewOrders = () => {
-    history.push("/orders");
+  const viewWishlist = () => {
+    history.push("/wishlist");
   };
 
   const viewReviews = () => {
@@ -45,7 +45,7 @@ function ProfileButton({ user }) {
 
   const viewPurchases = () => {
     history.push("/purchases");
-  }
+  };
 
   return (
     <div className="profile-container" ref={containerRef}>
@@ -57,24 +57,27 @@ function ProfileButton({ user }) {
       </div>
       <ul className={ulClassName} ref={ulRef}>
         <div className="user-details">
-            <li>Hi, {user.firstName}!</li>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
+          <li>
+            Hi, {user.firstName} {user.lastName}!
+          </li>
         </div>
         <div className="actions">
-            <li>
-              <button onClick={viewPurchases}>View orders</button>
-            </li>
-            <li>
-              <button onClick={viewReviews}>View reviews</button>
-            </li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
+          <li>
+            <button onClick={viewPurchases}>Orders</button>
+          </li>
+          <li>
+            <button onClick={viewReviews}>Reviews</button>
+          </li>
+          <li>
+            <button onClick={viewWishlist}>Wishlist</button>
+          </li>
+          <li>
+            <button onClick={logout}>Log Out</button>
+          </li>
         </div>
       </ul>
     </div>
-);
+  );
 }
 
 export default ProfileButton;

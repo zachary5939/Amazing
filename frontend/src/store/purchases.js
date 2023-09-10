@@ -11,6 +11,7 @@ const UPDATE_PURCHASE_QUANTITY = 'purchases/UPDATE_PURCHASE_QUANTITY';
 const START_TIMER = 'purchases/START_TIMER';
 const UPDATE_TIMER = 'purchases/UPDATE_TIMER';
 const CLEAR_TIMER = 'purchases/CLEAR_TIMER';
+const TIMER_EXPIRED = 'timer/TIMER_EXPIRED';
 // Action Creators
 export const fetchPurchasesSuccess = (purchases) => ({
   type: FETCH_PURCHASES,
@@ -60,6 +61,12 @@ export const updateTimer = () => ({
 export const clearTimer = () => ({
   type: CLEAR_TIMER,
 });
+
+export const timerExpired = () => {
+  return {
+    type: TIMER_EXPIRED,
+  };
+};
 
 export const fetchUserPurchases = (userId) => async (dispatch) => {
   if (!userId) {
@@ -199,6 +206,11 @@ const purchasesReducer = (state = initialState, action) => {
         ...state,
         lastUpdated: null,
       };
+      case TIMER_EXPIRED:
+        return {
+          ...state,
+          hasExpired: true,
+        };
     default:
       return state;
   }

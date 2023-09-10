@@ -7,6 +7,7 @@ const productsRouter = require("./products");
 const cartRouter = require("./cart");
 const ratingsRouter = require("./ratings");
 const purchasesRouter = require("./purchases");
+const wishlistRouter = require("./wishlist");
 // Connect restoreUser middleware to the API router
   // If current user session is valid, set req.user to the user in the database
   // If current user session is not valid, set req.user to null
@@ -18,7 +19,7 @@ router.use("/products", productsRouter);
 router.use("/cart", cartRouter);
 router.use("/ratings", ratingsRouter);
 router.use("/purchases", purchasesRouter);
-
+router.use("/wishlist", wishlistRouter);
 
 router.post("/test", (req, res) => {
   res.json({ requestBody: req.body });

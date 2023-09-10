@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { fetchAllRatings, fetchRatingsForProducts } from "../../store/ratings";
+import { fetchRatingsForProducts } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import * as productActions from "../../store/products";
 import "../Products/products.css";
+import depressing from "../../img/depressing.png";
+import "./search.css";
 
 function Search() {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ function Search() {
 
   useEffect(() => {
     if (searchTerm) {
+      dispatch(productActions.resetSearchState());
       dispatch(productActions.searchProductsByName(searchTerm));
     }
   }, [dispatch, searchTerm]);
@@ -27,8 +30,6 @@ function Search() {
       dispatch(fetchRatingsForProducts(productIds));
     }
   }, [dispatch, searchedProducts]);
-
-
 
   const getAverageRating = (productId) => {
     const productRatings = ratings.filter(
@@ -69,31 +70,43 @@ function Search() {
       </div>
     );
   };
-
+  const renderSearchResults = () => {
+    if (Object.values(searchedProducts || {}).length > 0) {
+      return Object.values(searchedProducts).map((product) => (
+        <div key={product.id} className="product-item">
+          <Link to={`/products/${product.id}`}>
+            <img src={product?.imageUrl} alt={product?.name} />
+          </Link>
+          <div className="product-details">
+            <h3 className="product-name">
+              <Link to={`/products/${product.id}`}>{product?.name}</Link>
+            </h3>
+            <p className="description">{product?.description}</p>
+            <div>
+              <StarRating average={getAverageRating(product?.id)} />
+            </div>
+            <p className="product-price">Price: ${product?.price}</p>
+          </div>
+        </div>
+      ));
+    } else {
+      return (
+        <div className="not-found-container">
+          <h2 className="not-found-heading">Product Not Found</h2>
+          <img src={depressing} alt="Not Found" className="not-found-img" />
+        </div>
+      );
+    }
+  };
   return (
     <div>
       <h2 className="category-name">Search Results</h2>
       <div className="products-container">
-        {Object.values(searchedProducts || {}).map((product) => (
-          <div key={product.id} className="product-item">
-            <Link to={`/products/${product.id}`}>
-              <img src={product?.imageUrl} alt={product?.name} />
-            </Link>
-            <div className="product-details">
-              <h3 className="product-name">
-                <Link to={`/products/${product.id}`}>{product?.name}</Link>
-              </h3>
-              <p className="description">{product?.description}</p>
-              <div>
-                <StarRating average={getAverageRating(product?.id)} />
-              </div>
-              <p className="product-price">Price: ${product?.price}</p>
-            </div>
-          </div>
-        ))}
+        {renderSearchResults()}
       </div>
     </div>
   );
+
 }
 
 export default Search;

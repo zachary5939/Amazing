@@ -1,0 +1,87 @@
+/* Main Container */
+.wishlist-container {
+    width: 90%;
+    margin: 2em auto;
+    border: 1px solid #e5e5e5;
+    padding: 1em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+/* Wishlist Header */
+.wishlist-header {
+    text-align: center;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 1em;
+}
+
+/* Wishlist Items */
+.wishlist-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Single Item */
+.wishlist-item {
+    width: 48%;
+    margin-bottom: 1em;
+    border: 1px solid #e5e5e5;
+    padding: 1em;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Wishlist item */
+#root .wishlist-items .wishlist-item{
+    width:400px;
+}
+
+/* Item Image */
+.wishlist-item-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Item Details */
+.wishlist-item-details {
+    margin-top: auto; /* Push to the bottom */
+}
+
+/* Item buttons */
+.wishlist-item-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+}
+
+.wishlist-item-buttons button {
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #fddd4e;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.wishlist-item-buttons button:hover {
+    background-color: #fdd521;
+}
+
+/* Remove from wishlist button */
+.wishlist-item-buttons button:last-child {
+    background-color: #dc3545;
+    color: white;
+}
+
+.wishlist-item-buttons button:last-child:hover {
+    background-color: #f51329;
+}

@@ -16,6 +16,7 @@ import CompletePurchase from "./components/CompletePurchase";
 import NotFound from "./components/NotFound";
 import Search from "./components/Search";
 import Purchases from './components/Purchases';
+import Wishlist from "./components/Wishlist";
 
 
 function App() {
@@ -50,6 +51,9 @@ function App() {
         </Route>
           <Route exact path="/purchases">
             <Purchases />
+        </Route>
+        <Route exact path="/wishlist">
+          <Wishlist />
         </Route>
         <Route path="/cart">
           <Cart />

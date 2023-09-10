@@ -5,6 +5,7 @@ import productsReducer from "./products";
 import cartReducer from "./cart";
 import ratingsReducer from "./ratings";
 import purchasesReducer from "./purchases";
+import wishlistsReducer from "./wishlist";
 import timerMiddleware from '../middleware/timerMiddleware';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   ratings: ratingsReducer,
   purchases: purchasesReducer,
+  wishlist: wishlistsReducer,
 });
 
 let enhancer;

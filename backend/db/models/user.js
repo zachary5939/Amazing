@@ -20,6 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'carts'
       });
 
+      // Association with Wishlist table
+      this.hasMany(models.Wishlist, {
+        foreignKey: 'userId',
+        as: 'wishlists'
+      });
+      
       // Association with Purchase table
       this.hasMany(models.Purchase, {
         foreignKey: 'userId',

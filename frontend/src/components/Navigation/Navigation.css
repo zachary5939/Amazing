@@ -52,13 +52,14 @@ body {
 }
 
 .nav-search-bar {
+  flex: 1;
   padding: 5px 10px;
   border-radius: 4px;
   border: 1px solid #ddd;
 }
 
 .nav-search-button {
-  margin-left: 10px;
+  margin-left: 40px;
   padding: 5px 10px;
   cursor: pointer;
 }
@@ -72,6 +73,11 @@ body {
   text-decoration: underline;
 }
 
+.nav-list input[type=text]{
+  min-height:28px;
+  width:708px;
+ }
+
 .profile-container {
   cursor: pointer;
   position: relative;
@@ -81,8 +87,9 @@ body {
 .profile-dropdown {
   position: absolute;
   top: 100%;
-  left: 0;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 300px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -107,10 +114,9 @@ body {
 
 .profile-dropdown .user-details {
   flex: 1;
-  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 10px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   text-decoration: none;
   list-style-type: none;
@@ -129,6 +135,7 @@ body {
   align-items: center;
   text-decoration: none;
   list-style-type: none;
+
 }
 
 .profile-dropdown .actions button {
@@ -140,6 +147,8 @@ body {
   cursor: pointer;
   width: 100%;
   transition: background-color 0.3s;
+  max-width: 120px;
+  width: 130px;
 }
 
 .profile-dropdown .actions button:hover {
