@@ -8,6 +8,9 @@ const FINALIZE_PURCHASE = 'purchases/FINALIZE_PURCHASE';
 const DELETE_PURCHASE = 'purchases/DELETE_PURCHASE';
 const UPDATE_PURCHASE = 'purchases/UPDATE_PURCHASE';
 const UPDATE_PURCHASE_QUANTITY = 'purchases/UPDATE_PURCHASE_QUANTITY';
+const START_TIMER = 'purchases/START_TIMER';
+const UPDATE_TIMER = 'purchases/UPDATE_TIMER';
+const CLEAR_TIMER = 'purchases/CLEAR_TIMER';
 // Action Creators
 export const fetchPurchasesSuccess = (purchases) => ({
   type: FETCH_PURCHASES,
@@ -43,6 +46,19 @@ export const updatePurchaseSuccess = (updatedPurchase) => ({
 export const updatePurchaseQuantitySuccess = (id, quantity) => ({
   type: UPDATE_PURCHASE_QUANTITY,
   payload: { id, quantity },
+});
+
+export const startTimer = (timestamp) => ({
+  type: START_TIMER,
+  payload: timestamp,
+});
+
+export const updateTimer = () => ({
+  type: UPDATE_TIMER,
+});
+
+export const clearTimer = () => ({
+  type: CLEAR_TIMER,
 });
 
 export const fetchUserPurchases = (userId) => async (dispatch) => {
@@ -131,6 +147,7 @@ export const updatePurchaseQuantity = (purchaseId, newQuantity) => async (dispat
 // Reducer
 const initialState = {
   items: [],
+  lastUpdated: null,
 };
 
 const purchasesReducer = (state = initialState, action) => {
@@ -155,18 +172,33 @@ const purchasesReducer = (state = initialState, action) => {
         ...state,
         items: [],
       };
-      case DELETE_PURCHASE:
-        return {
-          ...state,
-          items: state.items.filter(item => item.id !== action.payload),
-        };
-        case UPDATE_PURCHASE_QUANTITY:
-          return {
-            ...state,
-            items: state.items.map(item =>
-              item.id === action.payload.purchaseId ? { ...item, quantity: action.payload.newQuantity } : item
-            ),
-          };
+    case DELETE_PURCHASE:
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.payload),
+      };
+    case UPDATE_PURCHASE_QUANTITY:
+      return {
+        ...state,
+        items: state.items.map(item =>
+          item.id === action.payload.id ? { ...item, quantity: action.payload.quantity } : item
+        ),
+      };
+    // Timer Reducer Logic
+    case START_TIMER:
+      return {
+        ...state,
+        lastUpdated: action.payload,
+      };
+    case UPDATE_TIMER:
+      return {
+        ...state,
+      };
+    case CLEAR_TIMER:
+      return {
+        ...state,
+        lastUpdated: null,
+      };
     default:
       return state;
   }

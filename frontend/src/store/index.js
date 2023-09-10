@@ -5,7 +5,7 @@ import productsReducer from "./products";
 import cartReducer from "./cart";
 import ratingsReducer from "./ratings";
 import purchasesReducer from "./purchases";
-
+import timerMiddleware from '../middleware/timerMiddleware';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -18,12 +18,12 @@ const rootReducer = combineReducers({
 let enhancer;
 
 if (process.env.NODE_ENV === "production") {
-  enhancer = applyMiddleware(thunk);
+  enhancer = applyMiddleware(thunk, timerMiddleware);
 } else {
   const logger = require("redux-logger").default;
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  enhancer = composeEnhancers(applyMiddleware(thunk, logger));
+  enhancer = composeEnhancers(applyMiddleware(thunk, logger, timerMiddleware));
 }
 
 const configureStore = (preloadedState) => {

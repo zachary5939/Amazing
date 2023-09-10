@@ -96,8 +96,14 @@ router.delete('/:id', asyncHandler(async (req, res) => {
     return res.status(404).json({ message: 'No purchase found with the provided ID' });
   }
 
+  const timePassed = Date.now() - new Date(purchase.purchaseDate);
+
+  if (timePassed > 5*60*1000) {
+    return res.status(403).json({ message: 'Cannot cancel order after 5 minutes' });
+  }
+
   await purchase.destroy();
-  res.status(200).json({ message: 'Purchase deleted successfully' });
+  res.status(200).json({ message: 'Order cancelled successfully' });
 }));
 
 // Update quantity for a purchase by its ID
@@ -124,6 +130,12 @@ router.put('/:id', asyncHandler(async (req, res) => {
 
   if (!purchase) {
     return res.status(404).json({ message: 'No purchase found with the provided ID' });
+  }
+
+  const timePassed = Date.now() - new Date(purchase.purchaseDate);
+
+  if (timePassed > 5*60*1000) {
+    return res.status(403).json({ message: 'Cannot edit purchase after 5 minutes' });
   }
 
   const totalPrice = purchase.product.price * quantity;
