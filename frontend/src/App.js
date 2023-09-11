@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import LandingPage from "./components/LandingPage";
@@ -26,6 +27,10 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  const location = useLocation();
+  const searchTerm = new URLSearchParams(location.search).get('term');
+
 
   return (
     <div className="app-container">
@@ -67,9 +72,7 @@ function App() {
         <Route path="/newreview/:productId">
           <CreateReview />
         </Route>
-        <Route path="/search">
-          <Search />
-        </Route>
+        <Route path="/search" render={(props) => <Search {...props} key={searchTerm} />} />
         <Route path="*">
           <NotFound />
         </Route>

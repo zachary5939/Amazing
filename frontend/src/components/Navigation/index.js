@@ -28,10 +28,11 @@ function Navigation({ isLoaded }) {
   const handleSearch = () => {
     if (searchTerm.trim()) {
       dispatch(searchProductsByName(searchTerm)).then(() => {
-        history.push("/search");
+        history.push(`/search?term=${searchTerm}`);
       });
     }
   };
+
 
   let sessionLinks;
   if (sessionUser) {

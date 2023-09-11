@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
@@ -23,7 +23,6 @@ function Search() {
       dispatch(productActions.searchProductsByName(searchTerm));
     }
   }, [dispatch, searchTerm]);
-
 
   useEffect(() => {
     if (searchedProducts && Object.keys(searchedProducts).length) {
@@ -72,6 +71,7 @@ function Search() {
     );
   };
   const renderSearchResults = () => {
+    console.log("Rendering search results with:", searchedProducts);
     if (Object.values(searchedProducts || {}).length > 0) {
       return Object.values(searchedProducts).map((product) => (
         <div key={product.id} className="product-item">

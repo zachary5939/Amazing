@@ -46,9 +46,14 @@ export const noProductsFound = () => ({
 export const searchProductsByName = (name) => async (dispatch) => {
   const response = await fetch(`/api/products/search?name=${name}`);
 
+  if (response.status === 404) {
+    dispatch(noProductsFound());
+    return false;
+  }
+
   if (response.ok) {
     const products = await response.json();
-    if (products.length === 0) {
+    if (products.error || products.length === 0) {
       dispatch(noProductsFound());
     } else {
       dispatch(setSearchResults(products));
@@ -57,6 +62,8 @@ export const searchProductsByName = (name) => async (dispatch) => {
   }
   return false;
 };
+
+
 
 export const fetchAllProducts = () => async (dispatch) => {
   try {
