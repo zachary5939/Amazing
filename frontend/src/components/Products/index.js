@@ -145,6 +145,8 @@ function Products() {
   };
 
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div>
       <h2 className="category-name">{getCategoryName(categoryId)}</h2>
       <div className="sorting-container">
@@ -181,6 +183,8 @@ function Products() {
           </div>
         ))}
       </div>
+    </div>
+    </div>
     </div>
   );
 }

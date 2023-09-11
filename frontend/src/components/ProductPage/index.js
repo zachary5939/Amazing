@@ -97,6 +97,8 @@ function ProductPage() {
   const emptyStars = 5 - fullStars - halfStars;
 
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div className="product-page">
       <div className="product-page__top-section">
         <div className="product-page__image-container">
@@ -192,6 +194,8 @@ function ProductPage() {
                 )}
             </div>
         </div>
+    </div>
+    </div>
     );
 }
 

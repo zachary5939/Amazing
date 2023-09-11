@@ -120,6 +120,8 @@ function Reviews() {
 }
 
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div>
       {showConfirmModal && (
         <div className="modal-background">
@@ -225,6 +227,8 @@ function Reviews() {
           </div>
         ))}
       </div>
+    </div>
+    </div>
     </div>
   );
 }

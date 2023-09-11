@@ -53,6 +53,8 @@ function SignupFormPage() {
 
   return (
 <>
+<div className="main-content">
+<div className="content-area">
   <div className="signup-container">
     <img className="signup-logo" src={logo} alt="Logo" />
     <div className="signup-form-container">
@@ -122,6 +124,8 @@ function SignupFormPage() {
       </form>
     </div>
   </div>
+</div>
+</div>
 </>
 
   );

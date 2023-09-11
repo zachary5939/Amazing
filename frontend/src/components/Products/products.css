@@ -87,6 +87,10 @@
     padding-top: 3px;
 }
 
+.spacing {
+    padding-top: 90px;
+}
+
 /* Description */
 #root .app-container div .products-container .product-item .product-details .description{
     width:62% !important;

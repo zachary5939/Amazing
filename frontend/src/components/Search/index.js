@@ -102,11 +102,15 @@ function Search() {
     }
   };
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div>
       <h2 className="category-name">Search Results</h2>
       <div className="products-container">
         {renderSearchResults()}
       </div>
+    </div>
+    </div>
     </div>
   );
 

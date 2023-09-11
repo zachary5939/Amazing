@@ -64,6 +64,8 @@ function LoginFormPage() {
   };
 
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div className="login-form-page">
       <div className="login-form-page__logo-container">
         <img
@@ -126,6 +128,8 @@ function LoginFormPage() {
           Sign Up
         </button>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

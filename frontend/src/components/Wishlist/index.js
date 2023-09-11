@@ -19,6 +19,8 @@ function Wishlist() {
   }, [dispatch, sessionUser]);
 
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div className="wishlist-container">
       <div className="wishlist-header">
         <h1>{sessionUser?.firstName}'s Wishlist</h1>
@@ -60,6 +62,8 @@ function Wishlist() {
           </div>
         ))}
       </div>
+    </div>
+    </div>
     </div>
   );
 }

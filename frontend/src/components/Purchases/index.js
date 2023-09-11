@@ -96,6 +96,8 @@ function Purchases() {
   }
 
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div className="purchasesContainer_unique">
       <h1>Your Purchases</h1>
       <div className="sortContainer_unique">
@@ -180,6 +182,8 @@ function Purchases() {
           );
         })}
       </ul>
+    </div>
+    </div>
     </div>
   );
 }

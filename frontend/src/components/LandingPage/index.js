@@ -20,6 +20,8 @@ function LandingPage() {
     };
 
     return (
+        <div className="main-content">
+            <div className="content-area">
         <div className="home-container">
             <div className="splash-screen">
                 <img src={logo} alt="The all new echo show. Video call with friends and family." className="logo-image2" />
@@ -42,6 +44,8 @@ function LandingPage() {
                     <h2>Grocery</h2>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     )
 }

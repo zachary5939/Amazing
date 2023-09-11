@@ -9,8 +9,15 @@ body {
   display: none;
 }
 
+.main-content {
+  padding-top: 160px;
+  
+}
+
 .nav-bar {
   display: flex;
+  position: fixed;
+  z-index: 3;
   justify-content: space-between;
   align-items: center;
   background-color: rgb(19,25,33);
@@ -164,6 +171,10 @@ body {
   justify-content: center;
   background-color: rgb(36,47,62);
   padding: 10px 0;
+  position: fixed;
+  top: 100px;
+  width: 100%;
+  z-index: 2;
 }
 
 .nav-categories-container a {

@@ -7,7 +7,16 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
     margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    margin-top: auto;
+
   }
+
+  .content-area {
+    padding-bottom: 140px; /* Adjust this value based on your footer's height */
+}
 
   .app-container {
     display: flex;

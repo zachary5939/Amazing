@@ -21,6 +21,8 @@ function CompletePurchase() {
   };
 
     return (
+      <div className="main-content">
+        <div className="content-area">
       <div className="complete-container">
         {!hasRun && (
           <Confetti
@@ -48,6 +50,8 @@ function CompletePurchase() {
           View Purchases
         </button>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

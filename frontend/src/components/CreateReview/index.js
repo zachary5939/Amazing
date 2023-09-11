@@ -121,6 +121,8 @@ function ReviewForm() {
   };
 
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div className="review-container">
       <div className="product-image-container">
         <img src={product?.imageUrl} alt={product?.name} />
@@ -150,6 +152,8 @@ function ReviewForm() {
           </button>
         </form>{" "}
       </div>
+    </div>
+    </div>
     </div>
   );
 }

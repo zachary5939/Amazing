@@ -115,6 +115,8 @@ function Cart() {
 
   if (!sessionUser) {
     return (
+      <div className="main-content">
+        <div className="content-area">
       <div className="cartComp-info-container">
         <p className="cartComp-plz-login">Please sign in to view your cart.</p>
         <img src={logo} alt="Amazing Logo" className="cartComp-website-logo" />
@@ -122,17 +124,23 @@ function Cart() {
           <button className="cartComp-login-button">Login to view cart</button>
         </Link>
       </div>
+      </div>
+      </div>
     );
   }
 
   if (!cartItems || cartItems.length === 0) {
     return (
+      <div className="main-content">
+        <div className="content-area">
       <div className="cartComp-info-container">
         <p className="cartComp-plz-login">{sessionUser?.firstName}, your cart is empty!</p>
         <img src={logo} alt="Amazing Logo" className="cartComp-website-logo" />
         <Link to="/products">
           <button className="cartComp-login-button">View All Products!</button>
         </Link>
+      </div>
+      </div>
       </div>
     );
   }
@@ -145,6 +153,8 @@ function Cart() {
     return <div>Error: {error.message}</div>;
   }
   return (
+    <div className="main-content">
+      <div className="content-area">
     <div className="cartComp-cart">
       <h2>{sessionUser?.firstName}'s Cart</h2>
       <ul>
@@ -217,6 +227,8 @@ function Cart() {
           <button onClick={() => setShowErrorModal(false)}>Close</button>
         </div>
       )}
+    </div>
+    </div>
     </div>
   );
 
