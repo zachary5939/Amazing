@@ -16,9 +16,9 @@ module.exports = {
       [
         {
           userId: 1,
-          productId: 1,
+          productId: 3,
           quantity: 1,
-          totalPrice: 999.99,
+          totalPrice: 499.99,
           purchaseDate: new Date(),
           createdAt: new Date(),
           updatedAt: new Date()

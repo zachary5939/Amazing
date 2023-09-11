@@ -172,7 +172,7 @@ function Purchases() {
                 {!isLoading &&
                 (!timers[purchase.id] || !timers[purchase.id].expired) ? (
                   <button onClick={() => handleDelete(purchase.id)}>
-                    Delete
+                    Cancel Order
                   </button>
                 ) : null}
               </div>
