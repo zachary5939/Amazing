@@ -1,12 +1,15 @@
 import * as productActions from "../../store/products";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { addToCart } from "../../store/cart";
+import { addToWishlist } from "../../store/wishlist";
 import { fetchAllRatings, fetchRatingsForProducts } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import "./products.css";
+import { Modal } from "../../context/Modal";
 
 function Products() {
   const dispatch = useDispatch();
@@ -15,6 +18,9 @@ function Products() {
   const normalizedProducts = Object.values(products || {});
   const ratings = useSelector((state) => state.ratings?.items || []);
   const searched = useSelector((state) => state.products.searched);
+  const [sortOption, setSortOption] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const searchedProducts = useSelector(
     (state) => state.products.searchedProducts
@@ -58,6 +64,25 @@ function Products() {
     }
   };
 
+  const sortedProducts = () => {
+    switch (sortOption) {
+      case "alphabetical":
+        return [...displayProducts].sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      case "priceHighToLow":
+        return [...displayProducts].sort((a, b) => b.price - a.price);
+      case "priceLowToHigh":
+        return [...displayProducts].sort((a, b) => a.price - b.price);
+      case "topRated":
+        return [...displayProducts].sort(
+          (a, b) => getAverageRating(b.id) - getAverageRating(a.id)
+        );
+      default:
+        return displayProducts;
+    }
+  };
+
   const displayProducts = searched
     ? Object.values(searchedProducts)
     : normalizedProducts;
@@ -73,6 +98,23 @@ function Products() {
     return productRatings.length
       ? parseFloat((total / productRatings.length).toFixed(2))
       : null;
+  };
+
+  const handleOpenModal = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+    setIsModalOpen(false);
+  };
+
+  const handleConfirmAddToWishlist = () => {
+    if (selectedProduct) {
+      dispatch(addToWishlist(selectedProduct.id));
+    }
+    handleCloseModal();
   };
 
   const StarRating = ({ average }) => {
@@ -105,11 +147,25 @@ function Products() {
   return (
     <div>
       <h2 className="category-name">{getCategoryName(categoryId)}</h2>
+      <div className="sorting-container">
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+        >
+          <option value="">Sort by</option>
+          <option value="alphabetical">Alphabetical</option>
+          <option value="priceHighToLow">Price: High to Low</option>
+          <option value="priceLowToHigh">Price: Low to High</option>
+          <option value="topRated">Top Rated</option>
+        </select>
+      </div>
       <div className="products-container">
-        {displayProducts.map((product) => (
+        {sortedProducts().map((product) => (
           <div key={product.id} className="product-item">
             <Link to={`/products/${product.id}`}>
-              <img src={product.imageUrl} alt={product?.name} />
+              <div className="image-container">
+                <img src={product?.imageUrl} alt={product?.name} />
+              </div>
             </Link>
             <div className="product-details">
               <h3 className="product-name">
@@ -118,8 +174,9 @@ function Products() {
               <div className="starrating">
                 <StarRating average={getAverageRating(product?.id)} />
               </div>
-              <p className="description">{product.description}</p>
-              <p className="product-price">Price: ${product.price}</p>
+              <i class="a-icon a-icon-prime a-icon-medium" role="img" aria-label="Amazon Prime"></i>
+              {/* <p className="description">{product?.description}</p> */}
+              <p className="product-price">${product?.price}</p>
             </div>
           </div>
         ))}

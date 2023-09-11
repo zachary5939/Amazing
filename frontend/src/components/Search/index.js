@@ -24,6 +24,7 @@ function Search() {
     }
   }, [dispatch, searchTerm]);
 
+
   useEffect(() => {
     if (searchedProducts && Object.keys(searchedProducts).length) {
       const productIds = Object.values(searchedProducts).map(product => product.id);
@@ -75,7 +76,9 @@ function Search() {
       return Object.values(searchedProducts).map((product) => (
         <div key={product.id} className="product-item">
           <Link to={`/products/${product.id}`}>
+            <div className="image-container">
             <img src={product?.imageUrl} alt={product?.name} />
+            </div>
           </Link>
           <div className="product-details">
             <h3 className="product-name">
