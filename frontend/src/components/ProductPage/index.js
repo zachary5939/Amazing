@@ -8,6 +8,7 @@ import { fetchRatings } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { addToWishlist } from "../../store/wishlist";
+import prime from "../../img/prime.png";
 import Zoom from "react-img-zoom-gdn";
 
 function ProductPage() {

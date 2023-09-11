@@ -1,15 +1,13 @@
 import * as productActions from "../../store/products";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { addToCart } from "../../store/cart";
-import { addToWishlist } from "../../store/wishlist";
-import { fetchAllRatings, fetchRatingsForProducts } from "../../store/ratings";
+import prime from "../../img/prime.png";
+import { fetchRatingsForProducts } from "../../store/ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import "./products.css";
-import { Modal } from "../../context/Modal";
 
 function Products() {
   const dispatch = useDispatch();
@@ -19,8 +17,6 @@ function Products() {
   const ratings = useSelector((state) => state.ratings?.items || []);
   const searched = useSelector((state) => state.products.searched);
   const [sortOption, setSortOption] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const searchedProducts = useSelector(
     (state) => state.products.searchedProducts
@@ -28,11 +24,11 @@ function Products() {
 
   useEffect(() => {
     if (categoryId) {
-      dispatch(productActions.resetSearchState());
       dispatch(productActions.fetchProductsByCategory(categoryId));
     } else if (searched) {
       return;
     } else {
+      dispatch(productActions.resetSearchState()); // Reset the search state
       dispatch(productActions.fetchAllProducts());
     }
   }, [dispatch, categoryId, searched]);
@@ -100,23 +96,6 @@ function Products() {
       : null;
   };
 
-  const handleOpenModal = (product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedProduct(null);
-    setIsModalOpen(false);
-  };
-
-  const handleConfirmAddToWishlist = () => {
-    if (selectedProduct) {
-      dispatch(addToWishlist(selectedProduct.id));
-    }
-    handleCloseModal();
-  };
-
   const StarRating = ({ average }) => {
     if (average === null) return "No reviews";
 
@@ -162,29 +141,35 @@ function Products() {
         </select>
       </div>
       <div className="products-container">
-        {sortedProducts().map((product) => (
-          <div key={product.id} className="product-item">
-            <Link to={`/products/${product.id}`}>
-              <div className="image-container">
-                <img src={product?.imageUrl} alt={product?.name} />
+            {sortedProducts().map((product) => (
+              <div key={product.id} className="product-item">
+                <Link to={`/products/${product.id}`}>
+                  <div className="image-container">
+                    <img src={product?.imageUrl} alt={product?.name} />
+                  </div>
+                </Link>
+                <div className="product-details">
+                  <h3 className="product-name">
+                    <Link to={`/products/${product.id}`}>{product.name}</Link>
+                  </h3>
+                  <div className="starrating">
+                    <StarRating average={getAverageRating(product?.id)} />
+                  </div>
+                  <div className="price-and-delivery">
+                    <p className="product-price">${product?.price}</p>
+                    <div className="product-info-right">
+                      <img src={prime} alt="prime" className="prime-logo" />
+                      <p>
+                        FREE delivery by Amazing
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </Link>
-            <div className="product-details">
-              <h3 className="product-name">
-                <Link to={`/products/${product.id}`}>{product.name}</Link>
-              </h3>
-              <div className="starrating">
-                <StarRating average={getAverageRating(product?.id)} />
-              </div>
-              <i class="a-icon a-icon-prime a-icon-medium" role="img" aria-label="Amazon Prime"></i>
-              {/* <p className="description">{product?.description}</p> */}
-              <p className="product-price">${product?.price}</p>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
-    </div>
-    </div>
     </div>
   );
 }

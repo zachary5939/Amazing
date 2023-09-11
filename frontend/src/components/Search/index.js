@@ -9,6 +9,7 @@ import * as productActions from "../../store/products";
 import "../Products/products.css";
 import depressing from "../../img/depressing.png";
 import "./search.css";
+import prime from "../../img/prime.png";
 
 function Search() {
   const dispatch = useDispatch();
@@ -84,11 +85,18 @@ function Search() {
             <h3 className="product-name">
               <Link to={`/products/${product.id}`}>{product?.name}</Link>
             </h3>
-            <p className="description">{product?.description}</p>
             <div>
               <StarRating average={getAverageRating(product?.id)} />
             </div>
-            <p className="product-price">Price: ${product?.price}</p>
+            <div className="price-and-delivery">
+                    <p className="product-price">${product?.price}</p>
+                    <div className="product-info-right">
+                      <img src={prime} alt="prime" className="prime-logo" />
+                      <p>
+                        FREE delivery by Amazing
+                      </p>
+                    </div>
+                  </div>
           </div>
         </div>
       ));

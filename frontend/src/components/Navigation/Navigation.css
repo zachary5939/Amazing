@@ -11,7 +11,7 @@ body {
 
 .main-content {
   padding-top: 160px;
-  
+
 }
 
 .nav-bar {
@@ -56,6 +56,11 @@ body {
   max-height: 80px;
   height: auto;
   margin-right: 10px;
+}
+
+.logo-image:hover {
+  border: white 1px solid;
+  /* padding: 0px 0px 0px 0px; */
 }
 
 .nav-search-bar {
