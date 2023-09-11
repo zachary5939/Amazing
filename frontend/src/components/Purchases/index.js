@@ -13,41 +13,38 @@ function Purchases() {
   const user = useSelector((state) => state.session.user);
   const userId = user ? user.id : null;
   const purchases = useSelector((state) => state.purchases.items);
-  const lastPurchaseTime = useSelector(
-    (state) => state.purchases.lastPurchaseTime
-  );
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState("recent");
   const purchasesRef = useRef(purchases);
   const [timers, setTimers] = useState({});
 
+  useEffect(() => {
+    purchasesRef.current = purchases;
+  }, [purchases]);
 
-    useEffect(() => {
-      purchasesRef.current = purchases;
-    }, [purchases]);
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchUserPurchases(userId));
+      setIsLoading(false);
+    }
+  }, [dispatch, userId]);
 
-    useEffect(() => {
-      if (userId) {
-        dispatch(fetchUserPurchases(userId));
-        setIsLoading(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const updatedTimers = {};
+      for (const purchase of purchasesRef.current) {
+        const timeSincePurchase =
+          (Date.now() - new Date(purchase.purchaseDate).getTime()) / 1000;
+        updatedTimers[purchase.id] = {
+          countdown: Math.max(0, 300 - timeSincePurchase),
+          expired: timeSincePurchase >= 300,
+        };
       }
-    }, [dispatch, userId]);
+      setTimers(updatedTimers);
+    }, 1000);
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        const updatedTimers = {};
-        for (const purchase of purchasesRef.current) {
-          const timeSincePurchase = (Date.now() - new Date(purchase.purchaseDate).getTime()) / 1000;
-          updatedTimers[purchase.id] = {
-            countdown: Math.max(0, 300 - timeSincePurchase),
-            expired: timeSincePurchase >= 300,
-          };
-        }
-        setTimers(updatedTimers);
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   function formatPrice(price) {
     if (typeof price === "number") {
@@ -72,7 +69,6 @@ function Purchases() {
       console.error("Error updating purchase quantity:", error);
     }
   };
-
 
   let sortedPurchases = [...purchases];
   switch (sortType) {
@@ -99,8 +95,6 @@ function Purchases() {
     return <div>Loading...</div>;
   }
 
-
-
   return (
     <div className="purchasesContainer_unique">
       <h1>Your Purchases</h1>
@@ -119,24 +113,40 @@ function Purchases() {
       </div>
       {purchases.length === 0 && <p>You haven't made any purchases yet.</p>}
       <ul>
-        {sortedPurchases.map((purchase) => (
-          <li key={purchase.id} className="purchaseItem_unique">
-            <img
-              src={purchase?.product?.imageUrl}
-              alt={purchase?.product?.name}
-              className="purchaseImage_unique"
-            />
-            <div className="purchaseDetails_unique">
-              <div>{purchase?.product?.name}</div>
+        {sortedPurchases.map((purchase) => {
+          const minutes = Math.floor(timers[purchase.id]?.countdown / 60);
+          const seconds = Math.round(timers[purchase.id]?.countdown % 60);
+          const timeDisplay = timers[purchase.id]
+            ? `Time Remaining for Shipment: ${minutes}:${seconds
+                .toString()
+                .padStart(2, "0")} minutes`
+            : "Loading...";
 
-              {timers[purchase.id] && timers[purchase.id].expired ? (
-                <p>Order has been shipped!</p>
-              ) : (
-                <>
-                  <p>
-                    Time Remaining for Shipment: {Math.floor(timers[purchase.id]?.countdown / 60)}:
-                    {(timers[purchase.id]?.countdown % 60).toString().padStart(2, "0")} minutes
-                  </p>
+          return (
+            <li key={purchase.id} className="purchaseItem_unique">
+              <img
+                src={purchase?.product?.imageUrl}
+                alt={purchase?.product?.name}
+                className="purchaseImage_unique"
+              />
+              <div className="purchaseDetails_unique">
+                <div>{purchase?.product?.name}</div>
+                <div>Total Price: ${formatPrice(purchase?.totalPrice)}</div>
+                <div>
+                  Date of Purchase:
+                  {new Date(purchase?.purchaseDate).toLocaleDateString()}
+                </div>
+              </div>
+              <div className="timerContainer_unique">
+                {timers[purchase.id] && timers[purchase.id].expired ? (
+                  <p>Order has shipped!</p>
+                ) : (
+                  <p>{timeDisplay}</p>
+                )}
+              </div>
+              <div className="updateContainer_unique">
+                {!isLoading &&
+                (!timers[purchase.id] || !timers[purchase.id].expired) ? (
                   <div>
                     Quantity:
                     <select
@@ -156,24 +166,22 @@ function Purchases() {
                       ))}
                     </select>
                   </div>
+                ) : null}
+              </div>
+              <div className="deleteContainer_unique">
+                {!isLoading &&
+                (!timers[purchase.id] || !timers[purchase.id].expired) ? (
                   <button onClick={() => handleDelete(purchase.id)}>
                     Delete
                   </button>
-                </>
-              )}
-
-              <div>Total Price: ${formatPrice(purchase?.totalPrice)}</div>
-              <div>
-                Date of Purchase:
-                {new Date(purchase?.purchaseDate).toLocaleDateString()}
+                ) : null}
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </div>
-);
-
+  );
 }
 
 export default Purchases;
