@@ -68,7 +68,7 @@
     right: 0;
 }
 
-/* MODAL STYLING */
+/* MODAL STYLING DELETE */
 .modalOverlay_unique {
     position: fixed;
     top: 0;
@@ -111,3 +111,49 @@
 .button-design:hover {
     background-color: #fccc2e;
 }
+
+/* MODAL STYLING ALREADY REVIEWED */
+.modal-already-reviewed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensures the modal appears above other content */
+  }
+
+  .modal-already-reviewed-content {
+    width: 300px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+
+  .modal-already-reviewed-content h2 {
+    margin-top: 0;
+    color: #e74c3c; /* Red color for the error title */
+  }
+
+  .modal-already-reviewed-content p {
+    margin: 20px 0;
+  }
+
+  .modal-already-reviewed-content button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #e74c3c; /* Red background for the error button */
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .modal-already-reviewed-content button:hover {
+    background-color: #c0392b; /* Darker red on hover */
+  }

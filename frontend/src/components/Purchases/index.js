@@ -15,11 +15,12 @@ function Purchases() {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const sessionUser = useSelector((state) => state.session.user);
-  const userId = user ? user.id : null;
+  const userId = useSelector((state) => state.session.user?.id);
   const purchases = useSelector((state) => state.purchases.items);
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState("recent");
   const allReviews = useSelector((state) => state.ratings.byProductId || {});
+  const userReviews = useSelector((state) => state.ratings.items);
   const purchasesRef = useRef(purchases);
   const [timers, setTimers] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,11 +77,11 @@ function Purchases() {
   function ErrorModal({ isOpen, onClose }) {
     return (
       isOpen && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="modal-already-reviewed">
+          <div className="modal-already-reviewed-content">
             <h2>Error</h2>
             <p>You've already reviewed this product</p>
-            <button onClick={onClose}>Close</button>
+            <button onClick={onClose}>View my Reviews</button>
           </div>
         </div>
       )
@@ -88,16 +89,18 @@ function Purchases() {
   }
 
   const navigateToReview = (product) => {
-    if (hasReviewedProduct(product.id)) {
+    if (hasReviewedProduct(product?.id)) {
       setIsErrorModalOpen(true); // Open the error modal
     } else {
-      history.push(`/newreview/${product.id}`);
+      history.push(`/newreview/${product?.id}`);
     }
   };
 
+
   const hasReviewedProduct = (productId) => {
-    return allReviews[productId]?.some((review) => review.userId === userId);
+    return userReviews.some((review) => review?.userId === userId && review?.productId === productId);
   };
+
 
   const handleUpdateQuantity = async (purchaseId, newQuantity) => {
     try {
@@ -165,7 +168,7 @@ function Purchases() {
                 : "Loading...";
 
               return (
-                <li key={purchase.id} className="purchaseItem_unique">
+                <li key={purchase?.id} className="purchaseItem_unique">
                   <img
                     src={purchase?.product?.imageUrl}
                     alt={purchase?.product?.name}
@@ -180,7 +183,7 @@ function Purchases() {
                     </div>
                   </div>
                   <div className="timerContainer_unique">
-                    {timers[purchase.id] && timers[purchase.id].expired ? (
+                    {timers[purchase?.id] && timers[purchase?.id].expired ? (
                       <p>Order has shipped!</p>
                     ) : (
                       <p>{timeDisplay}</p>
@@ -188,7 +191,7 @@ function Purchases() {
                   </div>
                   <div className="updateContainer_unique">
                     {!isLoading &&
-                    (!timers[purchase.id] || !timers[purchase.id].expired) ? (
+                    (!timers[purchase?.id] || !timers[purchase?.id].expired) ? (
                       <div>
                         Quantity:
                         <select
@@ -196,7 +199,7 @@ function Purchases() {
                           value={purchase?.quantity}
                           onChange={(e) =>
                             handleUpdateQuantity(
-                              purchase.id,
+                              purchase?.id,
                               parseInt(e.target.value)
                             )
                           }
@@ -212,14 +215,14 @@ function Purchases() {
                   </div>
                   <div className="deleteContainer_unique">
                     <button
-                      onClick={() => navigateToReview(purchase.product)}
+                      onClick={() => navigateToReview(purchase?.product)}
                       className="cartComp-review-button"
                     >
                       Review
                     </button>
                     {!isLoading &&
-                    (!timers[purchase.id] || !timers[purchase.id].expired) ? (
-                      <button onClick={() => handleDelete(purchase.id)}>
+                    (!timers[purchase?.id] || !timers[purchase?.id].expired) ? (
+                      <button onClick={() => handleDelete(purchase?.id)}>
                         Cancel Order
                       </button>
                     ) : null}
