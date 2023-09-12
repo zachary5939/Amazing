@@ -157,3 +157,14 @@
   .modal-already-reviewed-content button:hover {
     background-color: #c0392b; /* Darker red on hover */
   }
+
+  .X-button {
+    position: sticky;
+    transform: translatex(147px) translatey(-26px) !important;
+    background: none;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    color: #e74c3c; /* Red color to match the theme */
+    transition: color 0.3s ease;
+}
