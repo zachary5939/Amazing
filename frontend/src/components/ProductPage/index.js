@@ -109,7 +109,7 @@ function ProductPage() {
         <div className="product-page__center">
           <h2>{product?.name}</h2>
 
-          <div>
+          <div className="stars">
             {[...Array(fullStars)].map((_, index) => (
               <FontAwesomeIcon className="star" icon={faStar} key={index} />
             ))}
@@ -129,14 +129,17 @@ function ProductPage() {
               />
             ))}
           </div>
-
+          <p className="product-price-2">${product?.price}</p>
           <p>{product?.description}</p>
-          <p>MSRP: ${product?.price}</p>
         </div>
 
         <div className="product-page__right">
           <p>Total Price: ${totalPrice}</p>
           <p>{isProductSoldOut ? "Sold Out" : "In Stock"}</p>
+          <img src={prime} alt="prime" className="prime-logo" />
+          <p className="free-shipping">
+            Free one day shipping
+          </p>
           <div>
             <label htmlFor="quantity">Quantity:</label>
             <select

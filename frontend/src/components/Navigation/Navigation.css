@@ -9,14 +9,9 @@ body {
   display: none;
 }
 
-.main-content {
-  padding-top: 160px;
-
-}
 
 .nav-bar {
   display: flex;
-  position: fixed;
   z-index: 3;
   justify-content: space-between;
   align-items: center;
@@ -52,22 +47,16 @@ body {
 }
 
 .logo-image {
-  width: auto;
+  max-width: 400px;
   max-height: 80px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.logo-image:hover {
-  border: white 1px solid;
-  /* padding: 0px 0px 0px 0px; */
+  margin-left: -20px;
+  margin-right: 30px;
 }
 
 .nav-search-bar {
   flex: 1;
   padding: 5px 10px;
   border-radius: 4px;
-  border: 1px solid #ddd;
 }
 
 .nav-search-button {
@@ -91,10 +80,25 @@ body {
  }
 
 .profile-container {
-  cursor: pointer;
   position: relative;
   z-index: 10;
+  align-self: center;
+  align-content: center;
+  justify-content: center;
+  display: flex;
 }
+
+/* List Item */
+.profile-dropdown .user-details li{
+  width:256px;
+ }
+
+ .actions li button{
+  position:relative;
+  left:26px;
+ }
+
+
 
 .profile-dropdown {
   position: absolute;
@@ -114,8 +118,11 @@ body {
  }
 
 
-.profile-dropdown {
+ .profile-dropdown {
+  position: absolute;
+  top: 100%;
   display: flex;
+  flex-direction: column;
   width: 300px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -124,30 +131,43 @@ body {
   overflow: hidden;
 }
 
-.profile-dropdown .user-details {
+.profile-dropdown {
   flex: 1;
   border-bottom: 1px solid #ddd;
   padding: 10px;
   display: flex;
   justify-content: center;
+  align-items: center; /* vertically center the name */
   text-decoration: none;
   list-style-type: none;
 }
 
 .profile-dropdown .user-details li {
-  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.username-info {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 15px 0;
 }
 
 .profile-dropdown .actions {
-  flex: 1;
+  flex: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
   list-style-type: none;
-
+  align-self: center;
+  transform: translatex(6px);
 }
 
 .profile-dropdown .actions button {
@@ -163,6 +183,11 @@ body {
   width: 130px;
 }
 
+.profile-dropdown .actions li {
+  display: flex;
+  justify-content: center;
+}
+
 .profile-dropdown .actions button:hover {
   background-color: #fccc2e;
 }
@@ -176,7 +201,6 @@ body {
   justify-content: center;
   background-color: rgb(36,47,62);
   padding: 10px 0;
-  position: fixed;
   top: 100px;
   width: 100%;
   z-index: 2;
@@ -190,6 +214,12 @@ body {
   border-radius: 4px;
   transition: background-color 0.3s;
 }
+
+/* Cart Icon */
+.nav-list a i{
+  font-size:26px;
+ }
+
 
 .nav-categories-container a:hover {
   background-color: rgb(51, 67, 89);

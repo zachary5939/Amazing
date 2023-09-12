@@ -21,10 +21,6 @@ function Navigation({ isLoaded }) {
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const comingSoon = () => {
-    alert("Coming soon!");
-  };
-
   const handleSearch = () => {
     if (searchTerm.trim()) {
       dispatch(searchProductsByName(searchTerm)).then(() => {
@@ -32,7 +28,6 @@ function Navigation({ isLoaded }) {
       });
     }
   };
-
 
   let sessionLinks;
   if (sessionUser) {

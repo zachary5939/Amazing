@@ -89,15 +89,10 @@ function Cart() {
     handleCloseConfirmModal();
   };
 
-  const comingSoon = () => {
-    alert("Feature coming soon!");
-  };
-
   const hasReviewedProduct = (productId) => {
     const reviewsForProduct = allReviews[productId] || [];
     return reviewsForProduct.some((review) => review.userId === sessionUser.id);
   };
-
 
   const navigateToReview = (product) => {
     if (hasReviewedProduct(product.id)) {
@@ -107,10 +102,6 @@ function Cart() {
     }
   };
 
-
-  const loginPlease = () => {
-    history.push("/login");
-  };
 
 
   if (!sessionUser) {
