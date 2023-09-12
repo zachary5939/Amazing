@@ -51,15 +51,15 @@ function ProfileButton({ user }) {
     <div className="profile-container" ref={containerRef}>
       <div className="profile-trigger" onClick={openMenu}>
         <div className="profile-text">
-          <p>Hello, {user.firstName}</p>
+          <p>Hello, {user?.firstName}</p>
           <p>Account & Lists</p>
         </div>
       </div>
       <ul className={ulClassName} ref={ulRef}>
-        <div className="user-details">
           <li className="username-info">
-            Hi, {user.firstName} {user.lastName}!
+            Hi, {user?.firstName} {user?.lastName}!
           </li>
+        <div className="user-details">
         </div>
         <div className="actions">
           <li>

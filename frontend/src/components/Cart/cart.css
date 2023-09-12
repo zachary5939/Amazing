@@ -49,6 +49,7 @@
     cursor: pointer;
     transition: box-shadow 0.2s ease-in-out;
     border-radius: 3px;
+    text-decoration: none;
 }
 
 .cartComp-update-quantity-button:hover {
@@ -127,6 +128,11 @@
     align-items: center;
     text-align: center;
     border-radius: 5px;
+    text-decoration: none;
+}
+
+.cartComp-login-button p {
+    text-decoration: none;
 }
 
 .cartComp-plz-login {

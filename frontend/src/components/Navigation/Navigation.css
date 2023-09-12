@@ -227,6 +227,7 @@ body {
 
 .profile-text {
   color: white;
+  cursor: pointer;
 }
 
 .nav-search-container {

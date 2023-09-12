@@ -147,7 +147,7 @@ function Cart() {
     <div className="main-content">
       <div className="content-area">
     <div className="cartComp-cart">
-      <h2>{sessionUser?.firstName}'s Cart</h2>
+      <h2>Shopping Cart</h2>
       <ul>
 {cartItems.map(({ id, product, quantity }) => (
   <React.Fragment key={id}>

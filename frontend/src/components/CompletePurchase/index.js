@@ -43,10 +43,10 @@ function CompletePurchase() {
         You have five minutes to make any last minute changes to your order.
       </p>
       <div className="buttons-container2">
-        <button className="complete-button" onClick={handleReturnHome}>
+        <button className="complete-button-complete" onClick={handleReturnHome}>
           Return Home
         </button>
-        <button className="complete-button" onClick={viewOrder}>
+        <button className="complete-button-complete" onClick={viewOrder}>
           View Purchases
         </button>
       </div>

@@ -22,19 +22,20 @@
     margin: 20px 0;
 }
 
-.complete-button {
+.complete-button-complete {
     max-width: 100%;
-    margin: 0 10px; /* Adding some spacing between the buttons */
-    padding: 10px 20px;
     font-size: 1rem;
     background-color: #fddd4e;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    padding: 10px 20px;
     transition: background-color 0.3s ease;
+    margin-left: 40px;
+    margin-right: 40px
 }
 
-.complete-button:hover {
+.complete-button-complete:hover {
     background-color: #fccc2e;
 }
 

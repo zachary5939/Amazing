@@ -18,6 +18,8 @@ function Products() {
   const searched = useSelector((state) => state.products.searched);
   const [sortOption, setSortOption] = useState("");
   const [forceUpdate, setForceUpdate] = useState(0);
+  const [productExists, setProductExists] = useState(true);
+
 
   const searchedProducts = useSelector(
     (state) => state.products.searchedProducts
@@ -27,7 +29,7 @@ function Products() {
     if (categoryId) {
       dispatch(productActions.fetchProductsByCategory(categoryId));
     } else {
-      dispatch(productActions.resetSearchState()); // Always reset the search state
+      dispatch(productActions.resetSearchState());
       dispatch(productActions.fetchAllProducts());
     }
 }, [dispatch, categoryId]);

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addRating } from "../../store/ratings";
 import { useParams, useHistory } from "react-router-dom";
 import { fetchProductById } from "../../store/products";
-import { fetchCartItems } from "../../store/cart";
+import { fetchUserPurchases } from "../../store/purchases";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../img/amazinglogoblack.png";
@@ -20,6 +20,8 @@ function ReviewForm() {
   const product = useSelector((state) => state.products.productById);
   const cartItems = useSelector((state) => state.cart.items);
   const [hoveredStar, setHoveredStar] = useState(null);
+  const userPurchases = useSelector((state) => state.purchases.items);
+
 
 
   const StarRating = ({
@@ -55,11 +57,15 @@ function ReviewForm() {
   useEffect(() => {
     dispatch(fetchProductById(productId));
     if (userId) {
-      dispatch(fetchCartItems(userId));
+      dispatch(fetchUserPurchases(userId));
     }
   }, [dispatch, productId, userId]);
 
-  const isInCart = cartItems.some(item => item.productId === +productId);
+  const hasPurchasedProduct = () => {
+    const purchased = userPurchases.some((purchase) => purchase.productId === +productId);
+    return purchased;
+  };
+
 
   if (!user) {
     return (
@@ -76,10 +82,10 @@ function ReviewForm() {
     );
   }
 
-  if (!isInCart) {
+  if (!hasPurchasedProduct()) {
     return (
       <div className="not-signed-in-container">
-        <h1 className="not-signed-in-header">You need to add this product to your cart in order to review it.</h1>
+        <h1 className="not-signed-in-header">You need to purchase this product in order to review it.</h1>
         <img className="not-signed-in-logo" src={logo} alt="Amazing Logo" />
         <button
           className="not-signed-in-login-button"

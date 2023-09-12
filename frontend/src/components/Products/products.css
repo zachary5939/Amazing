@@ -37,6 +37,10 @@
     color:#000000;
    }
 
+.product-name a:hover {
+    text-decoration: underline;
+}
+
 .product-item {
     display: flex;
     border-top: 0.5px solid #d1d1d1;

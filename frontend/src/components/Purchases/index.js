@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import "./Purchases.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,17 +7,24 @@ import {
   deletePurchase,
   updatePurchaseQuantity,
 } from "../../store/purchases";
-import { formatTime } from "./helper";
+import { fetchUserRatings } from "../../store/ratings";
+import ConfirmModal from "./modal";
 
 function Purchases() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
   const userId = user ? user.id : null;
   const purchases = useSelector((state) => state.purchases.items);
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState("recent");
+  const allReviews = useSelector((state) => state.ratings.byProductId || {});
   const purchasesRef = useRef(purchases);
   const [timers, setTimers] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [purchaseToCancel, setPurchaseToCancel] = useState(null);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   useEffect(() => {
     purchasesRef.current = purchases;
@@ -25,6 +33,7 @@ function Purchases() {
   useEffect(() => {
     if (userId) {
       dispatch(fetchUserPurchases(userId));
+      dispatch(fetchUserRatings(userId));
       setIsLoading(false);
     }
   }, [dispatch, userId]);
@@ -54,10 +63,41 @@ function Purchases() {
   }
 
   function handleDelete(purchaseId) {
-    if (window.confirm("Are you sure you want to delete this purchase?")) {
-      dispatch(deletePurchase(purchaseId));
-    }
+    setPurchaseToCancel(purchaseId);
+    setIsModalOpen(true);
   }
+
+  // function handleDelete(purchaseId) {
+  //   if (window.confirm("Are you sure you want to delete this purchase?")) {
+  //     dispatch(deletePurchase(purchaseId));
+  //   }
+  // }
+
+  function ErrorModal({ isOpen, onClose }) {
+    return (
+      isOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Error</h2>
+            <p>You've already reviewed this product</p>
+            <button onClick={onClose}>Close</button>
+          </div>
+        </div>
+      )
+    );
+  }
+
+  const navigateToReview = (product) => {
+    if (hasReviewedProduct(product.id)) {
+      setIsErrorModalOpen(true); // Open the error modal
+    } else {
+      history.push(`/newreview/${product.id}`);
+    }
+  };
+
+  const hasReviewedProduct = (productId) => {
+    return allReviews[productId]?.some((review) => review.userId === userId);
+  };
 
   const handleUpdateQuantity = async (purchaseId, newQuantity) => {
     try {
@@ -98,92 +138,115 @@ function Purchases() {
   return (
     <div className="main-content">
       <div className="content-area">
-    <div className="purchasesContainer_unique">
-      <h1>Your Purchases</h1>
-      <div className="sortContainer_unique">
-        <label htmlFor="sortType">Sort by: </label>
-        <select
-          id="sortType"
-          value={sortType}
-          onChange={(e) => setSortType(e.target.value)}
-        >
-          <option value="recent">Most Recent</option>
-          <option value="oldest">Oldest</option>
-          <option value="productName">Product Name</option>
-          <option value="price">Price</option>
-        </select>
-      </div>
-      {purchases.length === 0 && <p>You haven't made any purchases yet.</p>}
-      <ul>
-        {sortedPurchases.map((purchase) => {
-          const minutes = Math.floor(timers[purchase.id]?.countdown / 60);
-          const seconds = Math.round(timers[purchase.id]?.countdown % 60);
-          const timeDisplay = timers[purchase.id]
-            ? `Time Remaining for Shipment: ${minutes}:${seconds
-                .toString()
-                .padStart(2, "0")} minutes`
-            : "Loading...";
+        <div className="purchasesContainer_unique">
+          <h1>Your Purchases</h1>
+          <div className="sortContainer_unique">
+            <label htmlFor="sortType">Sort by: </label>
+            <select
+              id="sortType"
+              value={sortType}
+              onChange={(e) => setSortType(e.target.value)}
+            >
+              <option value="recent">Most Recent</option>
+              <option value="oldest">Oldest</option>
+              <option value="productName">Product Name</option>
+              <option value="price">Price</option>
+            </select>
+          </div>
+          {purchases.length === 0 && <p>You haven't made any purchases yet.</p>}
+          <ul>
+            {sortedPurchases.map((purchase) => {
+              const minutes = Math.floor(timers[purchase.id]?.countdown / 60);
+              const seconds = Math.round(timers[purchase.id]?.countdown % 60);
+              const timeDisplay = timers[purchase.id]
+                ? `Time Remaining for Shipment: ${minutes}:${seconds
+                    .toString()
+                    .padStart(2, "0")} minutes`
+                : "Loading...";
 
-          return (
-            <li key={purchase.id} className="purchaseItem_unique">
-              <img
-                src={purchase?.product?.imageUrl}
-                alt={purchase?.product?.name}
-                className="purchaseImage_unique"
-              />
-              <div className="purchaseDetails_unique">
-                <div>{purchase?.product?.name}</div>
-                <div>Total Price: ${formatPrice(purchase?.totalPrice)}</div>
-                <div>
-                  Date of Purchase:
-                  {new Date(purchase?.purchaseDate).toLocaleDateString()}
-                </div>
-              </div>
-              <div className="timerContainer_unique">
-                {timers[purchase.id] && timers[purchase.id].expired ? (
-                  <p>Order has shipped!</p>
-                ) : (
-                  <p>{timeDisplay}</p>
-                )}
-              </div>
-              <div className="updateContainer_unique">
-                {!isLoading &&
-                (!timers[purchase.id] || !timers[purchase.id].expired) ? (
-                  <div>
-                    Quantity:
-                    <select
-                      key={purchase?.quantity}
-                      value={purchase?.quantity}
-                      onChange={(e) =>
-                        handleUpdateQuantity(
-                          purchase.id,
-                          parseInt(e.target.value)
-                        )
-                      }
-                    >
-                      {[...Array(10)].map((_, idx) => (
-                        <option key={idx} value={idx + 1}>
-                          {idx + 1}
-                        </option>
-                      ))}
-                    </select>
+              return (
+                <li key={purchase.id} className="purchaseItem_unique">
+                  <img
+                    src={purchase?.product?.imageUrl}
+                    alt={purchase?.product?.name}
+                    className="purchaseImage_unique"
+                  />
+                  <div className="purchaseDetails_unique">
+                    <div>{purchase?.product?.name}</div>
+                    <div>Total Price: ${formatPrice(purchase?.totalPrice)}</div>
+                    <div>
+                      Date of Purchase:
+                      {new Date(purchase?.purchaseDate).toLocaleDateString()}
+                    </div>
                   </div>
-                ) : null}
-              </div>
-              <div className="deleteContainer_unique">
-                {!isLoading &&
-                (!timers[purchase.id] || !timers[purchase.id].expired) ? (
-                  <button onClick={() => handleDelete(purchase.id)}>
-                    Cancel Order
-                  </button>
-                ) : null}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-    </div>
+                  <div className="timerContainer_unique">
+                    {timers[purchase.id] && timers[purchase.id].expired ? (
+                      <p>Order has shipped!</p>
+                    ) : (
+                      <p>{timeDisplay}</p>
+                    )}
+                  </div>
+                  <div className="updateContainer_unique">
+                    {!isLoading &&
+                    (!timers[purchase.id] || !timers[purchase.id].expired) ? (
+                      <div>
+                        Quantity:
+                        <select
+                          key={purchase?.quantity}
+                          value={purchase?.quantity}
+                          onChange={(e) =>
+                            handleUpdateQuantity(
+                              purchase.id,
+                              parseInt(e.target.value)
+                            )
+                          }
+                        >
+                          {[...Array(10)].map((_, idx) => (
+                            <option key={idx} value={idx + 1}>
+                              {idx + 1}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="deleteContainer_unique">
+                    <button
+                      onClick={() => navigateToReview(purchase.product)}
+                      className="cartComp-review-button"
+                    >
+                      Review
+                    </button>
+                    {!isLoading &&
+                    (!timers[purchase.id] || !timers[purchase.id].expired) ? (
+                      <button onClick={() => handleDelete(purchase.id)}>
+                        Cancel Order
+                      </button>
+                    ) : null}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        onConfirm={() => {
+          dispatch(deletePurchase(purchaseToCancel));
+          setIsModalOpen(false);
+          setPurchaseToCancel(null);
+        }}
+      />
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => {
+          setIsErrorModalOpen(false);
+          history.push("/reviews");
+        }}
+      />
     </div>
   );
 }
