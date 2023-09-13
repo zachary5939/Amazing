@@ -109,9 +109,6 @@ export const restoreUser = () => async (dispatch) => {
     }
 };
 
-
-
-
   export const createUserThunk = (user) => async (dispatch) => {
     const response = await csrfFetch("/api/users", {
       method: "POST",
