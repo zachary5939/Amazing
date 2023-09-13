@@ -8,6 +8,16 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
+.cartComp-quantity-select {
+    width: fit-content;
+    border-radius: 6px;
+    margin: 10px 0;
+    border-color: #D5D9D9;
+    background-color: rgba(173, 173, 173, 0.226);
+    font-size: 13px;
+    outline: none;
+}
+
 .purchasesContainer_unique h1 {
     text-align: center;
     color: #333;
@@ -91,6 +101,12 @@
     text-align: center;
 }
 
+#root ul .cartComp-review-button{
+    margin-left:3px;
+   }
+
+
+
 .modalButtonsContainer_unique {
     margin-top: 20px;
     display: flex;
@@ -119,11 +135,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensures the modal appears above other content */
+    z-index: 1000;
   }
 
   .modal-already-reviewed-content {
@@ -137,7 +153,6 @@
 
   .modal-already-reviewed-content h2 {
     margin-top: 0;
-    color: #e74c3c; /* Red color for the error title */
   }
 
   .modal-already-reviewed-content p {
@@ -147,7 +162,7 @@
   .modal-already-reviewed-content button {
     padding: 10px 20px;
     border: none;
-    background-color: #e74c3c; /* Red background for the error button */
+    background-color: #e74c3c;
     color: #ffffff;
     border-radius: 5px;
     cursor: pointer;
@@ -155,7 +170,7 @@
   }
 
   .modal-already-reviewed-content button:hover {
-    background-color: #c0392b; /* Darker red on hover */
+    background-color: #c0392b;
   }
 
   .X-button {
@@ -167,4 +182,18 @@
     cursor: pointer;
     color: #e74c3c; /* Red color to match the theme */
     transition: color 0.3s ease;
+}
+
+/* NOT LOGGED IN */
+.not-logged-in-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh; /* take the full viewport height */
+}
+
+.not-logged-centered-logo {
+    width: 300px;
+    margin-bottom: 20px;
 }

@@ -180,7 +180,7 @@ module.exports = {
           name: "Live Laugh Love Throw Pillow ",
           description: "Super Soft Breathable Fabric: A Grade Velvet, Fine Texture, Soft Handle, Comfortable And Elegant.",
           imageUrl:
-            "https://m.media-amazon.com/images/I/717jBuIvLDL._AC_SL1500_.jpg",
+            "https://m.media-amazon.com/images/I/61RrDEbdEOL._AC_SL1001_.jpg",
           price: 14.96,
           categoryId: 3,
         },

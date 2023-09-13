@@ -8,6 +8,7 @@ import {
   updatePurchaseQuantity,
 } from "../../store/purchases";
 import { fetchUserRatings } from "../../store/ratings";
+import logo from "../../img/amazinglogoblack.png";
 import ConfirmModal from "./modal";
 
 function Purchases() {
@@ -19,7 +20,6 @@ function Purchases() {
   const purchases = useSelector((state) => state.purchases.items);
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState("recent");
-  const allReviews = useSelector((state) => state.ratings.byProductId || {});
   const userReviews = useSelector((state) => state.ratings.items);
   const purchasesRef = useRef(purchases);
   const [timers, setTimers] = useState({});
@@ -79,7 +79,6 @@ function Purchases() {
       isOpen && (
         <div className="modal-already-reviewed">
           <div className="modal-already-reviewed-content">
-            <h2>Error</h2>
             <p>You've already reviewed this product</p>
             <button onClick={onClose}>View my Reviews</button>
           </div>
@@ -90,7 +89,7 @@ function Purchases() {
 
   const navigateToReview = (product) => {
     if (hasReviewedProduct(product?.id)) {
-      setIsErrorModalOpen(true); // Open the error modal
+      setIsErrorModalOpen(true);
     } else {
       history.push(`/newreview/${product?.id}`);
     }
@@ -134,6 +133,16 @@ function Purchases() {
       );
   }
 
+  if (!user) {
+    return (
+        <div className="not-logged-in-container">
+            <img src={logo} alt="Amazing Logo" className="not-logged-centered-logo"/>
+            <h1>You're not logged in.</h1>
+            <h3>What're you doing here?</h3>
+        </div>
+    );
+}
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -149,6 +158,7 @@ function Purchases() {
               id="sortType"
               value={sortType}
               onChange={(e) => setSortType(e.target.value)}
+              className="cartComp-quantity-select"
             >
               <option value="recent">Most Recent</option>
               <option value="oldest">Oldest</option>
@@ -162,7 +172,7 @@ function Purchases() {
               const minutes = Math.floor(timers[purchase.id]?.countdown / 60);
               const seconds = Math.round(timers[purchase.id]?.countdown % 60);
               const timeDisplay = timers[purchase.id]
-                ? `Time Remaining for Shipment: ${minutes}:${seconds
+                ? `Time Remaining: ${minutes}:${seconds
                     .toString()
                     .padStart(2, "0")} minutes`
                 : "Loading...";
@@ -195,6 +205,7 @@ function Purchases() {
                       <div>
                         Quantity:
                         <select
+                        className="cartComp-quantity-select"
                           key={purchase?.quantity}
                           value={purchase?.quantity}
                           onChange={(e) =>
@@ -222,7 +233,7 @@ function Purchases() {
                     </button>
                     {!isLoading &&
                     (!timers[purchase?.id] || !timers[purchase?.id].expired) ? (
-                      <button onClick={() => handleDelete(purchase?.id)}>
+                      <button className="cartComp-review-button" onClick={() => handleDelete(purchase?.id)}>
                         Cancel Order
                       </button>
                     ) : null}

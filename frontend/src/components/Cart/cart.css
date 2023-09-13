@@ -52,18 +52,6 @@
     text-decoration: none;
 }
 
-.cartComp-update-quantity-button:hover {
-    box-shadow:0px 0px 3px 0px #000000;
-}
-
-.cartComp-remove-button:hover {
-    box-shadow:0px 0px 3px 0px #000000;
-}
-
-.cartComp-review-button:hover {
-    box-shadow:0px 0px 3px 0px #000000;
-}
-
 .cartComp-confirm-modal {
     position: fixed;
     top: 50%;

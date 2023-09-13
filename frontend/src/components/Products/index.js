@@ -136,6 +136,7 @@ function Products() {
       <h2 className="category-name">{getCategoryName(categoryId)}</h2>
       <div className="sorting-container">
         <select
+          className="sort-quantity-select"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
         >
