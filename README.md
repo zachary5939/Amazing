@@ -29,7 +29,7 @@ This is Amazing, a functional clone of Amazon. This product allows users to shop
 | GET /api/products/:id' | Gets a single product by it's Id |
 | GET /api/products/category/:id' | Gets all products associated by its category |
 | GET /api/purchases' | Gets all purchases a user has made |
-| GET /api/finalize' | Purchases the products the user put into their cart |
+| POST /api/purchases/finalize' | Purchases the products the user put into their cart |
 | DELETE /api/purchases/:Id' | Cancels an order a user made (can only be done within 5 minutes of ordering) |
 | PUT /api/purchases' | Update quantity for a product by its ID (can only be done within 5 minutes of ordering) |
 | GET /api/ratings' | Gets all ratings for every product |
