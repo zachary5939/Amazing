@@ -196,7 +196,6 @@ function Cart() {
         )}
 
         <button className="cartComp-remove-button" onClick={() => handleOpenConfirmModal(id)}>Remove</button>
-        <button onClick={() => navigateToReview(product)} className="cartComp-review-button">Review</button>
       </div>
     </li>
     {showConfirmModal && (

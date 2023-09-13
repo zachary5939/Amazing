@@ -103,7 +103,6 @@ export const updateCartItemQuantity = (cartItemId, quantity) => async (dispatch)
 
     const updatedCartItem = await response.json();
     dispatch(updateCartItemSuccess(updatedCartItem));
-    console.log('updatedCartItem', updatedCartItem);
   } catch (error) {
     console.error('Error updating cart item quantity:', error);
   }

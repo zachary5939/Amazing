@@ -26,6 +26,13 @@
     margin-right: 20px;
 }
 
+/* Delete button */
+.cartComp-cart ul .delete-button{
+    transform:translatex(99px) translatey(0px);
+   }
+
+
+
 .cartComp-product-name,
 .cartComp-product-description,
 .cartComp-product-price,
