@@ -1,18 +1,22 @@
 import "./LandingPage.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchProductsByCategory } from "../../store/products";
 import logo from "../../img/echoshow.png";
 import electronics from "../../img/P1.jpg";
 import enterainment from "../../img/p2.png";
 import home from "../../img/p3.png";
 import food from "../../img/p4.png";
-import ImageGallery from "react-image-gallery";
+import { logPageView } from '../../utils/analytics';
 
 function LandingPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+
+    useEffect(() => {
+        logPageView();
+    }, []);
 
     const handleProductClick = async (categoryId) => {
         await dispatch(fetchProductsByCategory(categoryId));

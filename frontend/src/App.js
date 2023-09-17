@@ -18,6 +18,7 @@ import NotFound from "./components/NotFound";
 import Search from "./components/Search";
 import Purchases from './components/Purchases';
 import Wishlist from "./components/Wishlist";
+import { logPageView } from './utils/analytics';
 
 
 function App() {
@@ -27,6 +28,16 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    logPageView(); // Log the initial page view
+  }, [dispatch]);
+
+  useEffect(() => {
+    logPageView(); // Log subsequent page views when the route changes
+  }, [location]);
+
 
   const location = useLocation();
   const searchTerm = new URLSearchParams(location.search).get('term');
